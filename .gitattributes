@@ -1,6 +1,5 @@
 *    text=auto eol=lf
 # Text files
-*.cs diff=csharp text
 *.txt text
 *.mat text
 *.shader text
