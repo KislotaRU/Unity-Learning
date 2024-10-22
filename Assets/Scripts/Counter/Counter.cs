@@ -11,8 +11,6 @@ public class Counter : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Debug.Log($"Клик {_isMouseDown}");
-
         if (_isMouseDown == true)
         {
             _isMouseDown = false;
@@ -22,6 +20,8 @@ public class Counter : MonoBehaviour
             _isMouseDown = true;
             StartCoroutine(nameof(IncreaseScores));
         }
+
+        Debug.Log($"Клик {_isMouseDown}");
     }
 
     private IEnumerator IncreaseScores()
