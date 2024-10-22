@@ -4,14 +4,14 @@ using UnityEngine;
 public class Counter : MonoBehaviour
 {
     [SerializeField] private float _delay = 0.5f;
-    [SerializeField] private float _stepToChange = 1f;
+    [SerializeField] private float _score = 1f;
 
     private float _scores;
     private bool _isMouseDown;
 
     private void OnMouseDown()
     {
-        if (_isMouseDown == true)
+        if (_isMouseDown)
         {
             _isMouseDown = false;
         }
@@ -20,27 +20,25 @@ public class Counter : MonoBehaviour
             _isMouseDown = true;
             StartCoroutine(nameof(IncreaseScores));
         }
-
-        Debug.Log($"Êëèê {_isMouseDown}");
     }
 
     private IEnumerator IncreaseScores()
     {
         var wait = new WaitForSeconds(_delay);
 
-        while (_isMouseDown == true)
+        while (_isMouseDown)
         {
-            AddScores(_stepToChange);
+            AddScores();
             yield return wait;
         }
     }
 
-    private void AddScores(float scores)
+    private void AddScores()
     {
-        if (scores > 0)
+        if (_score > 0)
         {
-            _scores += scores;
-            Debug.Log($"Ñ÷¸ò: {_scores}");
+            _scores += _score;
+            Debug.Log($"Scores: {_scores}");
         }
     }
 }
