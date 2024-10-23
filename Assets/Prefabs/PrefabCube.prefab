@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -448882223656818961}
   - component: {fileID: -8319995634385844160}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: PrefabCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -162,4 +162,7 @@ MonoBehaviour:
   _prefab: {fileID: 6999124743901800340}
   _cube: {fileID: -448882223656818961}
   _chanceClone: 1
-  _reductionFactor: 2
+  _reductionFactorChanceClone: 2
+  _reductionFactorScale: 2
+  _explosionRadious: 200
+  _explosionForce: 1000

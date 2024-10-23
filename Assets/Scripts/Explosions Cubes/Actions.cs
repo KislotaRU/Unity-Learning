@@ -1,5 +1,5 @@
 using System.Collections;
-using Unity.VisualScripting;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Renderer))]
@@ -9,13 +9,17 @@ public class Actions : MonoBehaviour
     [SerializeField] private Cube _cube;
     [Space]
     [SerializeField, Range(0.0f, 1.0f)] private float _chanceClone = 1.0f;
-    [SerializeField, Range(1, 100)] private int _reductionFactor = 2;
+    [SerializeField, Range(1, 100)] private int _reductionFactorChanceClone = 2;
+    [SerializeField, Min(1)] private int _reductionFactorScale = 2;
+    [Space]
+    [SerializeField, Min(1.0f)] private float _explosionRadious = 200;
+    [SerializeField, Min(1.0f)] private float _explosionForce = 1000;
 
-    private Renderer _renderer;
+    private List<Rigidbody> _explodableObjects;
 
     private void Start()
     {
-        _renderer = GetComponent<Renderer>();
+        _explodableObjects = new List<Rigidbody>();
     }
 
     private void OnEnable()
@@ -32,6 +36,10 @@ public class Actions : MonoBehaviour
 
     private void Clone()
     {
+        GameObject gameObject;
+        Rigidbody rigidbody;
+        Renderer renderer;
+
         int minCountCubes = 2;
         int maxCountCubes = 6;
         int cubesCount = Random.Range(minCountCubes, maxCountCubes);
@@ -41,12 +49,25 @@ public class Actions : MonoBehaviour
         if (_chanceClone < currentChanceClone)
             return;
 
-        _renderer.material.color = Random.ColorHSV();
+        transform.localScale /= _reductionFactorScale;
+        _chanceClone /= _reductionFactorChanceClone;
 
         for (int i = 0; i < cubesCount; i++)
-            Instantiate(_prefab);
+        {
+            gameObject = Instantiate(_prefab);
+            
+            renderer = gameObject.GetComponent<Renderer>();
+            renderer.material.color = Random.ColorHSV();
 
-        _chanceClone /= _reductionFactor;
+            rigidbody = gameObject.GetComponent<Rigidbody>();
+            _explodableObjects.Add(rigidbody);
+        }
+    }
+
+    private void Explode()
+    {
+        foreach (Rigidbody explodableObject in _explodableObjects)
+            explodableObject.AddExplosionForce(_explosionForce, transform.position, _explosionRadious);
     }
 
     private void DestroyObject()
@@ -62,6 +83,8 @@ public class Actions : MonoBehaviour
         Vector3 scaleStart = transform.localScale;
         Vector3 scaleEnd = Vector3.zero;
 
+        Explode();
+
         while (elapsedTime <= duration)
         {
             normalizedTime = elapsedTime / duration;
@@ -71,7 +94,7 @@ public class Actions : MonoBehaviour
             
             yield return null;
         }
-
+    
         Destroy(gameObject);
     }
 }
