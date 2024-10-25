@@ -12,13 +12,6 @@ public class Cube : MonoBehaviour
     [SerializeField, Min(1)] private int _reductionFactorChanceToSpawn = 2;
     [SerializeField, Min(1)] private int _reductionFactorScale = 2;
 
-    private Cube _cube;
-
-    private void Start()
-    {
-        _cube = GetComponent<Cube>();
-    }
-
     public void Initialize()
     {
         Renderer renderer = GetComponent<Renderer>();
@@ -77,7 +70,7 @@ public class Cube : MonoBehaviour
         if (_chanceToSpawn < currentChanceClone)
             return false;
 
-        cubes = _spawner.Spawn(_cube, transform.position);
+        cubes = _spawner.Spawn(GetComponent<Cube>(), transform.position);
 
         return true;
     }
