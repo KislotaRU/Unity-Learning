@@ -1,86 +1,89 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody), typeof(Collider), typeof(Renderer))]
+[RequireComponent(typeof(Rigidbody), typeof(Renderer))]
 public class Cube : MonoBehaviour
 {
-    //[SerializeField] private float _chanceToSpawn = 1.0f;
+    [SerializeField] private Spawner _spawner;
+    [SerializeField] private Exploder _exploder;
+    [Space]
+    [SerializeField, Range(0f, 1f)] private float _chanceToSpawn = 1.0f;
+    [SerializeField, Min(1)] private int _reductionFactorChanceToSpawn = 2;
+    [SerializeField, Min(1)] private int _reductionFactorScale = 2;
 
-    //[SerializeField] private InputReader _inputReader;
-    //[SerializeField] private Spawner _spawner;
-    //[SerializeField] private Exploder _exploder;
+    private Cube _cube;
 
-    //private void OnEnable()
-    //{
-    //    _inputReader.Clicked += Spawn;
-    //    _inputReader.Clicked += Explode;
-    //    _inputReader.Clicked += DestroyObject;
-    //}
+    private void Start()
+    {
+        _cube = GetComponent<Cube>();
+    }
 
-    //private void OnDisable()
-    //{
-    //    _inputReader.Clicked -= Spawn;
-    //    _inputReader.Clicked -= Explode;
-    //    _inputReader.Clicked -= DestroyObject;
-    //}
+    public void Initialize()
+    {
+        Renderer renderer = GetComponent<Renderer>();
 
-    //private IEnumerator DestroyCoroutine()
-    //{
-    //    float duration = 1f;
-    //    float elapsedTime = 0f;
-    //    float normalizedTime;
-    //    Vector3 scaleStart = transform.localScale;
-    //    Vector3 scaleEnd = Vector3.zero;
+        renderer.material.color = Random.ColorHSV();
+        _chanceToSpawn /= _reductionFactorChanceToSpawn;
+        transform.localScale /= _reductionFactorScale;
+    }
 
-    //    while (elapsedTime <= duration)
-    //    {
-    //        normalizedTime = elapsedTime / duration;
-    //        normalizedTime = Mathf.Clamp(normalizedTime, 0f, 1f);
-    //        transform.localScale = Vector3.Lerp(scaleStart, scaleEnd, normalizedTime);
-    //        elapsedTime += Time.deltaTime;
+    private IEnumerator DestroyCoroutine()
+    {
+        float duration = 1f;
+        float elapsedTime = 0f;
+        float normalizedTime;
+        Vector3 scaleStart = transform.localScale;
+        Vector3 scaleEnd = Vector3.zero;
 
-    //        yield return null;
-    //    }
+        while (elapsedTime <= duration)
+        {
+            normalizedTime = elapsedTime / duration;
+            normalizedTime = Mathf.Clamp(normalizedTime, 0f, 1f);
+            transform.localScale = Vector3.Lerp(scaleStart, scaleEnd, normalizedTime);
+            elapsedTime += Time.deltaTime;
 
-    //    Destroy(gameObject);
-    //}
+            yield return null;
+        }
 
-    //private void DestroyObject()
-    //{
-    //    StartCoroutine(nameof(DestroyCoroutine));
-    //}
+        Destroy(gameObject);
+    }
 
-    //public void Spawn()
-    //{
-        
-    //    return;
+    public void OnCubeClicked()
+    {
+        DestroyObject();
 
-    //    Renderer renderer = GetComponent<Renderer>();
+        if (TrySpawn(out List<Cube> cubes) == false)
+            return;
 
-    //    int reductionFactorChanceToSpawn = 2;
-    //    int reductionFactorScale = 2;
-    //    float currentChanceClone;
+        List<Rigidbody> rigidbodies = new List<Rigidbody>();
 
-    //    renderer.material.color = Random.ColorHSV();
+        foreach (Cube cube in cubes)
+            rigidbodies.Add(cube.GetComponent<Rigidbody>());
 
-    //    Vector3 scaleClone = transform.localScale / reductionFactorChanceToSpawn;
+        Explode(rigidbodies);
+    }
 
-    //    currentChanceClone = Random.value;       
+    private void DestroyObject()
+    {
+        StartCoroutine(nameof(DestroyCoroutine));
+    }
 
-    //    if (_chanceToSpawn < currentChanceClone)
-    //        return;
+    private bool TrySpawn(out List<Cube> cubes)
+    {
+        float currentChanceClone = Random.value;
+        cubes = null;
 
-    //    _chanceToSpawn /= reductionFactorScale;
-    //    _spawner.Spawn(gameObject, scaleClone);
-    //}
+        if (_chanceToSpawn < currentChanceClone)
+            return false;
 
-    //public void Explode()
-    //{
+        cubes = _spawner.Spawn(_cube, transform.position);
 
-    //}
+        return true;
+    }
 
-    //public void Paint()
-    //{
-
-    //}
+    private void Explode(List<Rigidbody> rigidbodies)
+    {
+        _exploder.Explode(rigidbodies);
+    }
 }

@@ -133,7 +133,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &-448882223656818961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,7 +146,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95546d61ec8657a4493b60c5d725c990, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spawner: {fileID: 1785443534907315299, guid: 66a676860c671d141b0fdd7720ab5069, type: 3}
+  _exploder: {fileID: 9165787219812239043, guid: 1fbce197891884e4e8278e560fe620ed, type: 3}
   _chanceToSpawn: 1
-  _inputReader: {fileID: -3455249660879512123, guid: 2925b20b7e39ab94b8d3adbb4d13cf59, type: 3}
-  _spawner: {fileID: 0}
-  _exploder: {fileID: 0}
+  _reductionFactorChanceToSpawn: 2
+  _reductionFactorScale: 2

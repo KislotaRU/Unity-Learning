@@ -1,30 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
 public class Exploder : MonoBehaviour
 {
-    [SerializeField, Min(1.0f)] private float _explosionRadious = 200;
-    [SerializeField, Min(1.0f)] private float _explosionForce = 1000;
+    [SerializeField, Min(1.0f)] private float _explosionRadious = 10;
+    [SerializeField, Min(1.0f)] private float _explosionForce = 100;
 
-    private InputReader _inputReader;
-
-    private void OnEnable()
+    public void Explode(List<Rigidbody> rigidbodies)
     {
-        _inputReader.Clicked += Explode;
+        foreach (Rigidbody explodableObject in rigidbodies)
+            explodableObject.AddExplosionForce(_explosionForce, transform.position, _explosionRadious);
     }
-
-    private void OnDisable()
-    {
-
-        _inputReader.Clicked -= Explode;
-    }
-
-    private void Explode()
-    {
-        //foreach (Rigidbody explodableObject in _explodableObjects)
-        //    explodableObject.AddExplosionForce(_explosionForce, transform.position, _explosionRadious);
-    }
-
 }

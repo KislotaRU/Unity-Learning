@@ -1,28 +1,22 @@
-using System;
 using UnityEngine;
 
 public class InputReader : MonoBehaviour
 {
-    [SerializeField] GameObject _prefabTrigger;
+    [SerializeField] GameObject _trigger;
 
-    public event Action Clicked;
-
-    private void OnMouse()
+    private void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Input.GetMouseButtonDown(0) == false)
+            return;
 
-        Debug.Log("0");
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out RaycastHit hit) == false)
             return;
 
-        Debug.Log("1");
-
-        if (_prefabTrigger.GetType().Name != hit.GetType().Name)
+        if (hit.collider.TryGetComponent<Cube>(out Cube cube) == false)
             return;
 
-        Debug.Log("2");
-
-        //Clicked?.Invoke();
+        cube.OnCubeClicked();
     }
 }
