@@ -46,5 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _minCount: 2
   _maxCount: 6
-  _reductionFactorChanceToSpawn: 1
-  _reductionFactorScale: 1
+  _reductionFactorChanceToSpawn: 2
+  _reductionFactorScale: 2

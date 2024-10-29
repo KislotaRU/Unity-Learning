@@ -22,15 +22,15 @@ public class Cube : MonoBehaviour
 
     public void OnCubeClicked()
     {
+        DestroyProcess();
+
         if (TrySpawn(out List<Rigidbody> rigidbodies) == false)
             return;
 
         Explode(rigidbodies);
-
-        DestroyObject();
     }
 
-    private void DestroyObject()
+    private void DestroyProcess()
     {
         Destroy(gameObject);
     }
@@ -55,6 +55,6 @@ public class Cube : MonoBehaviour
 
     private void Explode(List<Rigidbody> rigidbodies)
     {
-        _exploder.Explode(rigidbodies);
+        _exploder.Explode(rigidbodies, transform.position);
     }
 }
