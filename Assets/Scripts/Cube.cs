@@ -37,7 +37,13 @@ public class Cube : MonoBehaviour
     {
         float currentChanceClone = Random.value;
 
-        return _chanceToSpawn >= currentChanceClone;
+        if (_chanceToSpawn >= currentChanceClone)
+        {
+            _spawner.Spawn(GetComponent<Cube>());
+            return true;
+        }
+
+        return false;
     }
 
     private void Paint()
