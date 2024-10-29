@@ -5,6 +5,9 @@ public class Spawner : MonoBehaviour
 {
     [SerializeField, Min(1)] private int _minCount = 2;
     [SerializeField, Min(2)] private int _maxCount = 6;
+    [Space]
+    [SerializeField, Min(1)] private int _reductionFactorChanceToSpawn = 2;
+    [SerializeField, Min(1)] private int _reductionFactorScale = 2;
 
     private void OnValidate()
     {
@@ -12,18 +15,25 @@ public class Spawner : MonoBehaviour
             _minCount = _maxCount - 1;
     }
 
-    public List<Cube> Spawn(Cube cube, Vector3 position)
+    public List<Rigidbody> Spawn(Cube cube)
     {
-        List<Cube> cubes = new List<Cube>();
+        List<Rigidbody> rigidbodies = new();
+
         int objectsCount = Random.Range(_minCount, _maxCount);
+
+        float newCubeChanceToSpawn = cube.ChanceToSpawn / _reductionFactorChanceToSpawn;
+        Vector3 newCubeScale = cube.transform.localScale / _reductionFactorScale;
 
         for (int i = 0; i < objectsCount; i++)
         {
-            var spawnedCube = Instantiate(cube, position, Quaternion.identity);
-            spawnedCube.Initialize();
-            cubes.Add(spawnedCube);
+            var newCube = Instantiate(cube, cube.transform.position, Quaternion.identity);
+
+            newCube.Initialize(newCubeScale, newCubeChanceToSpawn);
+
+            if (newCube.TryGetComponent<Rigidbody>(out Rigidbody rigidbody))
+                rigidbodies.Add(rigidbody);
         }
 
-        return cubes;
+        return rigidbodies;
     }
 }

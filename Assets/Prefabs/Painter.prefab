@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7116350310502979628
+--- !u!1 &5474322524559613234
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8822931022604812782}
-  - component: {fileID: 1785443534907315299}
+  - component: {fileID: 1256111467535990931}
+  - component: {fileID: 8262836809858539302}
   m_Layer: 0
-  m_Name: Spawner
+  m_Name: Painter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8822931022604812782
+--- !u!4 &1256111467535990931
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7116350310502979628}
+  m_GameObject: {fileID: 5474322524559613234}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,19 +32,15 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1785443534907315299
+--- !u!114 &8262836809858539302
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7116350310502979628}
+  m_GameObject: {fileID: 5474322524559613234}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6c3a249b67e1a14680e6c0e992f04e8, type: 3}
+  m_Script: {fileID: 11500000, guid: 5e73be67fc296ef43b91a97901e0805b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _minCount: 2
-  _maxCount: 6
-  _reductionFactorChanceToSpawn: 1
-  _reductionFactorScale: 1
