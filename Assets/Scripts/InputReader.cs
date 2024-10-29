@@ -12,7 +12,7 @@ public class InputReader : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit) == false)
             return;
 
-        if (hit.collider.TryGetComponent<Cube>(out Cube cube))
+        if (hit.collider.TryGetComponent(out Cube cube))
             cube.OnCubeClicked();
     }
 }

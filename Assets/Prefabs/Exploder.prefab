@@ -44,5 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 855d06a7fd56c8044aec95d678dcbbf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _explosionRadious: 40
-  _explosionForce: 600
+  _minExplosionRadious: 1
+  _maxExplosionRadious: 50
+  _minExplosionForce: 10
+  _maxExplosionForce: 500

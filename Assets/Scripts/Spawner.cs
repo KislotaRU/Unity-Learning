@@ -30,7 +30,7 @@ public class Spawner : MonoBehaviour
 
             newCube.Initialize(newCubeScale, newCubeChanceToSpawn);
 
-            if (newCube.TryGetComponent<Rigidbody>(out Rigidbody rigidbody))
+            if (newCube.TryGetComponent(out Rigidbody rigidbody))
                 rigidbodies.Add(rigidbody);
         }
 

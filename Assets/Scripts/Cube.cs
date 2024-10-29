@@ -25,9 +25,7 @@ public class Cube : MonoBehaviour
         DestroyProcess();
 
         if (TrySpawn(out List<Rigidbody> rigidbodies) == false)
-            return;
-
-        Explode(rigidbodies);
+            Explode(rigidbodies);
     }
 
     private void DestroyProcess()
@@ -55,6 +53,6 @@ public class Cube : MonoBehaviour
 
     private void Explode(List<Rigidbody> rigidbodies)
     {
-        _exploder.Explode(rigidbodies, transform.position);
+        _exploder.Explode(transform.position, transform.localScale);
     }
 }
