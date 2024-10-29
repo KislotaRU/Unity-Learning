@@ -24,8 +24,8 @@ public class Cube : MonoBehaviour
     {
         DestroyProcess();
 
-        if (TrySpawn(out List<Rigidbody> rigidbodies) == false)
-            Explode(rigidbodies);
+        if (TrySpawn() == false)
+            Explode();
     }
 
     private void DestroyProcess()
@@ -33,15 +33,11 @@ public class Cube : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private bool TrySpawn(out List<Rigidbody> rigidbodies)
+    private bool TrySpawn()
     {
         float currentChanceClone = Random.value;
-        rigidbodies = null;
 
-        if (_chanceToSpawn >= currentChanceClone)
-            rigidbodies = _spawner.Spawn(GetComponent<Cube>());
-
-        return rigidbodies != null;
+        return _chanceToSpawn >= currentChanceClone;
     }
 
     private void Paint()
@@ -51,7 +47,7 @@ public class Cube : MonoBehaviour
         _painter.Paint(renderer);
     }
 
-    private void Explode(List<Rigidbody> rigidbodies)
+    private void Explode()
     {
         _exploder.Explode(transform.position, transform.localScale);
     }

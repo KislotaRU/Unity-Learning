@@ -15,10 +15,8 @@ public class Spawner : MonoBehaviour
             _minCount = _maxCount - 1;
     }
 
-    public List<Rigidbody> Spawn(Cube cube)
+    public void Spawn(Cube cube)
     {
-        List<Rigidbody> rigidbodies = new();
-
         int objectsCount = Random.Range(_minCount, _maxCount);
 
         float newCubeChanceToSpawn = cube.ChanceToSpawn / _reductionFactorChanceToSpawn;
@@ -29,11 +27,6 @@ public class Spawner : MonoBehaviour
             var newCube = Instantiate(cube, cube.transform.position, Quaternion.identity);
 
             newCube.Initialize(newCubeScale, newCubeChanceToSpawn);
-
-            if (newCube.TryGetComponent(out Rigidbody rigidbody))
-                rigidbodies.Add(rigidbody);
         }
-
-        return rigidbodies;
     }
 }
