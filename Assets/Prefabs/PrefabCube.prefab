@@ -147,6 +147,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawner: {fileID: 1785443534907315299, guid: 66a676860c671d141b0fdd7720ab5069, type: 3}
+  _chanceToSpawn: 1
   _painter: {fileID: 8262836809858539302, guid: bceaad5ee7299334ababe4386a293d6a, type: 3}
   _exploder: {fileID: 9165787219812239043, guid: 1fbce197891884e4e8278e560fe620ed, type: 3}
-  _chanceToSpawn: 1
