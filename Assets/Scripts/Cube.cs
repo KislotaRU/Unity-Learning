@@ -1,59 +1,51 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Pool;
 
-[RequireComponent(typeof(Rigidbody), typeof(Renderer))]
+[RequireComponent(typeof(Collider), typeof(Renderer), typeof(Rigidbody))]
 public class Cube : MonoBehaviour
 {
-    [SerializeField] private Spawner _spawner;
-    [SerializeField, Range(0f, 1f)] private float _chanceToSpawn = 1.0f;
-    [Space]
+    [SerializeField] private CubeSpawner _cubeSpawner;
     [SerializeField] private Painter _painter;
-    [SerializeField] private Exploder _exploder;
 
-    public float ChanceToSpawn => _chanceToSpawn;
+    private Color _defaultColor;
+    private Renderer _renderer;
+    private ObjectPool<Cube> _cubePool;
 
-    public void Initialize(Vector3 scale, float chanceToSpawn)
+    private float _minDelayDestroy = 2f;
+    private float _maxDelayDestroy = 5f;
+
+    private void Start()
     {
-        transform.localScale = scale;
-        _chanceToSpawn = chanceToSpawn;
+        _renderer = GetComponent<Renderer>();
 
-        Paint();
+        _defaultColor = _renderer.material.color;
     }
 
-    public void OnCubeClicked()
+    private void OnCollisionEnter(Collision collision)
     {
-        DestroyProcess();
-
-        if (TrySpawn() == false)
-            Explode();
-    }
-
-    private void DestroyProcess()
-    {
-        Destroy(gameObject);
-    }
-
-    private bool TrySpawn()
-    {
-        float currentChanceClone = Random.value;
-
-        if (_chanceToSpawn >= currentChanceClone)
+        if (collision.gameObject.TryGetComponent(out Floor _))
         {
-            _spawner.Spawn(GetComponent<Cube>());
-            return true;
+            ChangeColor();
+            StartCoroutine(nameof(DestroingWithDelay));
         }
-
-        return false;
     }
 
-    private void Paint()
+    private IEnumerator DestroingWithDelay()
     {
-        Renderer renderer = GetComponent<Renderer>();
+        yield return new WaitForSeconds(Random.Range(_minDelayDestroy, _maxDelayDestroy));
 
-        _painter.Paint(renderer);
+        _cubePool.Release(this);
     }
 
-    private void Explode()
+    public void Initialize(ObjectPool<Cube> cubePool)
     {
-        _exploder.Explode(transform.position, transform.localScale);
+        _cubePool = cubePool;
+    }
+
+    private void ChangeColor()
+    {
+        if (_defaultColor == _renderer.material.color)
+            _painter.Paint(_renderer);
     }
 }
