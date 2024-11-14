@@ -7,29 +7,29 @@ public class CubeSpawner : MonoBehaviour
 {
     [SerializeField] private Cube _cubePrefab;
 
+    private readonly int _poolCapacity = 5;
+    private readonly int _poolMaxSize = 5;
+
+    private readonly float _spawnDelay = 1f;
+
     private ObjectPool<Cube> _cubePool;
     private BoxCollider _boxCollider;
 
-    private int _poolCapacity = 5;
-    private int _poolMaxSize = 5;
-
-    private float _spawnDelay = 1f;
-
     private void Awake()
     {
-        _cubePool = new ObjectPool<Cube>(createFunc: () => CreateManually(),
-                                     actionOnGet: (cube) => ActionOnGet(cube),
-                                     actionOnRelease: (cube) => cube.gameObject.SetActive(false),
-                                     actionOnDestroy: (cube) => Destroy(cube),
-                                     collectionCheck: true,
-                                     defaultCapacity: _poolCapacity,
-                                     maxSize: _poolMaxSize);
+        _boxCollider = GetComponent<BoxCollider>();
+
+        _cubePool = new ObjectPool<Cube>(createFunc: () => Instantiate(_cubePrefab),
+                                         actionOnGet: (cube) => ActionOnGet(cube),
+                                         actionOnRelease: (cube) => cube.gameObject.SetActive(false),
+                                         actionOnDestroy: (cube) => Destroy(cube),
+                                         collectionCheck: true,
+                                         defaultCapacity: _poolCapacity,
+                                         maxSize: _poolMaxSize);
     }
 
     private void Start()
     {
-        _boxCollider = GetComponent<BoxCollider>();
-
         StartCoroutine(nameof(SpawningWithDelay));
     }
 
@@ -45,26 +45,22 @@ public class CubeSpawner : MonoBehaviour
         }
     }
 
-    public Cube CreateManually()
+    public void ActionOnRelease(Cube cube)
     {
-        Cube cube = Instantiate(_cubePrefab);
-        cube.Initialize(_cubePool);
-
-        return cube;
+        _cubePool?.Release(cube);
     }
 
     private void ActionOnGet(Cube cube)
     {
-        Vector3 randomPosition = new Vector3(Random.Range(-_boxCollider.size.x / 2, _boxCollider.size.x / 2),
-                                             transform.position.y,
-                                             Random.Range(-_boxCollider.size.x / 2, _boxCollider.size.z / 2));
+        float coefficientAreaSpawner = 2;
 
-        cube.transform.rotation = Quaternion.identity;
+        float randomPositionX = Random.Range(-_boxCollider.size.x / coefficientAreaSpawner, _boxCollider.size.x / coefficientAreaSpawner);
+        float randomPositionZ = Random.Range(-_boxCollider.size.z / coefficientAreaSpawner, _boxCollider.size.z / coefficientAreaSpawner);
 
-        if (cube.TryGetComponent(out Rigidbody rigidbody))
-            rigidbody.velocity = Vector3.zero;
+        Vector3 randomPosition = new Vector3(randomPositionX, transform.position.y, randomPositionZ);               
 
-        cube.transform.Translate(randomPosition);
+        cube.ResetPosition(randomPosition);
+
         cube.gameObject.SetActive(true);
     }
 }

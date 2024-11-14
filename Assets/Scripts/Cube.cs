@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Pool;
 
 [RequireComponent(typeof(Collider), typeof(Renderer), typeof(Rigidbody))]
 public class Cube : MonoBehaviour
@@ -8,17 +7,21 @@ public class Cube : MonoBehaviour
     [SerializeField] private CubeSpawner _cubeSpawner;
     [SerializeField] private Painter _painter;
 
+    private readonly float _minDelayDestroy = 2f;
+    private readonly float _maxDelayDestroy = 5f;
+
     private Color _defaultColor;
     private Renderer _renderer;
-    private ObjectPool<Cube> _cubePool;
+    private Rigidbody _rigidbody;
 
-    private float _minDelayDestroy = 2f;
-    private float _maxDelayDestroy = 5f;
+    private void Awake()
+    {
+        _renderer = GetComponent<Renderer>();
+        _rigidbody = GetComponent<Rigidbody>();
+    }
 
     private void Start()
     {
-        _renderer = GetComponent<Renderer>();
-
         _defaultColor = _renderer.material.color;
     }
 
@@ -35,12 +38,14 @@ public class Cube : MonoBehaviour
     {
         yield return new WaitForSeconds(Random.Range(_minDelayDestroy, _maxDelayDestroy));
 
-        _cubePool.Release(this);
+        _cubeSpawner.ActionOnRelease(this);
     }
 
-    public void Initialize(ObjectPool<Cube> cubePool)
+    public void ResetPosition(Vector3 position)
     {
-        _cubePool = cubePool;
+        _rigidbody.velocity = Vector3.zero;
+        transform.rotation = Quaternion.identity;
+        transform.position = position;
     }
 
     private void ChangeColor()
