@@ -1,18 +1,21 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider), typeof(Renderer), typeof(Rigidbody))]
 public class Cube : MonoBehaviour
 {
-    [SerializeField] private CubeSpawner _cubeSpawner;
     [SerializeField] private Painter _painter;
+
+    public event Action<Cube> TouchedFloor;
 
     private readonly float _minDelayDestroy = 2f;
     private readonly float _maxDelayDestroy = 5f;
 
-    private Color _defaultColor;
     private Renderer _renderer;
     private Rigidbody _rigidbody;
+
+    private bool _isTouched = false;
 
     private void Awake()
     {
@@ -20,25 +23,15 @@ public class Cube : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
     }
 
-    private void Start()
-    {
-        _defaultColor = _renderer.material.color;
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.TryGetComponent(out Floor _))
-        {
+        if (collision.gameObject.TryGetComponent(out Floor _) == false)
+            return;
+
+        if (_isTouched == false)
             ChangeColor();
-            StartCoroutine(nameof(DestroingWithDelay));
-        }
-    }
 
-    private IEnumerator DestroingWithDelay()
-    {
-        yield return new WaitForSeconds(Random.Range(_minDelayDestroy, _maxDelayDestroy));
-
-        _cubeSpawner.ActionOnRelease(this);
+        StartCoroutine(DestroingWithDelay());
     }
 
     public void ResetPosition(Vector3 position)
@@ -48,9 +41,17 @@ public class Cube : MonoBehaviour
         transform.position = position;
     }
 
+    private IEnumerator DestroingWithDelay()
+    {
+        yield return new WaitForSeconds(UnityEngine.Random.Range(_minDelayDestroy, _maxDelayDestroy));
+
+        Debug.Log($"ֲûחמג סמבûעטÿ");
+        TouchedFloor?.Invoke(this);
+    }
+
     private void ChangeColor()
     {
-        if (_defaultColor == _renderer.material.color)
-            _painter.Paint(_renderer);
+        _painter.Paint(_renderer);
+        _isTouched = true;
     }
 }

@@ -20,17 +20,27 @@ public class CubeSpawner : MonoBehaviour
         _boxCollider = GetComponent<BoxCollider>();
 
         _cubePool = new ObjectPool<Cube>(createFunc: () => Instantiate(_cubePrefab),
-                                         actionOnGet: (cube) => ActionOnGet(cube),
+                                         actionOnGet: (cube) => GetPrefab(cube),
                                          actionOnRelease: (cube) => cube.gameObject.SetActive(false),
-                                         actionOnDestroy: (cube) => Destroy(cube),
+                                         actionOnDestroy: (cube) => Destroy(cube.gameObject),
                                          collectionCheck: true,
                                          defaultCapacity: _poolCapacity,
                                          maxSize: _poolMaxSize);
     }
 
+    private void OnEnable()
+    {
+        _cubePrefab.TouchedFloor += OnRelease;
+    }
+
+    private void OnDisable()
+    {
+        _cubePrefab.TouchedFloor -= OnRelease;
+    }
+
     private void Start()
     {
-        StartCoroutine(nameof(SpawningWithDelay));
+        StartCoroutine(SpawningWithDelay());
     }
 
     private IEnumerator SpawningWithDelay()
@@ -45,12 +55,13 @@ public class CubeSpawner : MonoBehaviour
         }
     }
 
-    public void ActionOnRelease(Cube cube)
+    private void OnRelease(Cube cube)
     {
+        Debug.Log($"Обработка события");
         _cubePool?.Release(cube);
     }
 
-    private void ActionOnGet(Cube cube)
+    private void GetPrefab(Cube cube)
     {
         float coefficientAreaSpawner = 2;
 
