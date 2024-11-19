@@ -45,7 +45,6 @@ public class Cube : MonoBehaviour
     {
         yield return new WaitForSeconds(UnityEngine.Random.Range(_minDelayDestroy, _maxDelayDestroy));
 
-        Debug.Log($"ֲûחמג סמבûעטÿ");
         TouchedFloor?.Invoke(this);
     }
 

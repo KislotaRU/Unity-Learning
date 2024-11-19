@@ -19,23 +19,13 @@ public class CubeSpawner : MonoBehaviour
     {
         _boxCollider = GetComponent<BoxCollider>();
 
-        _cubePool = new ObjectPool<Cube>(createFunc: () => Instantiate(_cubePrefab),
-                                         actionOnGet: (cube) => GetPrefab(cube),
+        _cubePool = new ObjectPool<Cube>(createFunc: () => CreateCube(),
+                                         actionOnGet: (cube) => GetCube(cube),
                                          actionOnRelease: (cube) => cube.gameObject.SetActive(false),
-                                         actionOnDestroy: (cube) => Destroy(cube.gameObject),
+                                         actionOnDestroy: (cube) => DestroyCube(cube),
                                          collectionCheck: true,
                                          defaultCapacity: _poolCapacity,
                                          maxSize: _poolMaxSize);
-    }
-
-    private void OnEnable()
-    {
-        _cubePrefab.TouchedFloor += OnRelease;
-    }
-
-    private void OnDisable()
-    {
-        _cubePrefab.TouchedFloor -= OnRelease;
     }
 
     private void Start()
@@ -57,21 +47,33 @@ public class CubeSpawner : MonoBehaviour
 
     private void OnRelease(Cube cube)
     {
-        Debug.Log($"Обработка события");
         _cubePool?.Release(cube);
     }
 
-    private void GetPrefab(Cube cube)
+    private void GetCube(Cube cube)
     {
         float coefficientAreaSpawner = 2;
 
-        float randomPositionX = Random.Range(-_boxCollider.size.x / coefficientAreaSpawner, _boxCollider.size.x / coefficientAreaSpawner);
-        float randomPositionZ = Random.Range(-_boxCollider.size.z / coefficientAreaSpawner, _boxCollider.size.z / coefficientAreaSpawner);
+        float randomPositionX = Random.Range(-_boxCollider.size.x / coefficientAreaSpawner, _boxCollider.size.x / coefficientAreaSpawner) + transform.position.x;
+        float randomPositionZ = Random.Range(-_boxCollider.size.z / coefficientAreaSpawner, _boxCollider.size.z / coefficientAreaSpawner) + transform.position.z;
 
         Vector3 randomPosition = new Vector3(randomPositionX, transform.position.y, randomPositionZ);               
 
         cube.ResetPosition(randomPosition);
 
         cube.gameObject.SetActive(true);
+    }
+
+    private Cube CreateCube()
+    {
+        Cube cube = Instantiate(_cubePrefab);
+        cube.TouchedFloor += OnRelease;
+        return cube;
+    }
+
+    private void DestroyCube(Cube cube)
+    {
+        cube.TouchedFloor -= OnRelease;
+        Destroy(cube.gameObject);
     }
 }
