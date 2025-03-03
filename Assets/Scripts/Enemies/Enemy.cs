@@ -18,8 +18,11 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if (_target != null)
-            transform.position = Vector3.MoveTowards(transform.position, _target.transform.position, _speedMovement * Time.deltaTime);
+        if (_target == null)
+            return;
+            
+        transform.position = Vector3.MoveTowards(transform.position, _target.transform.position, _speedMovement * Time.deltaTime);
+        transform.LookAt(_target.transform.position, transform.up);
     }
 
     private void OnCollisionEnter(Collision collision)
