@@ -3,14 +3,15 @@ using UnityEngine;
 using UnityEngine.Pool;
 
 [RequireComponent(typeof(BoxCollider))]
-public class EnemySpawner : MonoBehaviour
+public class SpawnerEnemy : MonoBehaviour
 {
     [SerializeField] private Enemy _enemyPrefab;
+    [SerializeField] private Target _target;
 
-    private readonly int _poolCapacity = 5;
-    private readonly int _poolMaxSize = 5;
+    private readonly int _poolCapacity = 2;
+    private readonly int _poolMaxSize = 2;
 
-    private readonly float _spawnDelay = 2f;
+    private readonly float _spawnDelay = 1f;
 
     private ObjectPool<Enemy> _enemyPool;
     private BoxCollider _boxCollider;
@@ -22,7 +23,7 @@ public class EnemySpawner : MonoBehaviour
         _enemyPool = new ObjectPool<Enemy>(createFunc: () => CreateObject(),
                                          actionOnGet: (obj) => GetObject(obj),
                                          actionOnRelease: (obj) => obj.gameObject.SetActive(false),
-                                         actionOnDestroy: (obj) => Destroy(obj.gameObject),
+                                         actionOnDestroy: (obj) => DestroyObject(obj),
                                          collectionCheck: true,
                                          defaultCapacity: _poolCapacity,
                                          maxSize: _poolMaxSize);
@@ -39,10 +40,18 @@ public class EnemySpawner : MonoBehaviour
 
         while (true)
         {
-            _enemyPool.Get();
+            if (_enemyPool.CountActive < _poolMaxSize)
+                _enemyPool.Get();
 
             yield return delay;
         }
+    }
+
+    private Enemy CreateObject()
+    {
+        Enemy enemy = Instantiate(_enemyPrefab);
+        enemy.TouchedTarget += ReleaseObject;
+        return enemy;
     }
 
     private void GetObject(Enemy enemy)
@@ -52,19 +61,18 @@ public class EnemySpawner : MonoBehaviour
         float randomPositionZ = Random.Range(-_boxCollider.size.z / coefficientAreaSpawner, _boxCollider.size.z / coefficientAreaSpawner) + transform.position.z;
         Vector3 randomPosition = new Vector3(randomPositionX, transform.position.y, randomPositionZ);
 
-        float coefficientDirection = 1;
-        float randomDirectionX = Random.Range(-coefficientDirection, coefficientDirection);
-        float randomDirectionY = Random.Range(-coefficientDirection, coefficientDirection);
-        float randomDirectionZ = Random.Range(-coefficientDirection, coefficientDirection);
-        Vector3 randomDirection = new Vector3(randomDirectionX, randomDirectionY, randomDirectionZ);
-
-        enemy.Initialize(randomPosition, randomDirection);
+        enemy.Initialize(randomPosition, _target);
         enemy.gameObject.SetActive(true);
     }
 
-    private Enemy CreateObject()
+    private void ReleaseObject(Enemy enemy)
     {
-        Enemy enemy = Instantiate(_enemyPrefab);
-        return enemy;
+        _enemyPool.Release(enemy);
+    }
+
+    private void DestroyObject(Enemy enemy)
+    {
+        enemy.TouchedTarget -= ReleaseObject;
+        Destroy(enemy.gameObject);
     }
 }

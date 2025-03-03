@@ -1,12 +1,15 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private float _speedMovement = 2f;
-    [SerializeField] private Vector3 _direction = Vector3.zero;
+    [SerializeField] private float _speedMovement = 5f;
+
+    public event Action<Enemy> TouchedTarget;
 
     private Rigidbody _rigidbody;
+    private Target _target;
 
     private void Awake()
     {
@@ -15,15 +18,22 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        Vector3 position = _direction * _speedMovement * Time.deltaTime;
-
-        transform.Translate(position);
+        if (_target != null)
+            transform.position = Vector3.MoveTowards(transform.position, _target.transform.position, _speedMovement * Time.deltaTime);
     }
 
-    public void Initialize(Vector3 position, Vector3 direction)
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.TryGetComponent(out Target _))
+        {
+            TouchedTarget?.Invoke(this);
+        }
+    }
+
+    public void Initialize(Vector3 position, Target target)
     {
         _rigidbody.velocity = Vector3.zero;
-        _direction = direction;
+        _target = target;
         transform.position = position;
         transform.rotation = Quaternion.identity;
     }

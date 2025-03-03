@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4770778162362728272}
   - component: {fileID: 130115201462959758}
-  - component: {fileID: -4946618907417564787}
+  - component: {fileID: 3325296119113091884}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -28,8 +28,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 15, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -52,9 +52,9 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 10, y: 0, z: 10}
+  m_Size: {x: 1, y: 0, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-4946618907417564787
+--- !u!114 &3325296119113091884
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -66,4 +66,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47261629cf0bb9c4a888486ed4e7a60d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyPrefab: {fileID: -5442509936395849081, guid: a8b22cf66d10130449043dab11e046b2, type: 3}
+  _enemyPrefab: {fileID: 4912089801486356284, guid: 6fbdc9c7e57fec845b933e88730587b1, type: 3}
+  _target: {fileID: 0}
