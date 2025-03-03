@@ -9,8 +9,11 @@ public class Target : MonoBehaviour
 
     private void Update()
     {
+        if (_waypoints == null)
+            return;
+
         if (transform.position == _waypoints[_currentWaypoint].position)
-            _currentWaypoint = (_currentWaypoint + 1) % _waypoints.Length;
+            _currentWaypoint = ++_currentWaypoint % _waypoints.Length;
 
         transform.position = Vector3.MoveTowards(transform.position, _waypoints[_currentWaypoint].position, _speedMovement * Time.deltaTime);
     }
