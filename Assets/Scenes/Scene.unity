@@ -726,6 +726,10 @@ PrefabInstance:
       propertyPath: _parentWaypoints
       value: 
       objectReference: {fileID: 6287804718565947203}
+    - target: {fileID: 2880316189659100583, guid: a693c27ad52935d4f9500cf824dc3031, type: 3}
+      propertyPath: _waypointsParent
+      value: 
+      objectReference: {fileID: 6287804718565947203}
     - target: {fileID: 8259682096019316538, guid: a693c27ad52935d4f9500cf824dc3031, type: 3}
       propertyPath: m_Name
       value: Turret
