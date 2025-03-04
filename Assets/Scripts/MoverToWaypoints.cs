@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class MovingToWaypoints : MonoBehaviour
+public class MoverToWaypoints : MonoBehaviour
 {
-    [SerializeField] private Transform _parentWaypoints;
+    [SerializeField] private Transform _waypointsParent;
     [SerializeField] private float _speedMovement;
 
     private Transform[] _waypoints;
@@ -25,13 +25,13 @@ public class MovingToWaypoints : MonoBehaviour
 
     private void Initialize()
     {
-        if (_parentWaypoints == null)
+        if (_waypointsParent == null)
             return;
 
-        _waypoints = new Transform[_parentWaypoints.childCount];
+        _waypoints = new Transform[_waypointsParent.childCount];
 
         for (int i = 0; i < _waypoints.Length; i++)
-            _waypoints[i] = _parentWaypoints.GetChild(i);
+            _waypoints[i] = _waypointsParent.GetChild(i);
     }
 
     private void Move()

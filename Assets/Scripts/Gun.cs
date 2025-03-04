@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class ShootingBullets : MonoBehaviour
+public class Gun : MonoBehaviour
 {
     [SerializeField] private Bullet _bulletPrefab;
     [SerializeField] private Transform _pointToShoot;
@@ -37,8 +37,8 @@ public class ShootingBullets : MonoBehaviour
 
     private void Initialize()
     {
-        _bulletPool = new ObjectPool<Bullet>(createFunc: CreateBullet,
-                                             actionOnGet: (bullet) => GetBullet(bullet),
+        _bulletPool = new ObjectPool<Bullet>(createFunc: Create,
+                                             actionOnGet: (bullet) => Get(bullet),
                                              actionOnRelease: (bullet) => bullet.gameObject.SetActive(false),
                                              actionOnDestroy: (bullet) => DestroyBullet(bullet),
                                              collectionCheck: true,
@@ -46,7 +46,7 @@ public class ShootingBullets : MonoBehaviour
                                              maxSize: _poolMaxSize);
     }
 
-    private Bullet CreateBullet()
+    private Bullet Create()
     {
         Bullet bullet = Instantiate(_bulletPrefab, transform.position, Quaternion.identity);
         bullet.ElapsedTimeDeactivation += ReleaseBullet;
@@ -54,12 +54,14 @@ public class ShootingBullets : MonoBehaviour
         return bullet;
     }
 
-    private void GetBullet(Bullet bullet)
+    private Bullet Get(Bullet bullet)
     {
         Vector3 direction = (_pointToShoot.position - transform.position).normalized;
 
         bullet.Initialize(_pointToShoot.position, direction, _bulletSpeed);
         bullet.gameObject.SetActive(true);
+
+        return bullet;
     }
 
     private void ReleaseBullet(Bullet bullet)
