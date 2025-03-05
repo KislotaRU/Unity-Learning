@@ -4,6 +4,7 @@ public class MoverToWaypoints : MonoBehaviour
 {
     [SerializeField] private Transform _waypointsParent;
     [SerializeField] private float _speedMovement;
+    [SerializeField] private bool _isLookingToWaypoint = false;
 
     private Transform[] _waypoints;
     private int _currentWaypoint = 0;
@@ -40,5 +41,10 @@ public class MoverToWaypoints : MonoBehaviour
             _currentWaypoint = ++_currentWaypoint % _waypoints.Length;
 
         transform.position = Vector3.MoveTowards(transform.position, CurrentWaypointPosition, _speedMovement * Time.deltaTime);
+
+        if (_isLookingToWaypoint == false)
+            return;
+
+        transform.LookAt(CurrentWaypointPosition, transform.up);
     }
 }
