@@ -8,14 +8,12 @@ public class Way : MonoBehaviour
 
     public Vector3 GetNextPosition()
     {
-        if (_waypoints.Length > 0)
-        {
-            _currentWaypoint = ++_currentWaypoint % _waypoints.Length;
+        if (_waypoints.Length <= 0)
+            return transform.position;
 
-            return _waypoints[_currentWaypoint].position;
-        }
+        _currentWaypoint = ++_currentWaypoint % _waypoints.Length;
 
-        return transform.position;
+        return _waypoints[_currentWaypoint].position;
     }
 
     [ContextMenu("Refresh Child Array")]
