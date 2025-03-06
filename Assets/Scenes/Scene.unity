@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 323751234}
   m_Layer: 0
-  m_Name: Waypoint4 (2)
+  m_Name: Waypoint6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -270,7 +270,7 @@ GameObject:
   m_Component:
   - component: {fileID: 704730071}
   m_Layer: 0
-  m_Name: Waypoint4 (1)
+  m_Name: Waypoint5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -291,6 +291,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6287804718565947203}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &834206523 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 883582041311089525, guid: 11c2d44c535a4734f8fe837cb7d442ab, type: 3}
+  m_PrefabInstance: {fileID: 8692231151100465297}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd75ccbc8b0b17642b761c4dfe2eeac9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1076435391
 GameObject:
   m_ObjectHideFlags: 0
@@ -725,14 +736,30 @@ PrefabInstance:
       propertyPath: _speedFading
       value: 0.05
       objectReference: {fileID: 0}
+    - target: {fileID: 883582041311089525, guid: 11c2d44c535a4734f8fe837cb7d442ab, type: 3}
+      propertyPath: _speedTranslating
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 2400354952323139053, guid: 11c2d44c535a4734f8fe837cb7d442ab, type: 3}
       propertyPath: m_Volume
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2400354952323139053, guid: 11c2d44c535a4734f8fe837cb7d442ab, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3135040849790600964, guid: 11c2d44c535a4734f8fe837cb7d442ab, type: 3}
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4247245358004323275, guid: 11c2d44c535a4734f8fe837cb7d442ab, type: 3}
+      propertyPath: _audioVolume
+      value: 
+      objectReference: {fileID: 834206523}
+    - target: {fileID: 4247245358004323275, guid: 11c2d44c535a4734f8fe837cb7d442ab, type: 3}
+      propertyPath: _audioVolumeEffect
+      value: 
+      objectReference: {fileID: 834206523}
     - target: {fileID: 5842010184860056557, guid: 11c2d44c535a4734f8fe837cb7d442ab, type: 3}
       propertyPath: m_Name
       value: Home
@@ -740,6 +767,10 @@ PrefabInstance:
     - target: {fileID: 6320594602281067181, guid: 11c2d44c535a4734f8fe837cb7d442ab, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6698863718458268415, guid: 11c2d44c535a4734f8fe837cb7d442ab, type: 3}
+      propertyPath: m_Name
+      value: AlarmSignal
       objectReference: {fileID: 0}
     - target: {fileID: 7101318940617051691, guid: 11c2d44c535a4734f8fe837cb7d442ab, type: 3}
       propertyPath: m_LocalPosition.x
@@ -810,13 +841,27 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6287804718565947203}
+  - component: {fileID: 8828169330704380767}
   m_Layer: 0
-  m_Name: Waypoints
+  m_Name: Way
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8828169330704380767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8828169330704380766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4597fd85f96f35f4d909e5544a099346, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _waypoints: []
 --- !u!1001 &8828713771425184648
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -826,16 +871,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -5848451803742427943, guid: a7bc4a1bc747ace4ca86fdde7ad199ab, type: 3}
+      propertyPath: _way
+      value: 
+      objectReference: {fileID: 8828169330704380767}
+    - target: {fileID: -5848451803742427943, guid: a7bc4a1bc747ace4ca86fdde7ad199ab, type: 3}
       propertyPath: _waypointsParent
       value: 
-      objectReference: {fileID: 6287804718565947203}
+      objectReference: {fileID: 0}
     - target: {fileID: 897274315548483407, guid: a7bc4a1bc747ace4ca86fdde7ad199ab, type: 3}
       propertyPath: m_Name
       value: Thief
       objectReference: {fileID: 0}
     - target: {fileID: 4119140503008015648, guid: a7bc4a1bc747ace4ca86fdde7ad199ab, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 9.43
       objectReference: {fileID: 0}
     - target: {fileID: 4119140503008015648, guid: a7bc4a1bc747ace4ca86fdde7ad199ab, type: 3}
       propertyPath: m_LocalPosition.y
@@ -843,7 +892,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4119140503008015648, guid: a7bc4a1bc747ace4ca86fdde7ad199ab, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -12
+      value: -10.08
       objectReference: {fileID: 0}
     - target: {fileID: 4119140503008015648, guid: a7bc4a1bc747ace4ca86fdde7ad199ab, type: 3}
       propertyPath: m_LocalRotation.w
