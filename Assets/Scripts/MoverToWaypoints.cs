@@ -3,17 +3,18 @@ using UnityEngine;
 public class MoverToWaypoints : MonoBehaviour
 {
     [SerializeField] private Way _way;
-    [SerializeField] private float _speedMovement;
-    [SerializeField] private bool _isLookingToWaypoint = false;
+    [SerializeField] private float _moveSpeed = 1f;
 
-    private Vector3 _currentWaypointPosition;
+    private readonly float _distanceToTargetNeeded = 0.1f;
 
-    private void Start()
+    private Vector3 _currentTarget;
+
+    private void Awake()
     {
         if (_way == null)
-            gameObject.SetActive(false);
-
-        Initialize();
+            enabled = false;
+        else
+            _currentTarget = _way.GetNextPosition();
     }
 
     private void Update()
@@ -21,21 +22,13 @@ public class MoverToWaypoints : MonoBehaviour
         Move();
     }
 
-    private void Initialize()
-    {
-        _currentWaypointPosition = _way.GetNextPosition();
-    }
-
     private void Move()
     {
-        if (transform.position == _currentWaypointPosition)
-            _currentWaypointPosition = _way.GetNextPosition();
+        transform.position = Vector2.MoveTowards(transform.position, _currentTarget, _moveSpeed * Time.deltaTime);
 
-        transform.position = Vector3.MoveTowards(transform.position, _currentWaypointPosition, _speedMovement * Time.deltaTime);
-
-        if (_isLookingToWaypoint == false)
+        if (Vector2.Distance(transform.position, _currentTarget) > _distanceToTargetNeeded)
             return;
-
-        transform.LookAt(_currentWaypointPosition, transform.up);
+        
+        _currentTarget = _way.GetNextPosition();
     }
 }
