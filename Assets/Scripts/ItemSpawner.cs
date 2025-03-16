@@ -12,7 +12,7 @@ public class ItemSpawner : MonoBehaviour
 
     private readonly bool _isSpawning = false;
 
-    private float _delaySpawning = 3f;
+    private float _delaySpawning = 2f;
 
     private ObjectPool<Item> _objectPool;
 

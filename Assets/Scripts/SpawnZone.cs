@@ -16,8 +16,13 @@ public class SpawnZone : MonoBehaviour
     {
         Bounds bounds = _boxCollider2D.bounds;
 
-        int randomX = Random.Range((int)bounds.min.x, (int)bounds.max.x);
-        int randomY = Random.Range((int)bounds.min.y, (int)bounds.max.y);
+        int minRandomX = (int)(bounds.min.x + _offsetPosition);
+        int maxRandomX = (int)(bounds.max.x - _offsetPosition);
+        int minRandomY = (int)(bounds.min.y + _offsetPosition);
+        int maxRandomY = (int)(bounds.max.y - _offsetPosition);
+
+        int randomX = Random.Range(minRandomX, maxRandomX);
+        int randomY = Random.Range(minRandomY, maxRandomY);
 
         Debug.Log($"bounds.min.x {bounds.min.x}");
         Debug.Log($"bounds.max.x {bounds.max.x}");
