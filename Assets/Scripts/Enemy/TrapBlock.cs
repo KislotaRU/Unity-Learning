@@ -7,7 +7,7 @@ public class TrapBlock : MonoBehaviour
     [SerializeField] private float _retreatSpeed = 1f;
 
     [Space]
-    [SerializeField] private List<DirectionInfo> _directions;
+    [SerializeField] private List<AttackDirection> _directions;
 
     private Vector2 _defaultPosition;
     private Vector2 _targetPosition;
