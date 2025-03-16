@@ -11,14 +11,14 @@ public class Item : MonoBehaviour
             Collect();
     }
 
-    private void Collect()
-    {
-        ItemCollected?.Invoke(this);
-    }
-
     public void Initialize(Vector2 position)
     {
         transform.position = position;
         transform.rotation = Quaternion.identity;
+    }
+
+    private void Collect()
+    {
+        ItemCollected?.Invoke(this);
     }
 }

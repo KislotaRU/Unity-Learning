@@ -4,13 +4,15 @@ using UnityEngine.Pool;
 
 public class ItemSpawner : MonoBehaviour
 {
-    [SerializeField] private Item _item;
-    //[SerializeField] private SpawnPoint
-    
+    [SerializeField] private Item _itemPrefab;
+    [SerializeField] private SpawnZone _spawnZone;
+
     private readonly int _poolCapacity = 15;
     private readonly int _poolMaxSize = 15;
 
     private readonly bool _isSpawning = false;
+
+    private float _delaySpawning = 3f;
 
     private ObjectPool<Item> _objectPool;
 
@@ -32,27 +34,29 @@ public class ItemSpawner : MonoBehaviour
 
     private IEnumerator SpawningWithDelay()
     {
+        WaitForSeconds dealy = new WaitForSeconds(_delaySpawning);
+
         while (enabled)
         {
             if (_objectPool.CountActive < _poolMaxSize)
                 _objectPool.Get();
 
-            yield return null;
+            yield return dealy;
         }
     }
 
     private Item CreateObject()
     {
-        Item item = Instantiate(_item);
+        Item item = Instantiate(_itemPrefab);
         item.ItemCollected += ReleaseObject;
         return item;
     }
 
     private void GetObject(Item item)
     {
+        Vector2 position = _spawnZone.GetRandomPosition();
 
-
-        item.Initialize(transform.position);
+        item.Initialize(position);
         item.gameObject.SetActive(true);
     }
 
