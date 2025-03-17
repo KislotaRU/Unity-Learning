@@ -1,37 +1,64 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public class SpawnZone : MonoBehaviour
 {
-    [SerializeField] private float _offsetPosition = 0.5f;
+    private readonly float _offsetPosition = 0.5f;
+
+    private Vector2[] _positions;
+    private List<Vector2> _occupiedPositions;
+    private List<Vector2> _freePositions;
 
     private BoxCollider2D _boxCollider2D;
+    private Bounds _bounds;
+
+    public bool IsFreePosition => _occupiedPositions.Count < _positions.Length;
 
     private void Awake()
     {
         _boxCollider2D = GetComponent<BoxCollider2D>();
+        _bounds = _boxCollider2D.bounds;
+        _occupiedPositions = new List<Vector2>();
+        _freePositions = new List<Vector2>();
+
+        FillArray();
+
+        if (_positions == null)
+            enabled = false;
     }
 
     public Vector2 GetRandomPosition()
     {
-        Bounds bounds = _boxCollider2D.bounds;
+        int indexPosition;
+        _freePositions = new List<Vector2>(_positions);
 
-        int minRandomX = (int)(bounds.min.x + _offsetPosition);
-        int maxRandomX = (int)(bounds.max.x - _offsetPosition);
-        int minRandomY = (int)(bounds.min.y + _offsetPosition);
-        int maxRandomY = (int)(bounds.max.y - _offsetPosition);
+        foreach (Vector2 occupiedPositions in _occupiedPositions)
+            _freePositions.Remove(occupiedPositions);
 
-        int randomX = Random.Range(minRandomX, maxRandomX);
-        int randomY = Random.Range(minRandomY, maxRandomY);
+        indexPosition = Random.Range(0, _freePositions.Count);
 
-        Debug.Log($"bounds.min.x {bounds.min.x}");
-        Debug.Log($"bounds.max.x {bounds.max.x}");
-        Debug.Log($"bounds.min.y {bounds.min.y}");
-        Debug.Log($"bounds.max.y {bounds.max.y}");
-        Debug.Log($"bounds.min {bounds.min}");
-        Debug.Log($"bounds.max {bounds.max}");
-        Debug.Log($"bounds.size {bounds.size}");
+        _occupiedPositions.Add(_freePositions[indexPosition]);
 
-        return new Vector2(randomX, randomY);
+        return _freePositions[indexPosition];
+    }
+
+    public void ReleasePosition(Vector2 position)
+    {
+        _occupiedPositions.Remove(position);
+    }
+
+    private void FillArray()
+    {
+        int positionCount = ((int)_bounds.size.x) * ((int)_bounds.size.y);
+
+        float minPositionX = _bounds.min.x + _offsetPosition;
+        float minPositionY = _bounds.min.y + _offsetPosition;
+
+        _positions = new Vector2[positionCount];
+
+        for (int x = 0; x < (int)_bounds.size.x; x++)
+            for (int y = 0; y < (int)_bounds.size.y; y++)
+                _positions[x] = new Vector2(minPositionX + x, minPositionY + y);
     }
 }

@@ -5,20 +5,18 @@ using UnityEngine.Pool;
 public class ItemSpawner : MonoBehaviour
 {
     [SerializeField] private Item _itemPrefab;
-    [SerializeField] private SpawnZone _spawnZone;
+    [SerializeField] private Spawn _spawn;
 
-    private readonly int _poolCapacity = 15;
-    private readonly int _poolMaxSize = 15;
+    [SerializeField, Range(1, 50)] private int _poolMaxSize = 30;
+    [SerializeField, Range(1, 30)] private int _poolCapacity = 30;
 
-    private readonly bool _isSpawning = false;
+    private readonly float _delaySpawning = 2f;
 
-    private float _delaySpawning = 2f;
-
-    private ObjectPool<Item> _objectPool;
+    private ObjectPool<Item> _itemPool;
 
     private void Awake()
     {
-        _objectPool = new ObjectPool<Item>(createFunc: () => CreateObject(),
+        _itemPool = new ObjectPool<Item>(createFunc: () => CreateObject(),
                                            actionOnGet: (obj) => GetObject(obj),
                                            actionOnRelease: (obj) => obj.gameObject.SetActive(false),
                                            actionOnDestroy: (obj) => DestroyObject(obj),
@@ -29,6 +27,10 @@ public class ItemSpawner : MonoBehaviour
 
     private void Start()
     {
+        for (int i = 0; i < _poolCapacity; i++)
+            if (_spawn.IsFreeSpawnZone)
+                _itemPool.Get();
+
         StartCoroutine(SpawningWithDelay());
     }
 
@@ -38,8 +40,8 @@ public class ItemSpawner : MonoBehaviour
 
         while (enabled)
         {
-            if (_objectPool.CountActive < _poolMaxSize)
-                _objectPool.Get();
+            if (_itemPool.CountActive < _poolMaxSize && _spawn.IsFreeSpawnZone)
+                _itemPool.Get();
 
             yield return dealy;
         }
@@ -54,15 +56,15 @@ public class ItemSpawner : MonoBehaviour
 
     private void GetObject(Item item)
     {
-        Vector2 position = _spawnZone.GetRandomPosition();
+        Vector2 position = _spawn.GetRandomPosition();
 
-        item.Initialize(position);
+        item.Initialize(_spawn.CurrentSpawnZone, position);
         item.gameObject.SetActive(true);
     }
 
     private void ReleaseObject(Item item)
     {
-        _objectPool.Release(item);
+        _itemPool.Release(item);
     }
 
     private void DestroyObject(Item item)

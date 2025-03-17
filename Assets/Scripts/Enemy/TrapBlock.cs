@@ -7,10 +7,13 @@ public class TrapBlock : MonoBehaviour
     [SerializeField] private float _retreatSpeed = 1f;
 
     [Space]
-    [SerializeField] private List<AttackDirection> _directions;
+    [SerializeField] private List<AttackDirection2D> _directions;
+
+    private readonly float _offsetRaycast = 0.5f;
 
     private Vector2 _defaultPosition;
     private Vector2 _targetPosition;
+    private Vector2 _currentAttackDirection;
 
     private bool _isAttacking = false;
     private bool _isRetreating = false;
@@ -38,12 +41,23 @@ public class TrapBlock : MonoBehaviour
             Retreat();
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Vector3 directionRay;
+
+        foreach (var direction in _directions)
+        {
+            directionRay = direction.Direction * (direction.Range + _offsetRaycast);
+            Gizmos.DrawRay(transform.position, directionRay);
+        }
+    }
+
     private bool CanAttack()
     {
         foreach (var direction in _directions)
         {
-            _raycastHits2D = Physics2D.RaycastAll(transform.position, direction.Direction, direction.Range);
-            Debug.DrawRay(transform.position, direction.Direction * direction.Range, Color.red);
+            _raycastHits2D = Physics2D.RaycastAll(transform.position, direction.Direction, direction.Range + _offsetRaycast);
 
             foreach (var raycastHit2D in _raycastHits2D)
             {
@@ -65,7 +79,7 @@ public class TrapBlock : MonoBehaviour
 
     private void Attack()
     {
-        MoveToPosition(_targetPosition, _attackSpeed, _isAttacking);
+        MoveToPosition(_targetPosition, _attackSpeed);
 
         if (_isInPlace)
         {
@@ -76,13 +90,13 @@ public class TrapBlock : MonoBehaviour
 
     private void Retreat()
     {
-        MoveToPosition(_defaultPosition, _retreatSpeed, _isAttacking);
+        MoveToPosition(_defaultPosition, _retreatSpeed);
 
         if (_isInPlace)
             _isRetreating = false;
     }
 
-    private void MoveToPosition(Vector2 targetPosition, float speed, bool isAttacking = false)
+    private void MoveToPosition(Vector2 targetPosition, float speed)
     {
         _isInPlace = false;
         transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
