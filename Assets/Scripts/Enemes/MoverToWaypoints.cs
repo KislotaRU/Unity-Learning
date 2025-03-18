@@ -12,9 +12,12 @@ public class MoverToWaypoints : MonoBehaviour
     private void Awake()
     {
         if (_way == null)
+        {
             enabled = false;
-        else
-            _currentTarget = _way.GetNextPosition();
+            return;
+        }
+
+        _currentTarget = _way.GetNextPosition();
     }
 
     private void Update()
