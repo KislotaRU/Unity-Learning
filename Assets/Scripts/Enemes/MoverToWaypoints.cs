@@ -5,7 +5,7 @@ public class MoverToWaypoints : MonoBehaviour
     [SerializeField] private Way _way;
     [SerializeField] private float _moveSpeed = 1f;
 
-    private readonly float _distanceToTargetNeeded = 0.1f;
+    private readonly float _distanceToTargetNeeded = 0.2f;
 
     private Vector3 _currentTarget;
 

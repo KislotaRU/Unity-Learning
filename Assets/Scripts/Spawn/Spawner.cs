@@ -1,18 +1,26 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class ItemSpawner : MonoBehaviour
+public class Spawner : MonoBehaviour
 {
-    [SerializeField] private Item _itemPrefab;
+    [SerializeField] private List<Item> _items;
+    
+    [Space]
     [SerializeField] private Spawn _spawn;
-
     [SerializeField, Range(1, 50)] private int _poolMaxSize = 30;
     [SerializeField, Range(1, 30)] private int _poolCapacity = 30;
 
     private readonly float _delaySpawning = 2f;
 
     private ObjectPool<Item> _itemPool;
+
+    private void OnValidate()
+    {
+        if (_poolCapacity > _poolMaxSize)
+            _poolCapacity = _poolMaxSize;
+    }
 
     private void Awake()
     {
@@ -23,6 +31,9 @@ public class ItemSpawner : MonoBehaviour
                                            collectionCheck: true,
                                            defaultCapacity: _poolCapacity,
                                            maxSize: _poolMaxSize);
+
+        if (_items == null)
+            enabled = false;
     }
 
     private void Start()
@@ -36,21 +47,29 @@ public class ItemSpawner : MonoBehaviour
 
     private IEnumerator SpawningWithDelay()
     {
-        WaitForSeconds dealy = new WaitForSeconds(_delaySpawning);
+        WaitForSeconds delay = new WaitForSeconds(_delaySpawning);
 
         while (enabled)
         {
-            if (_itemPool.CountActive < _poolMaxSize && _spawn.IsFreeSpawnZone)
-                _itemPool.Get();
+            if (_itemPool.CountActive < _poolMaxSize)
+            {
+                if (_spawn.IsFreeSpawnZone)
+                    _itemPool.Get();
+                else
+                    _spawn.RefreshSpawnZones();
+            }
 
-            yield return dealy;
+            yield return delay;
         }
     }
 
     private Item CreateObject()
     {
-        Item item = Instantiate(_itemPrefab);
+        int randomNumberItem = Random.Range(0, _items.Count);
+        Item item = Instantiate(_items[randomNumberItem]);
+
         item.ItemCollected += ReleaseObject;
+
         return item;
     }
 

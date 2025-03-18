@@ -8,6 +8,7 @@ public class Spawn : MonoBehaviour
     private List<SpawnZone> _occupiedSpawnZones;
     private List<SpawnZone> _freeSpawnZones;
     private SpawnZone _currentSpawnZone;
+
     public SpawnZone CurrentSpawnZone => _currentSpawnZone;
     public bool IsFreeSpawnZone => _occupiedSpawnZones.Count < _spawnZones.Length;
 
@@ -24,12 +25,8 @@ public class Spawn : MonoBehaviour
     {
         int indexSpawnZone;
         Vector2 randomPosition;
-        _freeSpawnZones = new List<SpawnZone>(_spawnZones);
-
+        
         RefreshSpawnZones();
-
-        foreach (SpawnZone occupiedSpawnZone in _occupiedSpawnZones)
-            _freeSpawnZones.Remove(occupiedSpawnZone);
 
         indexSpawnZone = Random.Range(0, _freeSpawnZones.Count);
         _currentSpawnZone = _freeSpawnZones[indexSpawnZone];
@@ -42,13 +39,14 @@ public class Spawn : MonoBehaviour
         return randomPosition;
     }
 
-    private void RefreshSpawnZones()
+    public void RefreshSpawnZones()
     {
+        _freeSpawnZones = new List<SpawnZone>(_spawnZones);
+
+        _occupiedSpawnZones.RemoveAll(spawnZone => spawnZone.IsFreePosition);
+
         foreach (SpawnZone occupiedSpawnZone in _occupiedSpawnZones)
-        {
-            if (occupiedSpawnZone.IsFreePosition)
-                _occupiedSpawnZones.Remove(occupiedSpawnZone);
-        }
+            _freeSpawnZones.Remove(occupiedSpawnZone);
     }
 
     [ContextMenu("Refresh Child")]
