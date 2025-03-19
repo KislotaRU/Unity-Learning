@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1113306838739939868}
   - component: {fileID: 6046027921954220705}
   - component: {fileID: 819591178135981360}
-  - component: {fileID: -4694286670861707419}
+  - component: {fileID: 962840799528886512}
   m_Layer: 0
   m_Name: Pineapple
   m_TagString: Untagged
@@ -143,7 +143,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &-4694286670861707419
+--- !u!114 &962840799528886512
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -152,6 +152,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 7548151385427291974}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ec51f46a5caa594ea3130350952c4f5, type: 3}
+  m_Script: {fileID: 11500000, guid: 59152987d32a917428c447e2f3a82185, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

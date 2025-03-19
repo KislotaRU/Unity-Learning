@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1272312131112293794}
   - component: {fileID: 3393945565568096631}
   - component: {fileID: 6774294051344125355}
-  - component: {fileID: 82509884479248020}
+  - component: {fileID: 288946906241656605}
   m_Layer: 0
   m_Name: Cherries
   m_TagString: Untagged
@@ -143,7 +143,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &82509884479248020
+--- !u!114 &288946906241656605
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -152,6 +152,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 2379020566508598080}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4d5ce8ac5603c54499725c2fc22b4a7, type: 3}
+  m_Script: {fileID: 11500000, guid: 59152987d32a917428c447e2f3a82185, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

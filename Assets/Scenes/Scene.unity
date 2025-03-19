@@ -12602,7 +12602,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -12619,13 +12620,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8400121068592713957, guid: 37878f21773519248aa039e5525f10c9, type: 3}
+      propertyPath: _jumpForce
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8401206973045631070, guid: 37878f21773519248aa039e5525f10c9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.75
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 8401206973045631070, guid: 37878f21773519248aa039e5525f10c9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.25
+      value: -5.5
       objectReference: {fileID: 0}
     - target: {fileID: 8401206973045631070, guid: 37878f21773519248aa039e5525f10c9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -12961,23 +12966,23 @@ PrefabInstance:
     - target: {fileID: 7618460504807080771, guid: f58707d3f26291b4ca7e6b82102be83e, type: 3}
       propertyPath: _items.Array.data[0]
       value: 
-      objectReference: {fileID: 9178126294448854269, guid: 00de7d81b97337745a4886ca1d83c3d0, type: 3}
+      objectReference: {fileID: 2889164103330976135, guid: 00de7d81b97337745a4886ca1d83c3d0, type: 3}
     - target: {fileID: 7618460504807080771, guid: f58707d3f26291b4ca7e6b82102be83e, type: 3}
       propertyPath: _items.Array.data[1]
       value: 
-      objectReference: {fileID: 4995169792011930367, guid: eb91c51d5a8bf9248b4ff32baa28ea6f, type: 3}
+      objectReference: {fileID: 7216448231712909793, guid: eb91c51d5a8bf9248b4ff32baa28ea6f, type: 3}
     - target: {fileID: 7618460504807080771, guid: f58707d3f26291b4ca7e6b82102be83e, type: 3}
       propertyPath: _items.Array.data[2]
       value: 
-      objectReference: {fileID: 82509884479248020, guid: 7e4ef6943068ae4479f9b014d173c9c2, type: 3}
+      objectReference: {fileID: 288946906241656605, guid: 7e4ef6943068ae4479f9b014d173c9c2, type: 3}
     - target: {fileID: 7618460504807080771, guid: f58707d3f26291b4ca7e6b82102be83e, type: 3}
       propertyPath: _items.Array.data[3]
       value: 
-      objectReference: {fileID: 2849641904303370842, guid: 8162e3556b8fe604e831c3499ec117aa, type: 3}
+      objectReference: {fileID: 4484316238591171184, guid: 8162e3556b8fe604e831c3499ec117aa, type: 3}
     - target: {fileID: 7618460504807080771, guid: f58707d3f26291b4ca7e6b82102be83e, type: 3}
       propertyPath: _items.Array.data[4]
       value: 
-      objectReference: {fileID: -4694286670861707419, guid: b4d53f8f8ffef424a9ed5b56ea69c228, type: 3}
+      objectReference: {fileID: 962840799528886512, guid: b4d53f8f8ffef424a9ed5b56ea69c228, type: 3}
     - target: {fileID: 8407665010563848792, guid: f58707d3f26291b4ca7e6b82102be83e, type: 3}
       propertyPath: m_Name
       value: Spawner
