@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public struct AttackDirection2D
+public struct DirectionToMovement2D
 {
     [Range(-1, 1)] public int DirectionX;
     [Range(-1, 1)] public int DirectionY;

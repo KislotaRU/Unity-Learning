@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 3535764314123459586}
   - component: {fileID: 6273902205367515764}
   - component: {fileID: 1126968721150129454}
-  m_Layer: 0
+  - component: {fileID: -5409510448108983962}
+  m_Layer: 6
   m_Name: SpikeHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,9 +172,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dbcd8a033001eb4e971959e44f0bf44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackSpeed: 6
-  _retreatSpeed: 1
-  _directions:
-  - DirectionX: 1
-    DirectionY: 0
-    Range: 6
+  _mover: {fileID: -5409510448108983962}
+  _forwardSpeed: 5
+  _backSpeed: 1
+  _directions: []
+--- !u!114 &-5409510448108983962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7553447099361521356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d37956ab6f49d364c9ed219e7878c087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveSpeed: 0

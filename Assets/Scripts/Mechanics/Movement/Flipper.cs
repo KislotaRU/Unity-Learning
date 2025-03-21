@@ -6,7 +6,7 @@ public class Flipper : MonoBehaviour
 
     private Vector2 _lastDirection;
 
-    public void Flip(Transform transform, Vector2 direction)
+    public void Flip(Vector2 direction)
     {
         if (direction.x < 0)
             _lastDirection = new Vector2(0, _degreesRotation);

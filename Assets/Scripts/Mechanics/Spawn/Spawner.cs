@@ -8,7 +8,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private List<Item> _items;
     
     [Space]
-    [SerializeField] private Spawn _spawn;
+    [SerializeField] private SpawnZoneStorage _spawnZoneStorage;
     [SerializeField, Range(1, 50)] private int _poolMaxSize = 30;
     [SerializeField, Range(1, 30)] private int _poolCapacity = 30;
 
@@ -39,7 +39,7 @@ public class Spawner : MonoBehaviour
     private void Start()
     {
         for (int i = 0; i < _poolCapacity; i++)
-            if (_spawn.IsFreeSpawnZone)
+            if (_spawnZoneStorage.IsFreeSpawnZone)
                 _itemPool.Get();
 
         StartCoroutine(SpawningWithDelay());
@@ -53,10 +53,10 @@ public class Spawner : MonoBehaviour
         {
             if (_itemPool.CountActive < _poolMaxSize)
             {
-                if (_spawn.IsFreeSpawnZone)
+                if (_spawnZoneStorage.IsFreeSpawnZone)
                     _itemPool.Get();
                 else
-                    _spawn.RefreshSpawnZones();
+                    _spawnZoneStorage.RefreshSpawnZones();
             }
 
             yield return delay;
@@ -75,9 +75,9 @@ public class Spawner : MonoBehaviour
 
     private void GetObject(Item item)
     {
-        Vector2 position = _spawn.GetRandomPosition();
+        Vector2 position = _spawnZoneStorage.GetRandomPosition();
 
-        item.Initialize(_spawn.CurrentSpawnZone, position);
+        item.Initialize(_spawnZoneStorage.CurrentSpawnZone, position);
         item.gameObject.SetActive(true);
     }
 

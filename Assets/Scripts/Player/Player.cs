@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Collider2D), typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
     [Header("Input")]
@@ -14,9 +13,6 @@ public class Player : MonoBehaviour
     [SerializeField] private Jumper _jumper;
     [SerializeField] private Flipper _flipper;
 
-    private Collider2D _collider2D;
-    private Rigidbody2D _rigidbody2D;
-
     private void Awake()
     {
         _inputReader = GetComponent<InputReader>();
@@ -24,9 +20,6 @@ public class Player : MonoBehaviour
         _mover = GetComponent<Mover>();
         _jumper = GetComponent<Jumper>();
         _flipper = GetComponent<Flipper>();
-
-        _collider2D = GetComponent<Collider2D>();
-        _rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
@@ -39,21 +32,21 @@ public class Player : MonoBehaviour
 
     private void HandleAnimation()
     {
-
+        _playerAnimator.Setup(_mover.Speed, _jumper.IsGrounded);
     }
 
     private void HandleMovement()
     {
-        _mover.Move(_rigidbody2D, _inputReader.MoveDirection);
+        _mover.Move(_inputReader.MoveDirection);
     }
 
     private void HandleJump()
     {
-        _jumper.Jump(_collider2D, _inputReader.IsJumping);
+        _jumper.Jump(_inputReader.IsJumping);
     }
 
     private void HandleFlip()
     {
-        _flipper.Flip(transform, _inputReader.MoveDirection);
+        _flipper.Flip(_inputReader.MoveDirection);
     }
 }

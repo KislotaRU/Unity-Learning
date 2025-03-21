@@ -11,7 +11,7 @@ public class InputReader : MonoBehaviour
     private void Update()
     {
         MoveDirection = GetDirection();
-        IsJumping = GetIsJuming();
+        IsJumping = Input.GetButtonDown(Jump);
     }
 
     private Vector2 GetDirection()
@@ -19,10 +19,5 @@ public class InputReader : MonoBehaviour
         float positionX = Input.GetAxis(Horizontal);
 
         return new Vector2(positionX, 0);
-    }
-
-    private bool GetIsJuming()
-    {
-        return Input.GetButton(Jump);
     }
 }

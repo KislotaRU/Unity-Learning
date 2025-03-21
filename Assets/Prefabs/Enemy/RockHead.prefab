@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 185608675483334785}
   - component: {fileID: 3735422053148765099}
   - component: {fileID: 7876167378949855128}
-  - component: {fileID: 6419314814439804586}
-  m_Layer: 0
+  - component: {fileID: 8145035248972670528}
+  - component: {fileID: 3290056005596102867}
+  m_Layer: 6
   m_Name: RockHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 423907738953369600}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
@@ -159,7 +160,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &6419314814439804586
+--- !u!114 &8145035248972670528
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -171,9 +172,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dbcd8a033001eb4e971959e44f0bf44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackSpeed: 5
-  _retreatSpeed: 1
-  _directions:
-  - DirectionX: 0
-    DirectionY: -1
-    Range: 2
+  _mover: {fileID: 3290056005596102867}
+  _forwardSpeed: 5
+  _backSpeed: 1
+  _directions: []
+--- !u!114 &3290056005596102867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423907738953369600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d37956ab6f49d364c9ed219e7878c087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveSpeed: 0
