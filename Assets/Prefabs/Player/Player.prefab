@@ -19,6 +19,8 @@ GameObject:
   - component: {fileID: 1561365517552946849}
   - component: {fileID: 8400121068592713957}
   - component: {fileID: 5828994613344487332}
+  - component: {fileID: 1352391242398350944}
+  - component: {fileID: 1373654962579348365}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -193,6 +195,8 @@ MonoBehaviour:
   _mover: {fileID: 1561365517552946849}
   _jumper: {fileID: 8400121068592713957}
   _flipper: {fileID: 5828994613344487332}
+  _health: {fileID: 1352391242398350944}
+  _damager: {fileID: 1373654962579348365}
 --- !u!114 &8011525564201434923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,3 +265,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 166c74422374c8749ac3401288becd0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1352391242398350944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2508943399085733716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ec9c259625864645b6fda80e3347163, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 100
+--- !u!114 &1373654962579348365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2508943399085733716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05f054cd187a4aa46a5e4b347126d51b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseDamage: 10

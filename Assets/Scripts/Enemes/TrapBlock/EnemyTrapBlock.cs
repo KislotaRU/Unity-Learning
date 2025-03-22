@@ -6,6 +6,9 @@ public class EnemyTrapBlock : MonoBehaviour
     [Header("Movements")]
     [SerializeField] private Mover _mover;
 
+    [Header("Attack")]
+    [SerializeField] private Damager _damager;
+
     [SerializeField] private float _forwardSpeed = 5f;
     [SerializeField] private float _backSpeed = 1f;
 
@@ -38,6 +41,18 @@ public class EnemyTrapBlock : MonoBehaviour
             MoveForward();
         else if (_isBackMoving)
             MoveBack();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (_isForwardMoving == false)
+            return;
+
+        if (collision.collider.TryGetComponent(out Health targetHealth))
+        {
+            _damager.Attack(targetHealth);
+            Debug.Log($"Произошло нанесения урона по {targetHealth.name}.");
+        }
     }
 
     private void OnDrawGizmos()

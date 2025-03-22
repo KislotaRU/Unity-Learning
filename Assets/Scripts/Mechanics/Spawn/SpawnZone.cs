@@ -24,7 +24,7 @@ public class SpawnZone : MonoBehaviour
 
         FillArray();
 
-        if (_positions == null)
+        if (_positions.Length == 0)
             enabled = false;
     }
 

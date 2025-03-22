@@ -7,9 +7,8 @@ public class SpawnZoneStorage : MonoBehaviour
 
     private List<SpawnZone> _occupiedSpawnZones;
     private List<SpawnZone> _freeSpawnZones;
-    private SpawnZone _currentSpawnZone;
 
-    public SpawnZone CurrentSpawnZone => _currentSpawnZone;
+    public SpawnZone CurrentSpawnZone { get; private set; }
     public bool IsFreeSpawnZone => _occupiedSpawnZones.Count < _spawnZones.Length;
 
     private void Awake()
@@ -29,12 +28,12 @@ public class SpawnZoneStorage : MonoBehaviour
         RefreshSpawnZones();
 
         indexSpawnZone = Random.Range(0, _freeSpawnZones.Count);
-        _currentSpawnZone = _freeSpawnZones[indexSpawnZone];
+        CurrentSpawnZone = _freeSpawnZones[indexSpawnZone];
 
-        randomPosition = _currentSpawnZone.GetRandomPosition();
+        randomPosition = CurrentSpawnZone.GetRandomPosition();
 
-        if (_currentSpawnZone.IsFreePosition == false)
-            _occupiedSpawnZones.Add(_currentSpawnZone);
+        if (CurrentSpawnZone.IsFreePosition == false)
+            _occupiedSpawnZones.Add(CurrentSpawnZone);
 
         return randomPosition;
     }

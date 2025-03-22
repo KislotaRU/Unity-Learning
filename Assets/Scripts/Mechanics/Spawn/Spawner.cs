@@ -24,6 +24,12 @@ public class Spawner : MonoBehaviour
 
     private void Awake()
     {
+        if (_items == null)
+        {
+            enabled = false;
+            return;
+        }
+
         _itemPool = new ObjectPool<Item>(createFunc: () => CreateObject(),
                                            actionOnGet: (obj) => GetObject(obj),
                                            actionOnRelease: (obj) => obj.gameObject.SetActive(false),
@@ -31,9 +37,6 @@ public class Spawner : MonoBehaviour
                                            collectionCheck: true,
                                            defaultCapacity: _poolCapacity,
                                            maxSize: _poolMaxSize);
-
-        if (_items == null)
-            enabled = false;
     }
 
     private void Start()

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7876167378949855128}
   - component: {fileID: 8145035248972670528}
   - component: {fileID: 3290056005596102867}
+  - component: {fileID: 6576505001065080055}
   m_Layer: 6
   m_Name: RockHead
   m_TagString: Untagged
@@ -173,6 +174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mover: {fileID: 3290056005596102867}
+  _damager: {fileID: 6576505001065080055}
   _forwardSpeed: 5
   _backSpeed: 1
   _directions: []
@@ -189,3 +191,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 0
+--- !u!114 &6576505001065080055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423907738953369600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05f054cd187a4aa46a5e4b347126d51b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseDamage: 10

@@ -9,6 +9,12 @@ public class EnemyFrog : MonoBehaviour
     [SerializeField] private Mover _mover;
     [SerializeField] private Flipper _flipper;
 
+    [Header("Health")]
+    [SerializeField] private Health _health;
+
+    [Header("Attack")]
+    [SerializeField] private Damager _damager;
+
     [Space]
     [SerializeField] private Way _way;
 
@@ -23,6 +29,9 @@ public class EnemyFrog : MonoBehaviour
         _enemyFrogAnimator = GetComponent<EnemyFrogAnimator>();
         _mover = GetComponent<Mover>();
         _flipper = GetComponent<Flipper>();
+
+        _health = GetComponent<Health>();
+        _damager = GetComponent<Damager>();
 
         if (_way == null)
             enabled = false;

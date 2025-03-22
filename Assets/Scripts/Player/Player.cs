@@ -13,21 +13,35 @@ public class Player : MonoBehaviour
     [SerializeField] private Jumper _jumper;
     [SerializeField] private Flipper _flipper;
 
+    [Header("Health")]
+    [SerializeField] private Health _health;
+
+    [Header("Attack")]
+    [SerializeField] private Damager _damager;
+
     private void Awake()
     {
         _inputReader = GetComponent<InputReader>();
+
         _playerAnimator = GetComponent<PlayerAnimator>();
+
         _mover = GetComponent<Mover>();
         _jumper = GetComponent<Jumper>();
         _flipper = GetComponent<Flipper>();
+
+        _health = GetComponent<Health>();
+        _damager = GetComponent<Damager>();
     }
 
     private void Update()
     {
         HandleAnimation();
+
         HandleMovement();
         HandleJump();
         HandleFlip();
+
+        HandleAttack();
     }
 
     private void HandleAnimation()
@@ -48,5 +62,11 @@ public class Player : MonoBehaviour
     private void HandleFlip()
     {
         _flipper.Flip(_inputReader.MoveDirection);
+    }
+
+    private void HandleAttack()
+    {
+        //TryAttack()
+        //_damager.Attack(_inputReader.MoveDirection);
     }
 }
