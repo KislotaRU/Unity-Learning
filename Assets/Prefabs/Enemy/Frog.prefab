@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1843013063757451602
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8736029476193717092}
+  m_Layer: 0
+  m_Name: PointAttack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8736029476193717092
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1843013063757451602}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.127, y: -0.061, z: 0.0019270397}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8176639159936888432}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5864729529251926647
 GameObject:
   m_ObjectHideFlags: 0
@@ -17,7 +48,11 @@ GameObject:
   - component: {fileID: 3617930762478124462}
   - component: {fileID: -8672967212098404266}
   - component: {fileID: 4638647003972229456}
-  m_Layer: 0
+  - component: {fileID: -3066987664157276211}
+  - component: {fileID: 246389343114387853}
+  - component: {fileID: -5142082337321781345}
+  - component: {fileID: 4789699026309862261}
+  m_Layer: 7
   m_Name: Frog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +71,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 8736029476193717092}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4907291650445925535
@@ -189,6 +225,11 @@ MonoBehaviour:
   _enemyFrogAnimator: {fileID: 3617930762478124462}
   _mover: {fileID: -8672967212098404266}
   _flipper: {fileID: 4638647003972229456}
+  _health: {fileID: -3066987664157276211}
+  _damager: {fileID: 246389343114387853}
+  _weapon: {fileID: -5142082337321781345}
+  _pointAttack: {fileID: 8736029476193717092}
+  _viewer: {fileID: 4789699026309862261}
   _way: {fileID: 0}
 --- !u!114 &3617930762478124462
 MonoBehaviour:
@@ -228,3 +269,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 166c74422374c8749ac3401288becd0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-3066987664157276211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5864729529251926647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ec9c259625864645b6fda80e3347163, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 20
+--- !u!114 &246389343114387853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5864729529251926647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05f054cd187a4aa46a5e4b347126d51b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseDamage: 20
+--- !u!114 &-5142082337321781345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5864729529251926647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a94c79c973e2d4448ae2d7dec10d9d8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _range: 1
+  _delayAttack: 3
+--- !u!114 &4789699026309862261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5864729529251926647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3795eeac5fc13843884f2fdc9676313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _range: 8

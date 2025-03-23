@@ -49,10 +49,7 @@ public class EnemyTrapBlock : MonoBehaviour
             return;
 
         if (collision.collider.TryGetComponent(out Health targetHealth))
-        {
             _damager.Attack(targetHealth);
-            Debug.Log($"Произошло нанесения урона по {targetHealth.name}.");
-        }
     }
 
     private void OnDrawGizmos()

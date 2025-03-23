@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
 
     [Header("Attack")]
     [SerializeField] private Damager _damager;
+    [SerializeField] private Weapon _weapon;
+    [SerializeField] private Transform _pointAttack;
 
     private void Awake()
     {
@@ -66,7 +68,10 @@ public class Player : MonoBehaviour
 
     private void HandleAttack()
     {
-        //TryAttack()
-        //_damager.Attack(_inputReader.MoveDirection);
+        if (_inputReader.IsAttacking == false)
+            return;
+
+        if (_weapon.TryAttack(_pointAttack.position, transform.right, out Health targetHealth))
+            _damager.Attack(targetHealth);
     }
 }

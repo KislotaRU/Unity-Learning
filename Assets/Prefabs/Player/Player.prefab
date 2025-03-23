@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 5828994613344487332}
   - component: {fileID: 1352391242398350944}
   - component: {fileID: 1373654962579348365}
+  - component: {fileID: 3102621143611362118}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -40,7 +41,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 1924270592421336434}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3378142444302137976
@@ -197,6 +199,8 @@ MonoBehaviour:
   _flipper: {fileID: 5828994613344487332}
   _health: {fileID: 1352391242398350944}
   _damager: {fileID: 1373654962579348365}
+  _weapon: {fileID: 3102621143611362118}
+  _pointAttack: {fileID: 1924270592421336434}
 --- !u!114 &8011525564201434923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,3 +295,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _baseDamage: 10
+--- !u!114 &3102621143611362118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2508943399085733716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a94c79c973e2d4448ae2d7dec10d9d8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _range: 1
+  _delayAttack: 2
+--- !u!1 &3471832199760686459
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1924270592421336434}
+  m_Layer: 0
+  m_Name: PointAttack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1924270592421336434
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3471832199760686459}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.127, y: -0.033, z: 0}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8401206973045631070}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

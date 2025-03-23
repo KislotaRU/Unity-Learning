@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6318743020073427594}
   - component: {fileID: 5455130561260930197}
   - component: {fileID: 4484316238591171184}
+  - component: {fileID: 5618980976442187548}
   m_Layer: 0
   m_Name: Kiwi
   m_TagString: Untagged
@@ -155,3 +156,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59152987d32a917428c447e2f3a82185, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _healer: {fileID: 5618980976442187548}
+--- !u!114 &5618980976442187548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5222495884679893730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27df6d0376023f14d86d72c053f6ce24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseHeal: 5

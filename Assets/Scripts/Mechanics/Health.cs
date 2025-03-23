@@ -17,10 +17,11 @@ public class Health : MonoBehaviour
     public void TakeHealth(float health)
     {
         CurrentHealth += health;
-        Debug.Log($"Получения лечения +{health}. Итог: {CurrentHealth}.  Тот, кто получил: {name}.");
-
+        
         if (CurrentHealth >= _maxHealth)
             CurrentHealth = _maxHealth;
+
+        Debug.Log($"Получения лечения +{health}. Итог: {CurrentHealth}.  Тот, кто получил: {name}.");
     }
 
     public void TakeDamage(float damage)

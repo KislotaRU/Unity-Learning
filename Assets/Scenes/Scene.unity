@@ -188,6 +188,10 @@ PrefabInstance:
       propertyPath: _way
       value: 
       objectReference: {fileID: 1577921864}
+    - target: {fileID: 4789699026309862261, guid: 9ba90159b3334754d9707b9a0050bae3, type: 3}
+      propertyPath: _range
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5864729529251926647, guid: 9ba90159b3334754d9707b9a0050bae3, type: 3}
       propertyPath: m_Name
       value: Frog (3)
@@ -258,6 +262,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac9433929ebb1c34487e6ec2e5bfa750, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &102378057 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8736029476193717092, guid: 9ba90159b3334754d9707b9a0050bae3, type: 3}
+  m_PrefabInstance: {fileID: 1088480670519187270}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &160845973
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2976,6 +2985,10 @@ PrefabInstance:
       propertyPath: _way
       value: 
       objectReference: {fileID: 1626845057}
+    - target: {fileID: 4789699026309862261, guid: 9ba90159b3334754d9707b9a0050bae3, type: 3}
+      propertyPath: _range
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5864729529251926647, guid: 9ba90159b3334754d9707b9a0050bae3, type: 3}
       propertyPath: m_Name
       value: Frog (1)
@@ -3066,6 +3079,10 @@ PrefabInstance:
       propertyPath: _way
       value: 
       objectReference: {fileID: 987309805}
+    - target: {fileID: 4789699026309862261, guid: 9ba90159b3334754d9707b9a0050bae3, type: 3}
+      propertyPath: _range
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5864729529251926647, guid: 9ba90159b3334754d9707b9a0050bae3, type: 3}
       propertyPath: m_Name
       value: Frog (2)
@@ -12267,14 +12284,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1131952245}
     m_Modifications:
-    - target: {fileID: -8672967212098404266, guid: 9ba90159b3334754d9707b9a0050bae3, type: 3}
-      propertyPath: _moveSpeed
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4103424460640703104, guid: 9ba90159b3334754d9707b9a0050bae3, type: 3}
       propertyPath: _way
       value: 
       objectReference: {fileID: 100379325}
+    - target: {fileID: 4103424460640703104, guid: 9ba90159b3334754d9707b9a0050bae3, type: 3}
+      propertyPath: _pointAttack
+      value: 
+      objectReference: {fileID: 102378057}
+    - target: {fileID: 4789699026309862261, guid: 9ba90159b3334754d9707b9a0050bae3, type: 3}
+      propertyPath: _range
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5864729529251926647, guid: 9ba90159b3334754d9707b9a0050bae3, type: 3}
       propertyPath: m_Name
       value: Frog
