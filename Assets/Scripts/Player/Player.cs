@@ -33,6 +33,7 @@ public class Player : MonoBehaviour
 
         _health = GetComponent<Health>();
         _damager = GetComponent<Damager>();
+        _weapon = GetComponent<Weapon>();
     }
 
     private void Update()
@@ -71,7 +72,7 @@ public class Player : MonoBehaviour
         if (_inputReader.IsAttacking == false)
             return;
 
-        if (_weapon.TryAttack(_pointAttack.position, transform.right, out Health targetHealth))
+        if (_weapon.TryAttack(out Health targetHealth))
             _damager.Attack(targetHealth);
     }
 }

@@ -12,10 +12,7 @@ public class Mover : MonoBehaviour
 
     private void Awake()
     {
-        if (TryGetComponent(out Rigidbody2D rigidbody2D))
-            _rigidbody2D = rigidbody2D;
-        else
-            enabled = false;
+        _rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
     public void Move(Vector2 direction)

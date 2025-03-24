@@ -34,6 +34,6 @@ public class Jumper : MonoBehaviour
     {
         Vector2 position = new Vector2(_collider2D.bounds.center.x, _collider2D.bounds.min.y + _offsetBox);
 
-        IsGrounded = Physics2D.OverlapBox(position, _sizeBox, 0.1f, _groundLayer);
+        IsGrounded = Physics2D.OverlapBox(position, _sizeBox, 0f, _groundLayer);
     }
 }

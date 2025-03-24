@@ -1,45 +1,47 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Collider2D))]
 public class Viewer : MonoBehaviour
 {
     [SerializeField, Range(1, 50)] private int _range;
+    [SerializeField] private float _colliderDistance;
+    [SerializeField] private float _timeFollowing;
+    [SerializeField] private LayerMask _targetLayer;
 
-    private Vector2 _position;
-    private Vector2 _direction;
-
+    private Collider2D _collider2D;
+    
     public Vector2 TargetPosition { get; private set; }
-    public bool IsDetected { get; private set; }
+    public bool IsFollowing { get; private set; }
+
+    private void Awake()
+    {
+        _collider2D = GetComponent<Collider2D>();
+    }
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
+        if (_collider2D == null)
+            _collider2D = GetComponent<Collider2D>();
 
-        Vector3 directionRay = _direction * _range;
+        Gizmos.color = Color.yellow;
 
-        Gizmos.DrawRay(_position, directionRay);
+        Gizmos.DrawWireCube(_collider2D.bounds.center + transform.right * _range * transform.localScale.x * _colliderDistance,
+                                                         new Vector3(_collider2D.bounds.size.x * _range, _collider2D.bounds.size.y, _collider2D.bounds.size.z));
     }
 
-    public bool TrySeeTarget(Vector2 position, Vector2 direction)
+    public bool TryGetTarget(out Vector2 targetPosition)
     {
-        float distance = Mathf.Abs(direction.x) * _range;
-        
-        _position = position;
-        _direction = direction;
+        RaycastHit2D raycastHit2D = Physics2D.BoxCast(_collider2D.bounds.center + transform.right * _range * transform.localScale.x,
+                                                      new Vector3(_collider2D.bounds.size.x, _collider2D.bounds.size.y, _collider2D.bounds.size.z),
+                                                      0f, Vector2.right, 0f, _targetLayer);
 
-        RaycastHit2D[] raycastHits2D = Physics2D.RaycastAll(position, direction, distance);
-
-        foreach (RaycastHit2D raycastHit2D in raycastHits2D)
+        if (raycastHit2D.collider != null)
         {
-            if (raycastHit2D.collider.TryGetComponent(out Player player))
-            {
-                TargetPosition = player.transform.position;
-                IsDetected = true;
-
-                return true;
-            }
+            targetPosition = raycastHit2D.collider.transform.position;
+            return true;
         }
 
-        IsDetected = false;
+        targetPosition = Vector2.zero;
 
         return false;
     }

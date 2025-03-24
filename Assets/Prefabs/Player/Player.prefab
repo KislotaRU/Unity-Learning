@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 1352391242398350944}
   - component: {fileID: 1373654962579348365}
   - component: {fileID: 3102621143611362118}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -307,7 +307,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a94c79c973e2d4448ae2d7dec10d9d8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _range: 1
+  _range: 1.5
+  _colliderDistance: 0.14
   _delayAttack: 2
 --- !u!1 &3471832199760686459
 GameObject:
@@ -318,7 +319,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1924270592421336434}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PointAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}

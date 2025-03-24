@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _waypoints: []
+  _radiusGizmo: 0.1
 --- !u!1 &3723019942780867916
 GameObject:
   m_ObjectHideFlags: 0

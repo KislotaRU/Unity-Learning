@@ -45,9 +45,9 @@ public class EnemyFrog : MonoBehaviour
         if (_way == null)
             enabled = false;
         else
-            _currentTarget = _way.GetNextPosition();
+            _lastTarget = _way.GetNextPosition();
 
-        _lastTarget = _currentTarget;
+        _currentTarget = _lastTarget;
     }
 
     private void Update()
@@ -55,6 +55,8 @@ public class EnemyFrog : MonoBehaviour
         HandleAnimation();
         HandleMovement();
         HandleFlip();
+        HandleView();
+        HandleAttack();
     }
 
     private void HandleAnimation()
@@ -64,29 +66,31 @@ public class EnemyFrog : MonoBehaviour
 
     private void HandleMovement()
     {
-        if (_viewer.TrySeeTarget(transform.position, transform.right))
-        {
-            _lastTarget = _currentTarget;
-            _currentTarget = _viewer.TargetPosition;
-        }
-        else
-        {
-            _currentTarget = _lastTarget;
-        }
-
         _mover.Move(CurrentDirection);
 
         if (Vector2.Distance(transform.position, _currentTarget) <= _distanceToTargetNeeded)
         {
-            _currentTarget = _way.GetNextPosition();
-
-            if (_viewer.IsDetected == false)
-                _lastTarget = _currentTarget;
+            _lastTarget = _way.GetNextPosition();
+            _currentTarget = _lastTarget;
         }
     }
 
     private void HandleFlip()
     {
         _flipper.Flip(CurrentDirection);
+    }
+
+    private void HandleView()
+    {
+        if (_viewer.TryGetTarget(out Vector2 targetPosition))
+            _currentTarget = targetPosition;
+        else
+            _currentTarget = _lastTarget;
+    }
+
+    private void HandleAttack()
+    {
+        if (_weapon.TryAttack(out Health targetHealth))
+            _damager.Attack(targetHealth);
     }
 }

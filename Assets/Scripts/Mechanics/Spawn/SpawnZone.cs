@@ -28,6 +28,15 @@ public class SpawnZone : MonoBehaviour
             enabled = false;
     }
 
+    private void OnDrawGizmos()
+    {
+        if (_boxCollider2D == null)
+            _boxCollider2D = GetComponent<BoxCollider2D>();
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(_boxCollider2D.bounds.center, _boxCollider2D.bounds.size);
+    }
+
     public Vector2 GetRandomPosition()
     {
         int indexPosition;

@@ -51,7 +51,7 @@ GameObject:
   - component: {fileID: -3066987664157276211}
   - component: {fileID: 246389343114387853}
   - component: {fileID: -5142082337321781345}
-  - component: {fileID: 4789699026309862261}
+  - component: {fileID: -2668465150410208154}
   m_Layer: 7
   m_Name: Frog
   m_TagString: Untagged
@@ -229,7 +229,7 @@ MonoBehaviour:
   _damager: {fileID: 246389343114387853}
   _weapon: {fileID: -5142082337321781345}
   _pointAttack: {fileID: 8736029476193717092}
-  _viewer: {fileID: 4789699026309862261}
+  _viewer: {fileID: -2668465150410208154}
   _way: {fileID: 0}
 --- !u!114 &3617930762478124462
 MonoBehaviour:
@@ -308,8 +308,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _range: 1
+  _colliderDistance: 0.21
   _delayAttack: 3
---- !u!114 &4789699026309862261
+--- !u!114 &-2668465150410208154
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -321,4 +322,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3795eeac5fc13843884f2fdc9676313, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _range: 8
+  _range: 5
+  _colliderDistance: 0.05
+  _timeFollowing: 0
+  _targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
