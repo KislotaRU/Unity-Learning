@@ -6,11 +6,14 @@ using UnityEngine.Pool;
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private List<Item> _items;
-    
-    [Space]
+
+    [Header("Parameters spawner")]
     [SerializeField] private SpawnZoneStorage _spawnZoneStorage;
     [SerializeField, Range(1, 50)] private int _poolMaxSize = 30;
     [SerializeField, Range(1, 30)] private int _poolCapacity = 30;
+
+    [Space]
+    [SerializeField] private bool _isRespawning;
 
     private readonly float _delaySpawning = 2f;
 
@@ -45,7 +48,8 @@ public class Spawner : MonoBehaviour
             if (_spawnZoneStorage.IsFreeSpawnZone)
                 _itemPool.Get();
 
-        StartCoroutine(SpawningWithDelay());
+        if (_isRespawning)
+            StartCoroutine(SpawningWithDelay());
     }
 
     private IEnumerator SpawningWithDelay()

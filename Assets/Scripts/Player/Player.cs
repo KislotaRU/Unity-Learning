@@ -15,11 +15,11 @@ public class Player : MonoBehaviour
 
     [Header("Health")]
     [SerializeField] private Health _health;
+    [SerializeField] private Repulsiver _repulsiver;
 
     [Header("Attack")]
     [SerializeField] private Damager _damager;
     [SerializeField] private Weapon _weapon;
-    [SerializeField] private Transform _pointAttack;
 
     private void Awake()
     {
@@ -32,6 +32,8 @@ public class Player : MonoBehaviour
         _flipper = GetComponent<Flipper>();
 
         _health = GetComponent<Health>();
+        _repulsiver = GetComponent<Repulsiver>();
+
         _damager = GetComponent<Damager>();
         _weapon = GetComponent<Weapon>();
     }
@@ -45,6 +47,16 @@ public class Player : MonoBehaviour
         HandleFlip();
 
         HandleAttack();
+    }
+
+    private void OnEnable()
+    {
+        _health.TakedDamage += HandleRepulsion;
+    }
+
+    private void OnDisable()
+    {
+        _health.TakedDamage -= HandleRepulsion;
     }
 
     private void HandleAnimation()
@@ -74,5 +86,10 @@ public class Player : MonoBehaviour
 
         if (_weapon.TryAttack(out Health targetHealth))
             _damager.Attack(targetHealth);
+    }
+
+    private void HandleRepulsion()
+    {
+        _repulsiver.Push(_flipper.FaceDirection);
     }
 }

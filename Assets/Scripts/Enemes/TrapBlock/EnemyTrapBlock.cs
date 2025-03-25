@@ -75,7 +75,7 @@ public class EnemyTrapBlock : MonoBehaviour
                 if (raycastHit2D.collider == null)
                     continue;
 
-                if (raycastHit2D.collider.TryGetComponent(out Player _))
+                if (raycastHit2D.collider.TryGetComponent(out Health _))
                 {
                     _targetPosition = (Vector2)transform.position + direction.Direction * direction.Range;
                     _isForwardMoving = true;

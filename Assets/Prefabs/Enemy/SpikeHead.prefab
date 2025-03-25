@@ -175,7 +175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mover: {fileID: -5409510448108983962}
   _damager: {fileID: 5274628057172388060}
-  _forwardSpeed: 5
+  _forwardSpeed: 4
   _backSpeed: 1
   _directions: []
 --- !u!114 &-5409510448108983962

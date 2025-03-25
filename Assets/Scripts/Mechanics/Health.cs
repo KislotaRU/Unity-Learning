@@ -5,7 +5,7 @@ public class Health : MonoBehaviour
 {
     [SerializeField] private float _maxHealth;
 
-    public event Action Dead;
+    public event Action TakedDamage;
 
     public float CurrentHealth { get; private set; }
 
@@ -20,21 +20,20 @@ public class Health : MonoBehaviour
         
         if (CurrentHealth >= _maxHealth)
             CurrentHealth = _maxHealth;
-
-        Debug.Log($"Получения лечения +{health}. Итог: {CurrentHealth}.  Тот, кто получил: {name}.");
     }
 
     public void TakeDamage(float damage)
     {
         CurrentHealth -= damage;
-        Debug.Log($"Получения урона -{damage}. Итог: {CurrentHealth}. Тот, кто получил: {name}.");
 
         if (CurrentHealth <= 0)
             Die();
+
+        TakedDamage?.Invoke();
     }
 
     private void Die()
     {
-        Dead?.Invoke();
+        Destroy(gameObject);
     }
 }

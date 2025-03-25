@@ -4,14 +4,19 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class Weapon : MonoBehaviour
 {
+    [Header("Parameters for detection")]
     [SerializeField, Range(0f, 4f)] private float _range;
     [SerializeField] private float _colliderDistance;
-    [SerializeField] private float _delayAttack;
-    [SerializeField] private LayerMask _targetLayerMask;
+    [SerializeField] private LayerMask _targetLayer;
+
+    [Header("Parameter Weapon")]
+    [SerializeField] private float _attackCooldown;
 
     private Collider2D _collider2D;
 
     private bool _isRecharged = true;
+
+    public bool IsPunchAvailable { get; private set; }
 
     private void Awake()
     {
@@ -31,7 +36,7 @@ public class Weapon : MonoBehaviour
 
     private IEnumerator RechargingAttack()
     {
-        yield return new WaitForSeconds(_delayAttack);
+        yield return new WaitForSeconds(_attackCooldown);
 
         _isRecharged = true;
     }
@@ -47,22 +52,24 @@ public class Weapon : MonoBehaviour
 
         StartCoroutine(RechargingAttack());
 
-        RaycastHit2D[] raycastHits2D = Physics2D.BoxCastAll(_collider2D.bounds.center + transform.right * _range * transform.localScale.x,
-                                                            new Vector2(_collider2D.bounds.size.x, _collider2D.bounds.size.y),
-                                                            0f, Vector2.left, _targetLayerMask);
+        Collider2D[] raycastHits2D = Physics2D.OverlapBoxAll(_collider2D.bounds.center + transform.right * _range * transform.localScale.x * _colliderDistance,
+                                                             new Vector2(_collider2D.bounds.size.x, _collider2D.bounds.size.y), 0f, _targetLayer);
 
-
-        foreach (RaycastHit2D raycastHit2D in raycastHits2D)
+        foreach (Collider2D raycastHit2D in raycastHits2D)
         {
-            Debug.Log($"Произошла атака по {raycastHit2D.collider.name}");
+            if (raycastHit2D.TryGetComponent(out Health health) == false)
+                continue;
 
-            if (raycastHit2D.collider.TryGetComponent(out Health health))
-            {
-                targetHealth = health;
+            if (health.gameObject == gameObject)
+                continue;
 
-                return true;
-            }
+            targetHealth = health;
+            IsPunchAvailable = true;
+
+            return true;
         }
+
+        IsPunchAvailable = false;
 
         return false;
     }

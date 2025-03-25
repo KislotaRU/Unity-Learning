@@ -11,17 +11,20 @@ public class EnemyFrog : MonoBehaviour
 
     [Header("Health")]
     [SerializeField] private Health _health;
+    [SerializeField] private Repulsiver _repulsiver;
 
     [Header("Attack")]
     [SerializeField] private Damager _damager;
     [SerializeField] private Weapon _weapon;
-    [SerializeField] private Transform _pointAttack;
 
     [Header("View")]
     [SerializeField] private Viewer _viewer;
 
     [Space]
     [SerializeField] private Way _way;
+
+    [SerializeField] private float _defaultSpeed;
+    [SerializeField] private float _followingSpeed;
 
     private readonly float _distanceToTargetNeeded = 0.2f;
 
@@ -37,6 +40,8 @@ public class EnemyFrog : MonoBehaviour
         _flipper = GetComponent<Flipper>();
 
         _health = GetComponent<Health>();
+        _repulsiver = GetComponent<Repulsiver>();
+
         _damager = GetComponent<Damager>();
         _weapon = GetComponent<Weapon>();
 
@@ -57,6 +62,16 @@ public class EnemyFrog : MonoBehaviour
         HandleFlip();
         HandleView();
         HandleAttack();
+    }
+
+    private void OnEnable()
+    {
+        _health.TakedDamage += HandleRepulsion;
+    }
+
+    private void OnDisable()
+    {
+        _health.TakedDamage -= HandleRepulsion;
     }
 
     private void HandleAnimation()
@@ -82,15 +97,36 @@ public class EnemyFrog : MonoBehaviour
 
     private void HandleView()
     {
+        if (_viewer.IsTracking == false)
+            return;
+
         if (_viewer.TryGetTarget(out Vector2 targetPosition))
+        {
             _currentTarget = targetPosition;
+        }
         else
+        {
             _currentTarget = _lastTarget;
+            _mover.SetMoveSpeed(_defaultSpeed);
+        }
     }
 
     private void HandleAttack()
     {
+        if (_viewer.IsExistsTargetPosition == false)
+            return;
+
         if (_weapon.TryAttack(out Health targetHealth))
             _damager.Attack(targetHealth);
+
+        if (_weapon.IsPunchAvailable)
+            _mover.SetMoveSpeed(0f);
+        else
+            _mover.SetMoveSpeed(_followingSpeed);
+    }
+
+    private void HandleRepulsion()
+    {
+        _repulsiver.Push(_flipper.FaceDirection);
     }
 }
