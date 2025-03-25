@@ -279,7 +279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05f054cd187a4aa46a5e4b347126d51b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baseDamage: 20
+  _damageValue: 20
 --- !u!114 &-5142082337321781345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,7 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a94c79c973e2d4448ae2d7dec10d9d8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _range: 1
+  _attackRange: 1
   _colliderDistance: 0.21
   _targetLayer:
     serializedVersion: 2
