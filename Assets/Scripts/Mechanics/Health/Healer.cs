@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Healer : MonoBehaviour
 {
-    [SerializeField] private int _baseHeal = 5;
+    [SerializeField] private int _healValue;
 
     public void Heal(Health targetHealth) =>
-        targetHealth.TakeHealth(_baseHeal);
+        targetHealth.TakeHealth(_healValue);
 }

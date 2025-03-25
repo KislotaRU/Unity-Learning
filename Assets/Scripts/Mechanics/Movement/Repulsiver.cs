@@ -15,6 +15,6 @@ public class Repulsiver : MonoBehaviour
 
     public void Push(Vector2 direction)
     {
-        _rigidbody2D.AddForce(new Vector2(-direction.x * _throwDirection.x, _throwDirection.y)  * _forceRepulsive, ForceMode2D.Force);
+        _rigidbody2D.AddForce(new Vector2(-direction.x * _throwDirection.x, _throwDirection.y) * _forceRepulsive, ForceMode2D.Force);
     }
 }

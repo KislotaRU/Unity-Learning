@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Mover _mover;
     [SerializeField] private Jumper _jumper;
     [SerializeField] private Flipper _flipper;
+    [SerializeField] private Walker _walker;
 
     [Header("Health")]
     [SerializeField] private Health _health;
@@ -21,22 +22,8 @@ public class Player : MonoBehaviour
     [SerializeField] private Damager _damager;
     [SerializeField] private Weapon _weapon;
 
-    private void Awake()
-    {
-        _inputReader = GetComponent<InputReader>();
-
-        _playerAnimator = GetComponent<PlayerAnimator>();
-
-        _mover = GetComponent<Mover>();
-        _jumper = GetComponent<Jumper>();
-        _flipper = GetComponent<Flipper>();
-
-        _health = GetComponent<Health>();
-        _repulsiver = GetComponent<Repulsiver>();
-
-        _damager = GetComponent<Damager>();
-        _weapon = GetComponent<Weapon>();
-    }
+    [Header("Collector")]
+    [SerializeField] private Collector _collector;
 
     private void Update()
     {
@@ -52,16 +39,18 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         _health.TakedDamage += HandleRepulsion;
+        _health.Dead += HandleDie;
     }
 
     private void OnDisable()
     {
         _health.TakedDamage -= HandleRepulsion;
+        _health.Dead -= HandleDie;
     }
 
     private void HandleAnimation()
     {
-        _playerAnimator.Setup(_mover.Speed, _jumper.IsGrounded);
+        _playerAnimator.Setup(_mover.Speed, _walker.IsGrounded);
     }
 
     private void HandleMovement()
@@ -71,7 +60,8 @@ public class Player : MonoBehaviour
 
     private void HandleJump()
     {
-        _jumper.Jump(_inputReader.IsJumping);
+        if (_walker.CanWalk())
+            _jumper.Jump(_inputReader.IsJumping);
     }
 
     private void HandleFlip()
@@ -91,5 +81,10 @@ public class Player : MonoBehaviour
     private void HandleRepulsion()
     {
         _repulsiver.Push(_flipper.FaceDirection);
+    }
+
+    private void HandleDie()
+    {
+        Destroy(gameObject);
     }
 }

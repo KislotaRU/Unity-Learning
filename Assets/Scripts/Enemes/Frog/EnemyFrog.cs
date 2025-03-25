@@ -26,33 +26,24 @@ public class EnemyFrog : MonoBehaviour
     [SerializeField] private float _defaultSpeed;
     [SerializeField] private float _followingSpeed;
 
-    private readonly float _distanceToTargetNeeded = 0.2f;
+    private readonly float _requiredDistance = 0.2f;
 
-    private Vector2 _currentTarget;
-    private Vector2 _lastTarget;
+    private Vector2 _currentTargetPosition;
+    private Vector2 _patrolTargetPosition;
 
-    private Vector2 CurrentDirection => (_currentTarget - (Vector2)transform.position).normalized;
+    private Vector2 CurrentDirection => (_currentTargetPosition - (Vector2)transform.position).normalized;
+    private float CurrentDistanceToTargetPosition => (_currentTargetPosition - (Vector2)transform.position).sqrMagnitude;
 
     private void Awake()
     {
-        _enemyFrogAnimator = GetComponent<EnemyFrogAnimator>();
-        _mover = GetComponent<Mover>();
-        _flipper = GetComponent<Flipper>();
-
-        _health = GetComponent<Health>();
-        _repulsiver = GetComponent<Repulsiver>();
-
-        _damager = GetComponent<Damager>();
-        _weapon = GetComponent<Weapon>();
-
-        _viewer = GetComponent<Viewer>();
-
         if (_way == null)
+        {
             enabled = false;
-        else
-            _lastTarget = _way.GetNextPosition();
+            return;
+        }
 
-        _currentTarget = _lastTarget;
+        _patrolTargetPosition = _way.GetNextPosition();
+        _currentTargetPosition = _patrolTargetPosition;
     }
 
     private void Update()
@@ -67,11 +58,13 @@ public class EnemyFrog : MonoBehaviour
     private void OnEnable()
     {
         _health.TakedDamage += HandleRepulsion;
+        _health.Dead += HandleDie;
     }
 
     private void OnDisable()
     {
         _health.TakedDamage -= HandleRepulsion;
+        _health.Dead -= HandleDie;
     }
 
     private void HandleAnimation()
@@ -83,10 +76,10 @@ public class EnemyFrog : MonoBehaviour
     {
         _mover.Move(CurrentDirection);
 
-        if (Vector2.Distance(transform.position, _currentTarget) <= _distanceToTargetNeeded)
+        if (CurrentDistanceToTargetPosition <= _requiredDistance)
         {
-            _lastTarget = _way.GetNextPosition();
-            _currentTarget = _lastTarget;
+            _patrolTargetPosition = _way.GetNextPosition();
+            _currentTargetPosition = _patrolTargetPosition;
         }
     }
 
@@ -102,11 +95,11 @@ public class EnemyFrog : MonoBehaviour
 
         if (_viewer.TryGetTarget(out Vector2 targetPosition))
         {
-            _currentTarget = targetPosition;
+            _currentTargetPosition = targetPosition;
         }
         else
         {
-            _currentTarget = _lastTarget;
+            _currentTargetPosition = _patrolTargetPosition;
             _mover.SetMoveSpeed(_defaultSpeed);
         }
     }
@@ -128,5 +121,10 @@ public class EnemyFrog : MonoBehaviour
     private void HandleRepulsion()
     {
         _repulsiver.Push(_flipper.FaceDirection);
+    }
+
+    private void HandleDie()
+    {
+        Destroy(gameObject);
     }
 }

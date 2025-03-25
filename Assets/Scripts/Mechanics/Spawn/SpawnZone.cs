@@ -19,6 +19,7 @@ public class SpawnZone : MonoBehaviour
     {
         _boxCollider2D = GetComponent<BoxCollider2D>();
         _bounds = _boxCollider2D.bounds;
+
         _occupiedPositions = new List<Vector2>();
         _freePositions = new List<Vector2>();
 

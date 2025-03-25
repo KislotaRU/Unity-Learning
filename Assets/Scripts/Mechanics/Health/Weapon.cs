@@ -5,7 +5,7 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     [Header("Parameters for detection")]
-    [SerializeField, Range(0f, 4f)] private float _range;
+    [SerializeField, Range(0f, 4f)] private float _attackRange;
     [SerializeField] private float _colliderDistance;
     [SerializeField] private LayerMask _targetLayer;
 
@@ -30,8 +30,8 @@ public class Weapon : MonoBehaviour
 
         Gizmos.color = Color.red;
 
-        Gizmos.DrawWireCube(_collider2D.bounds.center + transform.right * _range * transform.localScale.x * _colliderDistance,
-                            new Vector3(_collider2D.bounds.size.x * _range, _collider2D.bounds.size.y, _collider2D.bounds.size.z));
+        Gizmos.DrawWireCube(_collider2D.bounds.center + transform.right * _attackRange * transform.localScale.x * _colliderDistance,
+                            new Vector3(_collider2D.bounds.size.x * _attackRange, _collider2D.bounds.size.y, _collider2D.bounds.size.z));
     }
 
     private IEnumerator RechargingAttack()
@@ -52,7 +52,7 @@ public class Weapon : MonoBehaviour
 
         StartCoroutine(RechargingAttack());
 
-        Collider2D[] raycastHits2D = Physics2D.OverlapBoxAll(_collider2D.bounds.center + transform.right * _range * transform.localScale.x * _colliderDistance,
+        Collider2D[] raycastHits2D = Physics2D.OverlapBoxAll(_collider2D.bounds.center + transform.right * _attackRange * transform.localScale.x * _colliderDistance,
                                                              new Vector2(_collider2D.bounds.size.x, _collider2D.bounds.size.y), 0f, _targetLayer);
 
         foreach (Collider2D raycastHit2D in raycastHits2D)

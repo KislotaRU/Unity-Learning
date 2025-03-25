@@ -14,7 +14,10 @@ public class SpawnZoneStorage : MonoBehaviour
     private void Awake()
     {
         if (_spawnZones == null)
+        {
             enabled = false;
+            return;
+        }
 
         _occupiedSpawnZones = new List<SpawnZone>();
         _freeSpawnZones = new List<SpawnZone>();

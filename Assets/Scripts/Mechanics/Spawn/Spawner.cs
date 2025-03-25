@@ -9,8 +9,8 @@ public class Spawner : MonoBehaviour
 
     [Header("Parameters spawner")]
     [SerializeField] private SpawnZoneStorage _spawnZoneStorage;
-    [SerializeField, Range(1, 50)] private int _poolMaxSize = 30;
-    [SerializeField, Range(1, 30)] private int _poolCapacity = 30;
+    [SerializeField, Range(1, 50)] private int _poolMaxSize;
+    [SerializeField, Range(1, 30)] private int _poolCapacity;
 
     [Space]
     [SerializeField] private bool _isRespawning;

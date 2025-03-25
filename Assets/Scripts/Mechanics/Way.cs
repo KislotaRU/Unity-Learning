@@ -4,8 +4,7 @@ public class Way : MonoBehaviour
 {
     [SerializeField] private Transform[] _waypoints;
 
-    [Header("For Gizmos")]
-    [SerializeField] private float _radiusGizmo = 0.1f;
+    private readonly float _radiusGizmo = 0.1f;
 
     private int _currentWaypoint = -1;
 

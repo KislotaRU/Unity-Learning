@@ -1,10 +1,9 @@
-using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Mover : MonoBehaviour
 {
-    [SerializeField] float _moveSpeed = 4f;
+    [SerializeField] float _moveSpeed;
 
     private Rigidbody2D _rigidbody2D;
 
