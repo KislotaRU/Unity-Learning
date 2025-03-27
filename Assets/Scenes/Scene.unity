@@ -12716,6 +12716,10 @@ PrefabInstance:
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7618460504807080771, guid: f58707d3f26291b4ca7e6b82102be83e, type: 3}
+      propertyPath: _isRespawning
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7618460504807080771, guid: f58707d3f26291b4ca7e6b82102be83e, type: 3}
       propertyPath: _poolCapacity
       value: 30
       objectReference: {fileID: 0}

@@ -38,14 +38,14 @@ public class Player : MonoBehaviour
 
     private void OnEnable()
     {
-        _health.TakedDamage += HandleRepulsion;
-        _health.Dead += HandleDie;
+        _health.AcceptedDamage += HandleRepulsion;
+        _health.Died += HandleDie;
     }
 
     private void OnDisable()
     {
-        _health.TakedDamage -= HandleRepulsion;
-        _health.Dead -= HandleDie;
+        _health.AcceptedDamage -= HandleRepulsion;
+        _health.Died -= HandleDie;
     }
 
     private void HandleAnimation()

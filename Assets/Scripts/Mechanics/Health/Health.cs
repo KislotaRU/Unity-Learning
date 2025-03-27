@@ -5,8 +5,8 @@ public class Health : MonoBehaviour
 {
     [SerializeField] private float _maxValue;
 
-    public event Action Dead;
-    public event Action TakedDamage;
+    public event Action Died;
+    public event Action AcceptedDamage;
 
     public float CurrentValue { get; private set; }
 
@@ -26,9 +26,9 @@ public class Health : MonoBehaviour
     public void TakeDamage(float damage)
     {
         CurrentValue -= damage;
-        TakedDamage?.Invoke();
+        AcceptedDamage?.Invoke();
 
         if (CurrentValue <= 0)
-            Dead?.Invoke();
+            Died?.Invoke();
     }
 }
