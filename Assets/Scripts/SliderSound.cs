@@ -5,15 +5,14 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Slider))]
 public class SliderSound : MonoBehaviour
 {
+    private const int MinVolume = -80;
     private const int CoefficientDB = 20;
 
     [Header("Toggle")]
     [SerializeField] private ToggleSound _toggleSound;
 
     [Header("Sound")]
-    [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private AudioMixer _audioMixer;
-    [SerializeField] private TypesVolume _typeVolume;
+    [SerializeField] private AudioMixerGroup _audioMixerGroup;
 
     private Slider _slider;
 
@@ -37,14 +36,11 @@ public class SliderSound : MonoBehaviour
 
     public void HandleTranslateVolume(float targetVolume)
     {
+        float currentVolume = targetVolume == 0 ? MinVolume : targetVolume;
+
         if (_toggleSound.IsMuted)
             return;
 
-        _audioMixer.SetFloat(_typeVolume.ToString(), Mathf.Log10(targetVolume) * CoefficientDB);
-    }
-
-    public void HandleSound()
-    {
-        _audioSource.Play();
+        _audioMixerGroup.audioMixer.SetFloat(_audioMixerGroup.name.ToString(), Mathf.Log10(currentVolume) * CoefficientDB);
     }
 }

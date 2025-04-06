@@ -314,7 +314,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5427372852389457024, guid: 2cd9f499aaa5ce247a54d855906c7a72, type: 3}
       propertyPath: m_MinValue
-      value: 0.0001
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5592312582164284445, guid: 2cd9f499aaa5ce247a54d855906c7a72, type: 3}
       propertyPath: m_AnchorMax.x
@@ -332,6 +332,10 @@ PrefabInstance:
       propertyPath: _toggleSound
       value: 
       objectReference: {fileID: 1469847528}
+    - target: {fileID: 8313713044243821905, guid: 2cd9f499aaa5ce247a54d855906c7a72, type: 3}
+      propertyPath: _audioMixerGroup
+      value: 
+      objectReference: {fileID: 4909861087870712079, guid: 12f6fa364814ffd46b717633d8ccf34d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1207,7 +1211,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5427372852389457024, guid: 2cd9f499aaa5ce247a54d855906c7a72, type: 3}
       propertyPath: m_MinValue
-      value: 0.0001
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5592312582164284445, guid: 2cd9f499aaa5ce247a54d855906c7a72, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1225,6 +1229,10 @@ PrefabInstance:
       propertyPath: _toggleSound
       value: 
       objectReference: {fileID: 1469847528}
+    - target: {fileID: 8313713044243821905, guid: 2cd9f499aaa5ce247a54d855906c7a72, type: 3}
+      propertyPath: _audioMixerGroup
+      value: 
+      objectReference: {fileID: -5893593397629376015, guid: 12f6fa364814ffd46b717633d8ccf34d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1419,6 +1427,10 @@ PrefabInstance:
       propertyPath: _toggleSound
       value: 
       objectReference: {fileID: 1469847528}
+    - target: {fileID: 8313713044243821905, guid: 2cd9f499aaa5ce247a54d855906c7a72, type: 3}
+      propertyPath: _audioMixerGroup
+      value: 
+      objectReference: {fileID: 24300002, guid: 12f6fa364814ffd46b717633d8ccf34d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

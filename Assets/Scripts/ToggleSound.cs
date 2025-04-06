@@ -8,10 +8,9 @@ public class ToggleSound : MonoBehaviour
     private const int MinVolume = -80;
     private const int MaxVolume = 0;
 
+    [Header("Sound")]
     [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private AudioMixer _audioMixer;
-
-    [SerializeField] private TypesVolume _typeVolume;
+    [SerializeField] private AudioMixerGroup _audioMixerGroup;
 
     private Toggle _toggle;
     
@@ -38,7 +37,7 @@ public class ToggleSound : MonoBehaviour
 
         HandleSound();
 
-        _audioMixer.SetFloat(_typeVolume.ToString(), currentVolume);
+        _audioMixerGroup.audioMixer.SetFloat(_audioMixerGroup.name.ToString(), currentVolume);
         IsMuted = isEnabled;
     }
 
