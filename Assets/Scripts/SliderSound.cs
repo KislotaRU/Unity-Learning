@@ -36,11 +36,11 @@ public class SliderSound : MonoBehaviour
 
     public void HandleTranslateVolume(float targetVolume)
     {
-        float currentVolume = targetVolume == 0 ? MinVolume : targetVolume;
+        float currentVolume = targetVolume == 0 ? MinVolume : Mathf.Log10(targetVolume) * CoefficientDB;
 
         if (_toggleSound.IsMuted)
             return;
 
-        _audioMixerGroup.audioMixer.SetFloat(_audioMixerGroup.name.ToString(), Mathf.Log10(currentVolume) * CoefficientDB);
+        _audioMixerGroup.audioMixer.SetFloat(_audioMixerGroup.name.ToString(), currentVolume);
     }
 }
