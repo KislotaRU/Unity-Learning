@@ -17,17 +17,12 @@ public class ButtonHeal : MonoBehaviour
 
     private void OnEnable()
     {
-        _button.onClick.AddListener(HandleClick);
+        _button.onClick.AddListener(HandleHeal);
     }
 
     private void OnDisable()
     {
-        _button.onClick.RemoveListener(HandleClick);
-    }
-
-    private void HandleClick()
-    {
-        HandleHeal();
+        _button.onClick.RemoveListener(HandleHeal);
     }
 
     private void HandleHeal()

@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,13 +7,9 @@ public class SliderHealth : MonoBehaviour
     [Header("Target")]
     [SerializeField] private Health _targetHealth;
 
-    [Header("Smooth")]
-    [SerializeField] private bool _isTranslatedSmooth;
-    [SerializeField] private float _speedTranslatedSmooth;
+    protected Slider _slider;
 
-    private Slider _slider;
-
-    private float TargetValue => _targetHealth.CurrentValue;
+    protected float TargetValue => Mathf.Clamp(_targetHealth.CurrentValue / _targetHealth.MaxValue, _slider.minValue, _slider.maxValue);
 
     private void Awake()
     {
@@ -23,7 +18,6 @@ public class SliderHealth : MonoBehaviour
 
     private void Start()
     {
-        _slider.maxValue = _targetHealth.MaxValue;
         _slider.value = TargetValue;
     }
 
@@ -39,21 +33,8 @@ public class SliderHealth : MonoBehaviour
         _targetHealth.AcceptedDamage -= HandleTranslating;
     }
 
-    private IEnumerator TranslatingValueWithSmooth()
+    protected virtual void HandleTranslating()
     {
-        while (_slider.value != TargetValue)
-        {
-            _slider.value = Mathf.MoveTowards(_slider.value, TargetValue, _speedTranslatedSmooth * Time.deltaTime);
-
-            yield return null;
-        }
+        _slider.value = TargetValue;
     }
-
-    private void HandleTranslating()
-    {
-        if (_isTranslatedSmooth)
-            StartCoroutine(TranslatingValueWithSmooth());
-        else
-            _slider.value = TargetValue;
-    }
-} 
+}

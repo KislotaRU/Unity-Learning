@@ -17,17 +17,12 @@ public class ButtonAttack : MonoBehaviour
 
     private void OnEnable()
     {
-        _button.onClick.AddListener(HandleClick);
+        _button.onClick.AddListener(HandleAttack);
     }
 
     private void OnDisable()
     {
-        _button.onClick.RemoveListener(HandleClick);
-    }
-
-    private void HandleClick()
-    {
-        HandleAttack();
+        _button.onClick.RemoveListener(HandleAttack);
     }
 
     private void HandleAttack()

@@ -1710,7 +1710,7 @@ GameObject:
   - component: {fileID: 1948404067}
   - component: {fileID: 1948404068}
   m_Layer: 5
-  m_Name: Slider Health (1)
+  m_Name: Slider Health Smooth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1776,12 +1776,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1948404065}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 483445ca3cb018744b630d4c2f04b69c, type: 3}
+  m_Script: {fileID: 11500000, guid: bf7a1f76e9619a04e82fb2b1aaf903d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _targetHealth: {fileID: 2078270563}
-  _isTranslatedSmooth: 1
-  _speedTranslatedSmooth: 10
+  _speedTranslatedSmooth: 3
 --- !u!1 &2028981208
 GameObject:
   m_ObjectHideFlags: 0
@@ -2063,8 +2062,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _targetHealth: {fileID: 2078270563}
-  _isTranslatedSmooth: 0
-  _speedTranslatedSmooth: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
