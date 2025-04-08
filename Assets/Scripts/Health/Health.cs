@@ -9,13 +9,12 @@ public class Health : MonoBehaviour
     public event Action AcceptedDamage;
     public event Action AcceptedHealth;
 
-    public float MaxValue { get; private set; }
+    public float MaxValue => _maxValue;
     public float CurrentValue { get; private set; }
 
     private void Awake()
     {
         CurrentValue = _maxValue;
-        MaxValue = _maxValue;
     }
 
     public void TakeHealth(float health)

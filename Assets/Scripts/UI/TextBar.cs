@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(TextMeshProUGUI))]
-public class TextBar : MonoBehaviour
+public abstract class TextBar : MonoBehaviour
 {
     [Header("Target")]
     [SerializeField] private Health _target;
@@ -34,5 +34,5 @@ public class TextBar : MonoBehaviour
         _target.AcceptedDamage -= HandleView;
     }
 
-    protected virtual void HandleView() { }
+    protected abstract void HandleView();
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Slider))]
-public class SliderBar : MonoBehaviour
+public abstract class SliderBar : MonoBehaviour
 {
     [Header("Target")]
     [SerializeField] private Health _target;
@@ -33,5 +33,5 @@ public class SliderBar : MonoBehaviour
         _target.AcceptedDamage -= HandleView;
     }
 
-    protected virtual void HandleView() { }
+    protected abstract void HandleView();
 }
