@@ -3,8 +3,13 @@ using UnityEngine;
 
 public class SliderHealthSmooth : SliderHealth
 {
-    [Header("Smooth")]
-    [SerializeField] private float _speedTranslatedSmooth;
+    [Header("Parameters Smooth")]
+    [SerializeField] private float _speedTranslated;
+
+    protected override void HandleView()
+    {
+        StartCoroutine(TranslatingValueWithSmooth());
+    }
 
     private IEnumerator TranslatingValueWithSmooth()
     {
@@ -16,15 +21,10 @@ public class SliderHealthSmooth : SliderHealth
 
         while (elapsedTime < availableTime)
         {
-            elapsedTime += _speedTranslatedSmooth * Time.deltaTime;
+            elapsedTime += _speedTranslated * Time.deltaTime;
             _slider.value = Mathf.Lerp(startValue, endValue, elapsedTime);
 
             yield return null;
         }
-    }
-
-    protected override void HandleTranslating()
-    {
-        StartCoroutine(TranslatingValueWithSmooth());
     }
 }

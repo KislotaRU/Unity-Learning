@@ -20,17 +20,19 @@ public class Health : MonoBehaviour
 
     public void TakeHealth(float health)
     {
-        float temporaryCurrentValue = CurrentValue + health;
+        if (health < 0)
+            return;
 
-        CurrentValue = temporaryCurrentValue > MaxValue ? MaxValue : temporaryCurrentValue;
+        CurrentValue = Mathf.Clamp(CurrentValue + health, 0, MaxValue);
         AcceptedHealth?.Invoke();
     }
 
     public void TakeDamage(float damage)
     {
-        float temporaryCurrentValue = CurrentValue - damage;
+        if (damage < 0)
+            return;
 
-        CurrentValue = temporaryCurrentValue <= 0 ? 0 : temporaryCurrentValue;
+        CurrentValue = Mathf.Clamp(CurrentValue - damage, 0, MaxValue);
         AcceptedDamage?.Invoke();
 
         if (CurrentValue == 0)
