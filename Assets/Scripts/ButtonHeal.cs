@@ -4,7 +4,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button), typeof(Healer))]
 public class ButtonHeal : MonoBehaviour
 {
-    [SerializeField] private Health _targetHealth;
+    [SerializeField] private Health _target;
 
     private Healer _healer;
     private Button _button;
@@ -27,6 +27,6 @@ public class ButtonHeal : MonoBehaviour
 
     private void HandleHeal()
     {
-        _healer.Heal(_targetHealth);
+        _healer.Heal(_target);
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button), typeof(Damager))]
 public class ButtonAttack : MonoBehaviour
 {
-    [SerializeField] private Health _targetHealth;
+    [SerializeField] private Health _target;
 
     private Damager _damager;
     private Button _button;
@@ -27,6 +27,6 @@ public class ButtonAttack : MonoBehaviour
 
     private void HandleAttack()
     {
-        _damager.Attack(_targetHealth);
+        _damager.Attack(_target);
     }
 }
