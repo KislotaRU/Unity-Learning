@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(TextMeshProUGUI))]
-public class TextHealth : TextBar
+public class TextBarHealth : TextBar
 {
     protected override void HandleView()
     {

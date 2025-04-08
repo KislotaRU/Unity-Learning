@@ -1,14 +1,17 @@
 using System.Collections;
 using UnityEngine;
 
-public class SliderHealthSmooth : SliderHealth
+public class SliderBarHealthSmooth : SliderBarHealth
 {
     [Header("Parameters Smooth")]
     [SerializeField] private float _speedTranslated;
 
+    private Coroutine _currentCoroutine;
+
     protected override void HandleView()
     {
-        StartCoroutine(TranslatingValueWithSmooth());
+        if (_currentCoroutine == null)
+            _currentCoroutine = StartCoroutine(TranslatingValueWithSmooth());
     }
 
     private IEnumerator TranslatingValueWithSmooth()
@@ -26,5 +29,10 @@ public class SliderHealthSmooth : SliderHealth
 
             yield return null;
         }
+
+        _currentCoroutine = null;
+
+        if (_slider.value != TargetValue)
+            HandleView();
     }
 }

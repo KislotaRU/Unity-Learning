@@ -1,20 +1,13 @@
 using UnityEngine;
-using UnityEngine.UI;
 
-[RequireComponent(typeof(Slider))]
-public abstract class SliderBar : MonoBehaviour
+public abstract class Bar : MonoBehaviour
 {
     [Header("Target")]
     [SerializeField] private Health _target;
 
-    protected Slider _slider;
-
-    protected float TargetValue => _target.CurrentValue / _target.MaxValue;
-
-    private void Awake()
-    {
-        _slider = GetComponent<Slider>();
-    }
+    protected float CurrentValue => _target.CurrentValue;
+    protected float MaxValue => _target.MaxValue;
+    protected float TargetValue => CurrentValue / MaxValue;
 
     private void Start()
     {

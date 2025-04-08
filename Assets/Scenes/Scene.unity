@@ -694,7 +694,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca7631d59e3320445abe1fb5c7cdbfd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetHealth: {fileID: 2078270563}
+  _target: {fileID: 2078270563}
+  _healer: {fileID: 354892974}
 --- !u!114 &354892974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1109,7 +1110,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15cf36538ef0a3143b0899de421438b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetHealth: {fileID: 2078270563}
+  _target: {fileID: 2078270563}
+  _damager: {fileID: 1088307563}
 --- !u!114 &1088307563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2058,7 +2060,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1211603314}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 483445ca3cb018744b630d4c2f04b69c, type: 3}
+  m_Script: {fileID: 11500000, guid: 79aa72ff6f80a1e48920fcbfdaeebc64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 2078270563}
