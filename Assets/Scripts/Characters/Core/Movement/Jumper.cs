@@ -4,8 +4,11 @@ using UnityEngine;
 public class Jumper : MonoBehaviour
 {
     [SerializeField] private float _jumpForce;
+    [SerializeField] private Detector2D _jumpZone;
 
     private Rigidbody2D _rigidbody2D;
+
+    public bool IsGrounded => _jumpZone.TryGetTarget(out Collider2D _);
 
     private void Awake()
     {

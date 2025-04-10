@@ -4,35 +4,15 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class Weapon : MonoBehaviour
 {
-    [Header("Parameters for detection")]
-    [SerializeField, Range(0f, 4f)] private float _attackRange;
-    [SerializeField] private float _colliderDistance;
-    [SerializeField] private LayerMask _targetLayer;
+    [Header("Detector")]
+    [SerializeField] private Detector2D _attackZone;
 
     [Header("Parameter Weapon")]
     [SerializeField] private float _attackCooldown;
 
-    private Collider2D _collider2D;
-
     private bool _isRecharged = true;
 
     public bool IsPunchAvailable { get; private set; }
-
-    private void Awake()
-    {
-        _collider2D = GetComponent<Collider2D>();
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (_collider2D == null)
-            _collider2D = GetComponent<Collider2D>();
-
-        Gizmos.color = Color.red;
-
-        Gizmos.DrawWireCube(_collider2D.bounds.center + transform.right * _attackRange * transform.localScale.x * _colliderDistance,
-                            new Vector3(_collider2D.bounds.size.x * _attackRange, _collider2D.bounds.size.y, _collider2D.bounds.size.z));
-    }
 
     private IEnumerator RechargingAttack()
     {
@@ -52,21 +32,21 @@ public class Weapon : MonoBehaviour
 
         StartCoroutine(RechargingAttack());
 
-        Collider2D[] raycastHits2D = Physics2D.OverlapBoxAll(_collider2D.bounds.center + transform.right * _attackRange * transform.localScale.x * _colliderDistance,
-                                                             new Vector2(_collider2D.bounds.size.x, _collider2D.bounds.size.y), 0f, _targetLayer);
-
-        foreach (Collider2D raycastHit2D in raycastHits2D)
+        if (_attackZone.TryGetTargets(out Collider2D[] targets))
         {
-            if (raycastHit2D.TryGetComponent(out Health health) == false)
-                continue;
+            foreach (Collider2D target in targets)
+            {
+                if (target.TryGetComponent(out Health health) == false)
+                    continue;
 
-            if (health.gameObject == gameObject)
-                continue;
+                if (health.gameObject == gameObject)
+                    continue;
 
-            targetHealth = health;
-            IsPunchAvailable = true;
+                targetHealth = health;
+                IsPunchAvailable = true;
 
-            return true;
+                return true;
+            }
         }
 
         IsPunchAvailable = false;

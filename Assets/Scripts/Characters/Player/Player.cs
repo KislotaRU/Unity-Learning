@@ -12,7 +12,6 @@ public class Player : MonoBehaviour
     [SerializeField] private Mover _mover;
     [SerializeField] private Jumper _jumper;
     [SerializeField] private Flipper _flipper;
-    [SerializeField] private Walker _walker;
 
     [Header("Health")]
     [SerializeField] private Health _health;
@@ -25,6 +24,9 @@ public class Player : MonoBehaviour
     [Header("Collector")]
     [SerializeField] private Collector _collector;
 
+    //[Header("Ability")]
+    //[SerializeField] private CircleDetector2D _vampirism;
+
     private void Update()
     {
         HandleAnimation();
@@ -34,6 +36,7 @@ public class Player : MonoBehaviour
         HandleFlip();
 
         HandleAttack();
+        //HandleAbility();
     }
 
     private void OnEnable()
@@ -50,7 +53,7 @@ public class Player : MonoBehaviour
 
     private void HandleAnimation()
     {
-        _playerAnimator.Setup(_mover.Speed, _walker.IsGrounded);
+        _playerAnimator.Setup(_mover.Speed, _jumper.IsGrounded);
     }
 
     private void HandleMovement()
@@ -60,7 +63,7 @@ public class Player : MonoBehaviour
 
     private void HandleJump()
     {
-        if (_walker.CanWalk())
+        if (_jumper.IsGrounded)
             _jumper.Jump(_inputReader.IsJumping);
     }
 
@@ -77,6 +80,13 @@ public class Player : MonoBehaviour
         if (_weapon.TryAttack(out Health targetHealth))
             _damager.Attack(targetHealth);
     }
+
+    //private void HandleAbility()
+    //{
+    //    if (_inputReader.IsVampiring == false)
+    //        return;
+
+    //}
 
     private void HandleRepulsion()
     {
