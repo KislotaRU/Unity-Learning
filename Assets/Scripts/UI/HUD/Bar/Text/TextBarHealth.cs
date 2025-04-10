@@ -13,6 +13,6 @@ public class TextBarHealth : Bar
 
     protected override void HandleView()
     {
-        _textMeshPro.text = $"{CurrentValue}/{MaxValue}";
+        _textMeshPro.text = $"{PercentageValue}%";
     }
 }
