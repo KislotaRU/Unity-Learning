@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
-public class VampirismZone : MonoBehaviour
+public class Vampire : MonoBehaviour
 {
     //[Header("Parameters for detection")]
     //[SerializeField, Range(0, 20)] private int _range;

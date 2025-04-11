@@ -18,7 +18,6 @@ GameObject:
   - component: {fileID: -5611336150131143421}
   - component: {fileID: 246389343114387853}
   - component: {fileID: -5142082337321781345}
-  - component: {fileID: -2668465150410208154}
   m_Layer: 7
   m_Name: Frog
   m_TagString: Untagged
@@ -40,6 +39,8 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2497728745833404126}
+  - {fileID: 2473637867300415058}
+  - {fileID: 2863616127118060267}
   - {fileID: 1772673296144382614}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -124,7 +125,7 @@ MonoBehaviour:
   _repulsiver: {fileID: -5611336150131143421}
   _damager: {fileID: 246389343114387853}
   _weapon: {fileID: -5142082337321781345}
-  _viewer: {fileID: -2668465150410208154}
+  _visibleZone: {fileID: 8680636467523269527}
   _way: {fileID: 0}
   _defaultSpeed: 2
   _followingSpeed: 3
@@ -205,30 +206,108 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a94c79c973e2d4448ae2d7dec10d9d8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackRange: 1.5
-  _colliderDistance: 0.15
-  _targetLayer:
-    serializedVersion: 2
-    m_Bits: 256
+  _attackZone: {fileID: 8432112593124191652}
   _attackCooldown: 2
---- !u!114 &-2668465150410208154
+--- !u!1 &6622595194854064680
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2863616127118060267}
+  - component: {fileID: 8680636467523269527}
+  m_Layer: 7
+  m_Name: VisibleZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2863616127118060267
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6622595194854064680}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.625, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8176639159936888432}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8680636467523269527
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5864729529251926647}
+  m_GameObject: {fileID: 6622595194854064680}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3795eeac5fc13843884f2fdc9676313, type: 3}
+  m_Script: {fileID: 11500000, guid: 0fc68a664d75ca94cb10ae6176d1a8f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _range: 10
-  _colliderDistance: 0.08
   _targetLayer:
     serializedVersion: 2
     m_Bits: 256
-  IsTracking: 1
+  _offset: 0
+  _color: {r: 1, g: 0.8353394, b: 0, a: 1}
+  _size: {x: 7, y: 1}
+--- !u!1 &6645656236018240885
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2473637867300415058}
+  - component: {fileID: 8432112593124191652}
+  m_Layer: 7
+  m_Name: AttackZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2473637867300415058
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6645656236018240885}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8176639159936888432}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8432112593124191652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6645656236018240885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fc68a664d75ca94cb10ae6176d1a8f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  _offset: 1
+  _color: {r: 1, g: 0, b: 0, a: 1}
+  _size: {x: 1, y: 1}
 --- !u!1 &8642655556651431663
 GameObject:
   m_ObjectHideFlags: 0

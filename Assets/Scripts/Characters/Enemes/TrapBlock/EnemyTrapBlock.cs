@@ -9,13 +9,14 @@ public class EnemyTrapBlock : MonoBehaviour
     [Header("Attack")]
     [SerializeField] private Damager _damager;
 
+    [Header("Viewer")]
+    [SerializeField] private Detector2D _visibleZone;
+
     [SerializeField] private float _forwardSpeed;
     [SerializeField] private float _backSpeed;
 
     [Space]
     [SerializeField] private List<DirectionToMovement2D> _directions;
-
-    private readonly float _offsetRaycast = 0.5f;
 
     private Vector2 _startPosition;
     private Vector2 _endPosition;
@@ -54,15 +55,15 @@ public class EnemyTrapBlock : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (_startPosition == Vector2.zero)
+        if (_isForwardMoving == false && _isBackMoving == false)
             _startPosition = transform.position;
 
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.yellow;
         Vector3 directionRay;
 
         foreach (var direction in _directions)
         {
-            directionRay = direction.Direction * (direction.Range + _offsetRaycast);
+            directionRay = direction.Direction * direction.Range;
             Gizmos.DrawRay(_startPosition, directionRay);
         }
     }
@@ -71,20 +72,15 @@ public class EnemyTrapBlock : MonoBehaviour
     {
         foreach (var direction in _directions)
         {
-            RaycastHit2D[] raycastHits2D = Physics2D.RaycastAll(_startPosition, direction.Direction, direction.Range + _offsetRaycast);
-
-            foreach (var raycastHit2D in raycastHits2D)
+            if (_visibleZone?.TryGetTarget(out Collider2D target) ?? false)
             {
-                if (raycastHit2D.collider == null)
+                if (target.TryGetComponent(out Health _) == false)
                     continue;
 
-                if (raycastHit2D.collider.TryGetComponent(out Health _))
-                {
-                    _endPosition = _startPosition + direction.Direction * direction.Range;
-                    _isForwardMoving = true;
+                _endPosition = _startPosition + direction.Direction * direction.Range;
+                _isForwardMoving = true;
 
-                    return true;
-                }
+                return true;
             }
         }
 

@@ -6,7 +6,7 @@ public class CircleDetector2D : Detector2D
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
+        Gizmos.color = _color;
 
         Gizmos.DrawWireSphere(Center, _radius);
     }
@@ -15,35 +15,19 @@ public class CircleDetector2D : Detector2D
     {
         Collider2D collider2D = Physics2D.OverlapCircle(Center, _radius, _targetLayer);
 
-        if (collider2D != null)
-        {
-            target = collider2D;
-            IsDetected = true;
+        target = collider2D;
+        IsDetected = collider2D != null;
 
-            return true;
-        }
-
-        IsDetected = false;
-        target = null;
-
-        return false;
+        return IsDetected;
     }
 
     public override bool TryGetTargets(out Collider2D[] targets)
     {
         Collider2D[] colliders2D = Physics2D.OverlapCircleAll(Center, _radius, _targetLayer);
 
-        if (colliders2D != null)
-        {
-            targets = colliders2D;
-            IsDetected = true;
+        targets = colliders2D;
+        IsDetected = colliders2D != null;
 
-            return true;
-        }
-
-        IsDetected = false;
-        targets = null;
-
-        return false;
+        return IsDetected;
     }
 }

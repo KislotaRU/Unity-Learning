@@ -17,8 +17,8 @@ public class EnemyFrog : MonoBehaviour
     [SerializeField] private Damager _damager;
     [SerializeField] private Weapon _weapon;
 
-    [Header("View")]
-    [SerializeField] private Viewer _viewer;
+    [Header("Viewer")]
+    [SerializeField] private Detector2D _visibleZone;
 
     [Space]
     [SerializeField] private Way _way;
@@ -90,12 +90,9 @@ public class EnemyFrog : MonoBehaviour
 
     private void HandleView()
     {
-        if (_viewer.IsTracking == false)
-            return;
-
-        if (_viewer.TryGetTarget(out Vector2 targetPosition))
+        if (_visibleZone.TryGetTarget(out Collider2D target))
         {
-            _currentTargetPosition = targetPosition;
+            _currentTargetPosition = target.transform.position;
         }
         else
         {
@@ -106,7 +103,7 @@ public class EnemyFrog : MonoBehaviour
 
     private void HandleAttack()
     {
-        if (_viewer.IsExistsTargetPosition == false)
+        if (_visibleZone.IsDetected == false)
             return;
 
         if (_weapon.TryAttack(out Health targetHealth))
