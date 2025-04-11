@@ -1,36 +1,45 @@
-using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider2D))]
-public class Weapon : MonoBehaviour
+public abstract class Weapon : MonoBehaviour
 {
     [Header("Detector")]
-    [SerializeField] private Detector2D _attackZone;
+    [SerializeField] protected Detector2D _attackZone;
 
     [Header("Parameter Weapon")]
-    [SerializeField] private float _attackCooldown;
-
-    private bool _isRecharged = true;
+    [SerializeField] protected Cooldown _cooldown;
+    [SerializeField] protected bool _isAutoRecharge;
 
     public bool IsPunchAvailable { get; private set; }
 
-    private IEnumerator RechargingAttack()
+    private void OnEnable()
     {
-        yield return new WaitForSeconds(_attackCooldown);
-
-        _isRecharged = true;
+        _cooldown.Devastated += Recharge;
     }
 
-    public bool TryAttack(out Health targetHealth)
+    private void OnDisable()
+    {
+        _cooldown.Devastated -= Recharge;
+    }
+
+    public void Recharge()
+    {
+        if (_isAutoRecharge)
+            _cooldown.Replenish();
+    }
+
+    public void Discharge()
+    {
+        _cooldown.Replenish();
+    }
+
+    public virtual bool TryAttack(out Health targetHealth)
     {
         targetHealth = null;
 
-        if (_isRecharged == false)
+        if (_cooldown.IsFull == false)
             return false;
 
-        _isRecharged = false;
-
-        StartCoroutine(RechargingAttack());
+        _cooldown.Diminish();
 
         if (_attackZone.TryGetTargets(out Collider2D[] targets))
         {

@@ -19,13 +19,11 @@ public class Player : MonoBehaviour
 
     [Header("Attack")]
     [SerializeField] private Damager _damager;
-    [SerializeField] private Weapon _weapon;
+    [SerializeField] private Weapon _katana;
+    [SerializeField] private Weapon _vampirism;
 
     [Header("Collector")]
     [SerializeField] private Collector _collector;
-
-    //[Header("Ability")]
-    //[SerializeField] private CircleDetector2D _vampirism;
 
     private void Update()
     {
@@ -36,7 +34,7 @@ public class Player : MonoBehaviour
         HandleFlip();
 
         HandleAttack();
-        //HandleAbility();
+        HandleAbility();
     }
 
     private void OnEnable()
@@ -77,16 +75,20 @@ public class Player : MonoBehaviour
         if (_inputReader.IsAttacking == false)
             return;
 
-        if (_weapon.TryAttack(out Health targetHealth))
+        if (_katana.TryAttack(out Health targetHealth))
             _damager.Attack(targetHealth);
     }
 
-    //private void HandleAbility()
-    //{
-    //    if (_inputReader.IsVampiring == false)
-    //        return;
+    private void HandleAbility()
+    {
+        if (_inputReader.IsVampiring == false)
+            return;
 
-    //}
+        if (_vampirism.TryAttack(out Health targetHealth))
+        {
+            _damager.Attack(targetHealth);
+        }
+    }
 
     private void HandleRepulsion()
     {

@@ -5,7 +5,7 @@ public abstract class Bar : MonoBehaviour
     private const float Percantages = 100f;
 
     [Header("Target")]
-    [SerializeField] private Health _target;
+    [SerializeField] private Indicator _target;
 
     protected float CurrentValue => _target.CurrentValue;
     protected float MaxValue => _target.MaxValue;
@@ -19,14 +19,14 @@ public abstract class Bar : MonoBehaviour
 
     private void OnEnable()
     {
-        _target.AcceptedHealth += HandleView;
-        _target.AcceptedDamage += HandleView;
+        _target.Increased += HandleView;
+        _target.Decreased += HandleView;
     }
 
     private void OnDisable()
     {
-        _target.AcceptedHealth -= HandleView;
-        _target.AcceptedDamage -= HandleView;
+        _target.Increased -= HandleView;
+        _target.Decreased -= HandleView;
     }
 
     protected abstract void HandleView();
