@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Slider))]
-public class SliderBarHealth : Bar
+public class SliderBar : Bar
 {
     protected Slider _slider;
 

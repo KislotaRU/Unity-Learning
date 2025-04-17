@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class SliderBarHealthSmooth : SliderBarHealth
+public class SliderBarSmooth : SliderBar
 {
     [Header("Parameters Smooth")]
     [SerializeField] private float _speedTranslated;

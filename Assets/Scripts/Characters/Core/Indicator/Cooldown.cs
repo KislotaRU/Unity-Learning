@@ -58,6 +58,8 @@ public class Cooldown : Indicator
             yield return delay;
         }
 
+        base.Decrease(MaxValue);
+
         CurrentCoroutine = null;
     }
 }

@@ -4,7 +4,7 @@ public abstract class Bar : MonoBehaviour
 {
     private const float Percantages = 100f;
 
-    [Header("Target")]
+    [Header("Indicator")]
     [SerializeField] private Indicator _target;
 
     protected float CurrentValue => _target.CurrentValue;

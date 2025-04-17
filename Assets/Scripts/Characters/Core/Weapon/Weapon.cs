@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
@@ -9,7 +10,11 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected Cooldown _cooldown;
     [SerializeField] protected bool _isAutoRecharge;
 
+    public event Action Attacking;
+
     public bool IsPunchAvailable { get; private set; }
+    public bool IsAutoRecharge => _isAutoRecharge;
+    public bool IsAttaked { get; private set; }
 
     private void OnEnable()
     {
@@ -23,23 +28,18 @@ public abstract class Weapon : MonoBehaviour
 
     public void Recharge()
     {
-        if (_isAutoRecharge)
+        if (IsAutoRecharge)
             _cooldown.Replenish();
     }
 
     public void Discharge()
     {
-        _cooldown.Replenish();
+        _cooldown.Diminish();
     }
 
     public virtual bool TryAttack(out Health targetHealth)
     {
         targetHealth = null;
-
-        if (_cooldown.IsFull == false)
-            return false;
-
-        _cooldown.Diminish();
 
         if (_attackZone.TryGetTargets(out Collider2D[] targets))
         {

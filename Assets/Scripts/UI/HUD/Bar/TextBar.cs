@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(TextMeshProUGUI))]
-public class TextBarHealth : Bar
+public class TextBar : Bar
 {
     protected TextMeshProUGUI _textMeshPro;
 
