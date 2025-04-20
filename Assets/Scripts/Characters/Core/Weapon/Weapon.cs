@@ -8,38 +8,34 @@ public abstract class Weapon : MonoBehaviour
 
     [Header("Parameter Weapon")]
     [SerializeField] protected Cooldown _cooldown;
-    [SerializeField] protected bool _isAutoRecharge;
+    [SerializeField] protected bool _isAutoReload;
 
     public event Action Attacking;
 
     public bool IsPunchAvailable { get; private set; }
-    public bool IsAutoRecharge => _isAutoRecharge;
-    public bool IsAttaked { get; private set; }
+    public bool IsAutoReload => _isAutoReload;
+    public bool IsAttacking { get; private set; }
 
     private void OnEnable()
     {
-        _cooldown.Devastated += Recharge;
+        _cooldown.Unloaded += Reload;
     }
 
     private void OnDisable()
     {
-        _cooldown.Devastated -= Recharge;
-    }
-
-    public void Recharge()
-    {
-        if (IsAutoRecharge)
-            _cooldown.Replenish();
-    }
-
-    public void Discharge()
-    {
-        _cooldown.Diminish();
+        _cooldown.Unloaded -= Reload;
     }
 
     public virtual bool TryAttack(out Health targetHealth)
     {
         targetHealth = null;
+
+        if (_cooldown.IsFull == false)
+            return false;
+        
+        _cooldown.Unload();
+
+        Attacking?.Invoke();
 
         if (_attackZone.TryGetTargets(out Collider2D[] targets))
         {
@@ -61,5 +57,23 @@ public abstract class Weapon : MonoBehaviour
         IsPunchAvailable = false;
 
         return false;
+    }
+
+    public bool TryReload()
+    {
+        if (_cooldown.IsEmpty)
+        {
+            _cooldown.Reload();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public void Reload()
+    {
+        if (_isAutoReload)
+            _cooldown.Reload();
     }
 }

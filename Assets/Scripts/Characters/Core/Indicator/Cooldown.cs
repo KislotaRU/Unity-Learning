@@ -1,65 +1,59 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class Cooldown : Indicator
 {
-    [SerializeField] protected float _durationPerSecond;
-    [SerializeField] protected bool _isGradually;
+    [SerializeField, Min(1)] private int _reloadDuration;
+    [SerializeField, Min(1)] private int _unloadDuration;
+
+    private readonly WaitForSeconds _delay = new WaitForSeconds(1f);
+
+    public event Action Unloaded;
 
     protected float ValuePerSecond { get; set; }
 
     protected Coroutine CurrentCoroutine;
 
-    public void Replenish()
+    public void Reload()
     {
-        if (CurrentCoroutine == null)
-            CurrentCoroutine = StartCoroutine(Replenishing());
+        if (CurrentCoroutine != null)
+            StopCoroutine(CurrentCoroutine);
+
+        CurrentCoroutine = StartCoroutine(Replenishing());
     }
 
-    public void Diminish()
+    public void Unload()
     {
-        if (_isGradually)
-        {
-            if (CurrentCoroutine == null)
-                CurrentCoroutine = StartCoroutine(Diminishing());
-        }
-        else
-        {
-            base.Decrease(MaxValue);
-        }
+        if (CurrentCoroutine != null)
+            StopCoroutine(CurrentCoroutine);
+
+        CurrentCoroutine = StartCoroutine(Diminishing());
     }
 
     protected IEnumerator Replenishing()
     {
-        WaitForSeconds delay = new WaitForSeconds(1f);
-
-        ValuePerSecond = Mathf.Round(MaxValue / _durationPerSecond);
+        ValuePerSecond = Mathf.RoundToInt(MaxValue / _reloadDuration);
 
         while (IsFull == false)
         {
             base.Increase(ValuePerSecond);
 
-            yield return delay;
+            yield return _delay;
         }
-
-        CurrentCoroutine = null;
     }
 
     protected IEnumerator Diminishing()
     {
-        WaitForSeconds delay = new WaitForSeconds(1f);
-
-        ValuePerSecond = Mathf.Round(MaxValue / _durationPerSecond);
+        ValuePerSecond = Mathf.RoundToInt(MaxValue / _unloadDuration);
 
         while (IsEmpty == false)
         {
             base.Decrease(ValuePerSecond);
 
-            yield return delay;
+            yield return _delay;
         }
 
-        base.Decrease(MaxValue);
-
-        CurrentCoroutine = null;
+        Unloaded?.Invoke();
     }
 }

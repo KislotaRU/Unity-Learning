@@ -17,6 +17,6 @@ public class Katana : Weapon
 
     private void HandleAnimator()
     {
-        _katanaAnimator.Setup(IsAttaked);
+        _katanaAnimator.Play();
     }
 }

@@ -72,6 +72,9 @@ public class Player : MonoBehaviour
 
     private void HandleAttack()
     {
+        if (_inputReader.IsReloading)
+            _katana.TryReload();
+
         if (_inputReader.IsAttacking == false)
             return;
 
@@ -85,9 +88,7 @@ public class Player : MonoBehaviour
             return;
 
         if (_vampirism.TryAttack(out Health targetHealth))
-        {
             _damager.Attack(targetHealth);
-        }
     }
 
     private void HandleRepulsion()
