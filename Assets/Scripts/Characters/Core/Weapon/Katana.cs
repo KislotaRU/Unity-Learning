@@ -5,18 +5,13 @@ public class Katana : Weapon
     [Header("Animation")]
     [SerializeField] protected KatanaAnimator _katanaAnimator;
 
-    private void OnEnable()
+    private void Update()
     {
-        Attacking += HandleAnimator;
+        HandleAnimation();
     }
 
-    private void OnDisable()
+    private void HandleAnimation()
     {
-        Attacking -= HandleAnimator;
-    }
-
-    private void HandleAnimator()
-    {
-        _katanaAnimator.Play();
+        _katanaAnimator.Setup(IsAttacking);
     }
 }

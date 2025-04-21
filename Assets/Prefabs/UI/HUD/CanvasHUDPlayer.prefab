@@ -30,8 +30,8 @@ RectTransform:
   m_GameObject: {fileID: 5636350703187183269}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2369081554869805712}
   m_Father: {fileID: 0}
@@ -86,7 +86,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &4272285866286720017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,7 +112,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5636350703187183269}
   m_Enabled: 1
-  m_Alpha: 0.9
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -232,7 +232,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8198850804103600051, guid: be21ab472a8e2c8479df6d3c8979e37c, type: 3}
       propertyPath: m_Color.b
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8198850804103600051, guid: be21ab472a8e2c8479df6d3c8979e37c, type: 3}
       propertyPath: m_Color.g
@@ -240,7 +240,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8198850804103600051, guid: be21ab472a8e2c8479df6d3c8979e37c, type: 3}
       propertyPath: m_Color.r
-      value: 0.7924528
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8418867587338349182, guid: be21ab472a8e2c8479df6d3c8979e37c, type: 3}
       propertyPath: m_Pivot.x
@@ -358,15 +358,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8198850804103600051, guid: be21ab472a8e2c8479df6d3c8979e37c, type: 3}
       propertyPath: m_Color.b
-      value: 0.013232097
+      value: 0.101960786
       objectReference: {fileID: 0}
     - target: {fileID: 8198850804103600051, guid: be21ab472a8e2c8479df6d3c8979e37c, type: 3}
       propertyPath: m_Color.g
-      value: 0.5660378
+      value: 0.7176471
       objectReference: {fileID: 0}
     - target: {fileID: 8198850804103600051, guid: be21ab472a8e2c8479df6d3c8979e37c, type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 0.019607844
       objectReference: {fileID: 0}
     - target: {fileID: 8418867587338349182, guid: be21ab472a8e2c8479df6d3c8979e37c, type: 3}
       propertyPath: m_Pivot.x

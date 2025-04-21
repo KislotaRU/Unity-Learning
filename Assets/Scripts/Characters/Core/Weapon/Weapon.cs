@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
@@ -9,34 +8,38 @@ public abstract class Weapon : MonoBehaviour
     [Header("Parameter Weapon")]
     [SerializeField] protected Cooldown _cooldown;
     [SerializeField] protected bool _isAutoReload;
+    [SerializeField] protected Damager _damager;
 
-    public event Action Attacking;
-
-    public bool IsPunchAvailable { get; private set; }
-    public bool IsAutoReload => _isAutoReload;
-    public bool IsAttacking { get; private set; }
+    public bool IsAttacking { get; protected set; }
 
     private void OnEnable()
     {
-        _cooldown.Unloaded += Reload;
+        _cooldown.Unloaded += HandleUnloaded;
     }
 
     private void OnDisable()
     {
-        _cooldown.Unloaded -= Reload;
+        _cooldown.Unloaded -= HandleUnloaded;
     }
 
-    public virtual bool TryAttack(out Health targetHealth)
+    public bool CanAttack()
     {
-        targetHealth = null;
+        return TryGetTarget(out Health targetHealth);
+    }
 
-        if (_cooldown.IsFull == false)
-            return false;
-        
-        _cooldown.Unload();
+    public virtual void Attack()
+    {
+        if (TryUnload() == false)
+            return;
 
-        Attacking?.Invoke();
+        IsAttacking = true;
 
+        if (TryGetTarget(out Health targetHealth))
+            _damager.Attack(targetHealth);
+    }
+
+    protected bool TryGetTarget(out Health targetHealth)
+    {
         if (_attackZone.TryGetTargets(out Collider2D[] targets))
         {
             foreach (Collider2D target in targets)
@@ -48,32 +51,35 @@ public abstract class Weapon : MonoBehaviour
                     continue;
 
                 targetHealth = health;
-                IsPunchAvailable = true;
 
                 return true;
             }
         }
 
-        IsPunchAvailable = false;
+        targetHealth = null;
 
         return false;
     }
 
-    public bool TryReload()
+    protected bool TryUnload()
     {
-        if (_cooldown.IsEmpty)
-        {
-            _cooldown.Reload();
+        if (_cooldown.IsFull == false)
+            return false;
 
-            return true;
-        }
+        _cooldown.Unload();
 
-        return false;
+        return true;
     }
-
-    public void Reload()
+    protected void Reload()
     {
         if (_isAutoReload)
             _cooldown.Reload();
+    }
+
+    private void HandleUnloaded()
+    {
+        IsAttacking = false;
+
+        Reload();
     }
 }

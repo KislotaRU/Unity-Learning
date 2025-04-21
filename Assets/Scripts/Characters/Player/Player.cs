@@ -17,10 +17,9 @@ public class Player : MonoBehaviour
     [SerializeField] private Health _health;
     [SerializeField] private Repulsiver _repulsiver;
 
-    [Header("Attack")]
-    [SerializeField] private Damager _damager;
-    [SerializeField] private Weapon _katana;
-    [SerializeField] private Weapon _vampirism;
+    [Header("Weapon")]
+    [SerializeField] private Katana _katana;
+    [SerializeField] private Vampirism _vampirism;
 
     [Header("Collector")]
     [SerializeField] private Collector _collector;
@@ -72,14 +71,10 @@ public class Player : MonoBehaviour
 
     private void HandleAttack()
     {
-        if (_inputReader.IsReloading)
-            _katana.TryReload();
-
         if (_inputReader.IsAttacking == false)
             return;
 
-        if (_katana.TryAttack(out Health targetHealth))
-            _damager.Attack(targetHealth);
+        _katana.Attack();
     }
 
     private void HandleAbility()
@@ -87,8 +82,7 @@ public class Player : MonoBehaviour
         if (_inputReader.IsVampiring == false)
             return;
 
-        if (_vampirism.TryAttack(out Health targetHealth))
-            _damager.Attack(targetHealth);
+        _vampirism.Attack();
     }
 
     private void HandleRepulsion()

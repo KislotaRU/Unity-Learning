@@ -13,6 +13,6 @@ public class TextBar : Bar
 
     protected override void HandleView()
     {
-        _textMeshPro.text = $"{PercentageValue} %";
+        _textMeshPro.text = $"{Mathf.RoundToInt(PercentageValue)} %";
     }
 }

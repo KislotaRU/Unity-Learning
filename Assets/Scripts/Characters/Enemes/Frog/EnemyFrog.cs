@@ -13,9 +13,8 @@ public class EnemyFrog : MonoBehaviour
     [SerializeField] private Health _health;
     [SerializeField] private Repulsiver _repulsiver;
 
-    [Header("Attack")]
-    [SerializeField] private Damager _damager;
-    [SerializeField] private Weapon _weapon;
+    [Header("Weapon")]
+    [SerializeField] private Katana _katana;
 
     [Header("Viewer")]
     [SerializeField] private Detector2D _visibleZone;
@@ -106,13 +105,15 @@ public class EnemyFrog : MonoBehaviour
         if (_visibleZone.IsDetected == false)
             return;
 
-        if (_weapon.TryAttack(out Health targetHealth))
-            _damager.Attack(targetHealth);
-
-        if (_weapon.IsPunchAvailable)
+        if (_katana.CanAttack())
+        {
             _mover.SetMoveSpeed(0f);
+            _katana.Attack();
+        }
         else
+        {
             _mover.SetMoveSpeed(_followingSpeed);
+        }
     }
 
     private void HandleRepulsion()
