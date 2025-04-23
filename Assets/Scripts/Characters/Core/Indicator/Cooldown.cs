@@ -10,6 +10,8 @@ public class Cooldown : Indicator
     private readonly WaitForSeconds _delay = new WaitForSeconds(1f);
 
     public event Action Unloaded;
+    public event Action Unloading;
+    public event Action Reloading;
 
     protected float ValuePerSecond { get; set; }
 
@@ -35,6 +37,8 @@ public class Cooldown : Indicator
     {
         ValuePerSecond = Mathf.RoundToInt(MaxValue / _reloadDuration);
 
+        Reloading?.Invoke();
+
         while (IsFull == false)
         {
             base.Increase(ValuePerSecond);
@@ -46,6 +50,8 @@ public class Cooldown : Indicator
     protected IEnumerator Diminishing()
     {
         ValuePerSecond = Mathf.RoundToInt(MaxValue / _unloadDuration);
+
+        Unloading?.Invoke();
 
         while (IsEmpty == false)
         {

@@ -5,7 +5,7 @@ public class Katana : Weapon
     [Header("Animation")]
     [SerializeField] protected KatanaAnimator _katanaAnimator;
 
-    private void Update()
+    private void FixedUpdate()
     {
         HandleAnimation();
     }

@@ -20,17 +20,7 @@ public abstract class Detector2D : MonoBehaviour
         FixedPosition = (Vector2)transform.position + (Vector2)transform.right * _offset;
     }
 
-    public virtual bool TryGetTarget(out Collider2D target, Collider2D collider2D = null)
-    {
-        target = collider2D;
+    public abstract bool TryGetTarget(out Collider2D target);
 
-        return IsDetected = collider2D != null;
-    }
-
-    public virtual bool TryGetTargets(out Collider2D[] targets, Collider2D[] colliders2D = null)
-    {
-        targets = colliders2D;
-
-        return IsDetected = colliders2D != null;
-    }
+    public abstract bool TryGetTargets(out Collider2D[] targets);
 }

@@ -82,7 +82,7 @@ public class Player : MonoBehaviour
         if (_inputReader.IsVampiring == false)
             return;
 
-        _vampirism.Attack();
+        _vampirism.Activate();
     }
 
     private void HandleRepulsion()

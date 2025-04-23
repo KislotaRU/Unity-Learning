@@ -11,17 +11,17 @@ public class CircleDetector2D : Detector2D
         Gizmos.DrawWireSphere(Center, _radius);
     }
 
-    public override bool TryGetTarget(out Collider2D target, Collider2D collider2D = null)
+    public override bool TryGetTarget(out Collider2D target)
     {
-        collider2D = Physics2D.OverlapCircle(Center, _radius, _targetLayer);
+        target = Physics2D.OverlapCircle(Center, _radius, _targetLayer);
 
-        return base.TryGetTarget(out target, collider2D);
+        return IsDetected = target != null;
     }
 
-    public override bool TryGetTargets(out Collider2D[] targets, Collider2D[] colliders2D = null)
+    public override bool TryGetTargets(out Collider2D[] targets)
     {
-        colliders2D = Physics2D.OverlapCircleAll(Center, _radius, _targetLayer);
+        targets = Physics2D.OverlapCircleAll(Center, _radius, _targetLayer);
 
-        return base.TryGetTargets(out targets, colliders2D);
+        return IsDetected = targets != null;
     }
 }

@@ -11,4 +11,9 @@ public class Healer : MonoBehaviour
 
     public void Heal(Health targetHealth) =>
         targetHealth.TakeHealth(_healValue);
+
+    public void SetValue(int value)
+    {
+        _healValue = value > 0 ? value : 0;
+    }
 }

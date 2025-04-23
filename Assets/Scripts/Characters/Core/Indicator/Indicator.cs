@@ -15,6 +15,8 @@ public abstract class Indicator : MonoBehaviour
 
     public float MaxValue => _maxValue;
     public float CurrentValue { get; private set; }
+    public float ValueAddition { get; private set; }
+    public float ValueReduction { get; private set; }
     public bool IsFull => CurrentValue == MaxValue;
     public bool IsEmpty => CurrentValue == MinValue;
 
@@ -25,10 +27,14 @@ public abstract class Indicator : MonoBehaviour
 
     protected virtual void Increase(float value)
     {
+        float temporaryCurrentValue = CurrentValue;
+
         if (value < 0)
             return;
 
         CurrentValue = Mathf.Clamp(CurrentValue + value, MinValue, MaxValue);
+
+        ValueAddition = CurrentValue - temporaryCurrentValue;
 
         Increased?.Invoke();
 
@@ -38,10 +44,14 @@ public abstract class Indicator : MonoBehaviour
 
     protected virtual void Decrease(float value)
     {
+        float temporaryCurrentValue = CurrentValue;
+
         if (value < 0)
             return;
 
         CurrentValue = Mathf.Clamp(CurrentValue - value, MinValue, MaxValue);
+
+        ValueReduction = temporaryCurrentValue - CurrentValue;
 
         Decreased?.Invoke();
 

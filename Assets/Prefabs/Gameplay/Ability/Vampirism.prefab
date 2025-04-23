@@ -50,11 +50,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2d35f9a40aa95a4ba06c4db6294a107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackZone: {fileID: 0}
+  _activeZone: {fileID: 4166262243988064180}
   _cooldown: {fileID: 196419669323190686}
   _isAutoReload: 1
-  _damager: {fileID: 2766738443354810655}
   _vampirismAnimator: {fileID: 1465252726166752162}
+  _damager: {fileID: 2766738443354810655}
   _healer: {fileID: 8863434875213551916}
   _ownerHealth: {fileID: 0}
 --- !u!114 &196419669323190686
@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05f054cd187a4aa46a5e4b347126d51b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damageValue: 1
+  _damageValue: 5
 --- !u!114 &8863434875213551916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27df6d0376023f14d86d72c053f6ce24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healValue: 1
+  _healValue: 0
 --- !u!1 &1977765958758543123
 GameObject:
   m_ObjectHideFlags: 0
@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 6110856563491559687}
   - component: {fileID: 1465252726166752162}
   m_Layer: 8
-  m_Name: WeaponView
+  m_Name: AbilityView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -241,7 +241,7 @@ GameObject:
   - component: {fileID: 1240456677583723175}
   - component: {fileID: 4166262243988064180}
   m_Layer: 8
-  m_Name: VampirismZone
+  m_Name: ActiveZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
