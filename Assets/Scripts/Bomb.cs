@@ -4,14 +4,14 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Collider), typeof(Rigidbody))]
-public class Cube : MonoBehaviour
+public class Bomb : MonoBehaviour
 {
-    [SerializeField] private Painter _painter;
+    [SerializeField] Detonator _detonator;
 
-    private readonly float _minDelayDestroy = 2f;
-    private readonly float _maxDelayDestroy = 5f;
+    private readonly float _minDelayExplode = 2f;
+    private readonly float _maxDelayExplode = 5f;
 
-    public event Action<Cube> Destroyed;
+    public event Action<Bomb> Exploded;
 
     private Rigidbody _rigidbody;
 
@@ -25,27 +25,19 @@ public class Cube : MonoBehaviour
         _rigidbody.velocity = Vector3.zero;
         transform.rotation = Quaternion.identity;
         transform.position = position;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.TryGetComponent(out Floor _) == false)
-            return;
-
-        HandlePaint();
 
         StartCoroutine(DestroingWithDelay());
     }
 
     private IEnumerator DestroingWithDelay()
     {
-        yield return new WaitForSeconds(Random.Range(_minDelayDestroy, _maxDelayDestroy));
+        yield return new WaitForSeconds(Random.Range(_minDelayExplode, _maxDelayExplode));
 
-        Destroyed?.Invoke(this);
+        HandleExplosion();
     }
 
-    private void HandlePaint()
+    private void HandleExplosion()
     {
-        _painter.Paint();
+        _detonator.Explode();
     }
 }
