@@ -1,17 +1,13 @@
 using System;
-using System.Collections;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Collider), typeof(Rigidbody))]
 public class Bomb : MonoBehaviour
 {
-    [SerializeField] Detonator _detonator;
+    [SerializeField] private Destroyer _destroyer;
+    [SerializeField] private Detonator _detonator;
 
-    private readonly float _minDelayExplode = 2f;
-    private readonly float _maxDelayExplode = 5f;
-
-    public event Action<Bomb> Exploded;
+    public event Action<Bomb> Detonated;
 
     private Rigidbody _rigidbody;
 
@@ -20,24 +16,39 @@ public class Bomb : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
     }
 
+    private void OnEnable()
+    {
+        _destroyer.Destroyed += HandleExplode;
+        _detonator.Detonated += HandleDetonated;
+    }
+
+    private void OnDisable()
+    {
+        _destroyer.Destroyed -= HandleExplode;
+        _detonator.Detonated -= HandleDetonated;
+    }
+
     public void Initialize(Vector3 position)
     {
         _rigidbody.velocity = Vector3.zero;
         transform.rotation = Quaternion.identity;
         transform.position = position;
 
-        StartCoroutine(DestroingWithDelay());
+        HandleDestroy();
     }
 
-    private IEnumerator DestroingWithDelay()
+    public void HandleDestroy()
     {
-        yield return new WaitForSeconds(Random.Range(_minDelayExplode, _maxDelayExplode));
-
-        HandleExplosion();
+        _destroyer.Destroy();
     }
 
-    private void HandleExplosion()
+    private void HandleExplode()
     {
         _detonator.Explode();
+    }
+
+    private void HandleDetonated()
+    {
+        Detonated?.Invoke(this);
     }
 }

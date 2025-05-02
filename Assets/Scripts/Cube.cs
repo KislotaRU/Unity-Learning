@@ -1,23 +1,30 @@
 using System;
-using System.Collections;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Collider), typeof(Rigidbody))]
 public class Cube : MonoBehaviour
 {
     [SerializeField] private Painter _painter;
-
-    private readonly float _minDelayDestroy = 2f;
-    private readonly float _maxDelayDestroy = 5f;
+    [SerializeField] private Destroyer _destroyer;
 
     public event Action<Cube> Destroyed;
+    public event Action<Vector3> BombSpawning;
 
     private Rigidbody _rigidbody;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+    }
+
+    private void OnEnable()
+    {
+        _destroyer.Destroyed += HandleDestryed;
+    }
+
+    private void OnDisable()
+    {
+        _destroyer.Destroyed -= HandleDestryed;
     }
 
     public void Initialize(Vector3 position)
@@ -34,18 +41,22 @@ public class Cube : MonoBehaviour
 
         HandlePaint();
 
-        StartCoroutine(DestroingWithDelay());
-    }
-
-    private IEnumerator DestroingWithDelay()
-    {
-        yield return new WaitForSeconds(Random.Range(_minDelayDestroy, _maxDelayDestroy));
-
-        Destroyed?.Invoke(this);
+        HandleDestroy();
     }
 
     private void HandlePaint()
     {
         _painter.Paint();
+    }
+
+    private void HandleDestroy()
+    {
+        _destroyer.Destroy();
+    }
+
+    private void HandleDestryed()
+    {
+        Destroyed?.Invoke(this);
+        BombSpawning?.Invoke(transform.position);
     }
 }

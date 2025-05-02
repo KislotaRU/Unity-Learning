@@ -8,13 +8,18 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
     [SerializeField] protected T _prefab;
 
     [Header("Parameters Spawn")]
-    [SerializeField] protected SpawnZone _zone;
-    [Space]
     [SerializeField, Min(0f)] protected float _delay;
+    [Space]
+    [SerializeField] protected bool _autoSpawning;
 
     [Header("Parameters object pool")]
     [SerializeField, Min(0)] protected int _maxSize;
     [SerializeField, Min(0)] protected int _capacity;
+
+    [Header("Counters")]
+    [SerializeField] protected Counter _allCount;
+    [SerializeField] protected Counter _createdCount;
+    [SerializeField] protected Counter _countInScene;
 
     protected ObjectPool<T> _objectPool;
 
@@ -37,12 +42,19 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
 
     private void Start()
     {
-        Spawn();
+        if (_autoSpawning)
+            StartCoroutine(SpawningWithDelay());
     }
 
     public virtual void Spawn()
     {
-        StartCoroutine(SpawningWithDelay());
+        if (_objectPool.CountActive < _maxSize)
+            _objectPool.Get();
+    }
+
+    protected void HandleRelease(T obj)
+    {
+        _objectPool?.Release(obj);
     }
 
     protected IEnumerator SpawningWithDelay()
@@ -51,27 +63,38 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
 
         while (enabled)
         {
-            if (_objectPool.CountActive < _maxSize)
-                _objectPool.Get();
+            Spawn();
 
             yield return delay;
         }
     }
 
-    protected virtual T Create() =>
-        Instantiate(_prefab);
-
-    protected virtual void Get(T obj) =>
-        obj.gameObject.SetActive(true);
-
-    protected virtual void Release(T obj) =>
-        obj.gameObject.SetActive(false);
-
-    protected virtual void Destroy(T obj) =>
-        Destroy(obj.gameObject);
-
-    protected void HandleRelease(T obj)
+    protected virtual T Create()
     {
-        _objectPool?.Release(obj);
+        _allCount.Increase();
+        _createdCount.Increase();
+
+        return Instantiate(_prefab);
+    }
+
+    protected virtual void Get(T obj)
+    {
+        _countInScene.Increase();
+
+        obj.gameObject.SetActive(true);
+    }
+
+    protected virtual void Release(T obj)
+    {
+        _countInScene.Decrease();
+
+        obj.gameObject.SetActive(false);
+    }
+
+    protected virtual void Destroy(T obj)
+    {
+        _allCount.Decrease();
+
+        Destroy(obj.gameObject);
     }
 }

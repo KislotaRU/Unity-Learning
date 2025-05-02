@@ -2,33 +2,34 @@ using UnityEngine;
 
 public class BombSpawner : Spawner<Bomb>
 {
-    public override void Spawn()
+    private Vector3 _spawnPosition;
+
+    public void SpawnInPosition(Vector3 position)
     {
-        if (_objectPool.CountActive < _maxSize)
-            _objectPool.Get();
+        _spawnPosition = position;
+
+        base.Spawn();
     }
 
     protected override Bomb Create()
     {
         Bomb bomb = base.Create();
 
-        bomb.Exploded += HandleRelease;
+        bomb.Detonated += HandleRelease;
 
         return bomb;
     }
 
     protected override void Get(Bomb bomb)
     {
-        Vector3 position = _zone.GetRandomPosition();
-
-        bomb.Initialize(position);
-
         base.Get(bomb);
+
+        bomb.Initialize(_spawnPosition);
     }
 
     protected override void Destroy(Bomb bomb)
     {
-        bomb.Exploded -= HandleRelease;
+        bomb.Detonated -= HandleRelease;
 
         Destroy(bomb.gameObject);
     }
