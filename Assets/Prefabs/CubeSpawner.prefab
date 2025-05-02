@@ -49,14 +49,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefab: {fileID: -161470663936843028, guid: 2bff8caee61efad41bcda1cff05671f9, type: 3}
-  _zone: {fileID: 1089468895868267707}
-  _delay: 0.1
+  _delay: 0.2
   _autoSpawning: 1
   _maxSize: 100
   _capacity: 20
-  _allCount: {fileID: 4819071960413511372}
+  _spawnedCount: {fileID: 4819071960413511372}
   _createdCount: {fileID: 3192448576895897583}
   _countInScene: {fileID: 1572274331571909823}
+  _zone: {fileID: 1089468895868267707}
   _bombSpawner: {fileID: 0}
 --- !u!1 &3352051291621908847
 GameObject:
@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 62674611277283259}
   - component: {fileID: 4819071960413511372}
   m_Layer: 0
-  m_Name: CounterAllCount
+  m_Name: CounterSpawnedCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

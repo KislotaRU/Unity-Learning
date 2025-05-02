@@ -17,7 +17,7 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
     [SerializeField, Min(0)] protected int _capacity;
 
     [Header("Counters")]
-    [SerializeField] protected Counter _allCount;
+    [SerializeField] protected Counter _spawnedCount;
     [SerializeField] protected Counter _createdCount;
     [SerializeField] protected Counter _countInScene;
 
@@ -71,7 +71,6 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
 
     protected virtual T Create()
     {
-        _allCount.Increase();
         _createdCount.Increase();
 
         return Instantiate(_prefab);
@@ -79,6 +78,7 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
 
     protected virtual void Get(T obj)
     {
+        _spawnedCount.Increase();
         _countInScene.Increase();
 
         obj.gameObject.SetActive(true);
@@ -93,7 +93,7 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
 
     protected virtual void Destroy(T obj)
     {
-        _allCount.Decrease();
+        _createdCount.Decrease();
 
         Destroy(obj.gameObject);
     }

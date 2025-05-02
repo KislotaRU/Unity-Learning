@@ -1843,10 +1843,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5519868920471304638, guid: 67b1f92314b78f04f8f1a8a16d964bad, type: 3}
-      propertyPath: _delay
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5519868920471304638, guid: 67b1f92314b78f04f8f1a8a16d964bad, type: 3}
       propertyPath: _bombSpawner
       value: 
       objectReference: {fileID: 2020756581}

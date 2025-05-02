@@ -52,7 +52,7 @@ MonoBehaviour:
   _autoSpawning: 0
   _maxSize: 100
   _capacity: 20
-  _allCount: {fileID: 6004515142146196259}
+  _spawnedCount: {fileID: 6004515142146196259}
   _createdCount: {fileID: 707366920113623524}
   _countInScene: {fileID: 3489502365345429478}
 --- !u!1 &3566359722203646164
@@ -66,7 +66,7 @@ GameObject:
   - component: {fileID: 6335656376301473173}
   - component: {fileID: 6004515142146196259}
   m_Layer: 0
-  m_Name: CounterAllCount
+  m_Name: CounterSpawnedCountCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

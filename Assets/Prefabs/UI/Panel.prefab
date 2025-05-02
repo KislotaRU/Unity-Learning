@@ -263,7 +263,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1223593144991899940, guid: 03137850664405b409b531f75d43dd39, type: 3}
       propertyPath: m_text
-      value: 'All Count:'
+      value: 'Spawned:'
       objectReference: {fileID: 0}
     - target: {fileID: 1223593144991899940, guid: 03137850664405b409b531f75d43dd39, type: 3}
       propertyPath: m_HorizontalAlignment
