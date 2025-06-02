@@ -13,7 +13,9 @@ GameObject:
   - component: {fileID: 332526955701614920}
   - component: {fileID: 5796822122951843924}
   - component: {fileID: 7146167009705359510}
+  - component: {fileID: 3210094292393261686}
   - component: {fileID: 2781552148030149460}
+  - component: {fileID: 1881701547041932276}
   - component: {fileID: 4571577287820652587}
   - component: {fileID: 4262754026547005100}
   m_Layer: 0
@@ -164,9 +166,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa1ff5bd8269ba54b8e9ddc3e4313b79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _birdMover: {fileID: 2781552148030149460}
+  _inputReader: {fileID: 3210094292393261686}
+  _mover: {fileID: 2781552148030149460}
+  _shooter: {fileID: 1881701547041932276}
   _scoreCounter: {fileID: 4571577287820652587}
   _birdCollisionHandler: {fileID: 4262754026547005100}
+--- !u!114 &3210094292393261686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7744373002453244900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef66d0201cff61442872edf5f59bc025, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2781552148030149460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,6 +200,18 @@ MonoBehaviour:
   _rotationSpeed: 1
   _maxRotationZ: 35
   _minRotationZ: -60
+--- !u!114 &1881701547041932276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7744373002453244900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8293c7a973f0b05418dcbe1152344e64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4571577287820652587
 MonoBehaviour:
   m_ObjectHideFlags: 0

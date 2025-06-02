@@ -205,6 +205,7 @@ MonoBehaviour:
   _capacity: 5
   _zone: {fileID: 1965585002}
   _container: {fileID: 305164525}
+  _spawnerBullet: {fileID: 0}
 --- !u!1 &148431557
 GameObject:
   m_ObjectHideFlags: 0

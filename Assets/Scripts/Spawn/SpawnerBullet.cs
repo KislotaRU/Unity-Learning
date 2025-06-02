@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class SpawnerBullet : Spawner<Bullet>
 {
-    [SerializeField] protected SpawnZone _zone;
-
     protected override Bullet Create()
     {
         Bullet bullet = base.Create();
@@ -18,7 +16,7 @@ public class SpawnerBullet : Spawner<Bullet>
 
     protected override void Get(Bullet bullet)
     {
-        Vector3 position = _zone.GetRandomPosition();
+        //Vector3 position = _zone.GetRandomPosition();
 
         //bullet.Initialize(position);
 

@@ -3,23 +3,39 @@ using UnityEngine;
 
 public class Bird : MonoBehaviour
 {
-    [SerializeField] private BirdMover _birdMover;
+    [SerializeField] private InputReader _inputReader;
+    [Space]
+    [SerializeField] private Mover _mover;
+    [SerializeField] private Shooter _shooter;
+    [Space]
     [SerializeField] private ScoreCounter _scoreCounter;
     [SerializeField] private BirdCollisionHandler _birdCollisionHandler;
 
     public Action GameOver;
 
+    private void Update()
+    {
+        HandleMovement();
+        HandleShoot();
+    }
+
     private void OnEnable()
     {
-        _birdCollisionHandler.CollisionDetected += HandelCollision;
+        _birdCollisionHandler.CollisionDetected += HandleCollision;
     }
 
     private void OnDisable()
     {
-        _birdCollisionHandler.CollisionDetected -= HandelCollision;
+        _birdCollisionHandler.CollisionDetected -= HandleCollision;
     }
 
-    private void HandelCollision(IInteractable interactable)
+    public void Reset()
+    {
+        _scoreCounter.Reset();
+        _mover.Reset();
+    }
+
+    private void HandleCollision(IInteractable interactable)
     {
         if (interactable is Bullet)
         {
@@ -31,9 +47,14 @@ public class Bird : MonoBehaviour
         }
     }
 
-    public void Reset()
+    private void HandleMovement()
     {
-        _scoreCounter.Reset();
-        _birdMover.Reset();
+        _mover.Move(_inputReader.IsFlying);
+    }
+
+    private void HandleShoot()
+    {
+        if (_inputReader.IsShooting)
+            _shooter.Shoot();
     }
 }
