@@ -12,6 +12,8 @@ public class Shooter : MonoBehaviour
 
     private bool IsCooldowning => _cooldown > 0;
 
+    private Coroutine _currentCorountine;
+
     private IEnumerator Cooldowning()
     {
         WaitForSeconds delay = new WaitForSeconds(1);
@@ -22,17 +24,18 @@ public class Shooter : MonoBehaviour
 
             yield return delay;
         }
+
+        _currentCorountine = null;
     }
 
     public void Shoot()
     {
-        if (IsCooldowning)
+        if (_currentCorountine != null)
             return;
 
         _cooldown = _maxCooldown;
+        _currentCorountine = StartCoroutine(Cooldowning());
 
         _spawnerBullet.Spawn();
-
-
     }
 }

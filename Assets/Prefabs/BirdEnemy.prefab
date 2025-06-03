@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3431034204054562657}
   - component: {fileID: 2784996712943013240}
   - component: {fileID: 355774916165621799}
+  - component: {fileID: 4517874648057727518}
   m_Layer: 0
   m_Name: BirdEnemy
   m_TagString: Untagged
@@ -133,3 +134,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5ff97fa4681ed34bb81270f67fc7e25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _shooter: {fileID: 0}
+--- !u!50 &4517874648057727518
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3572318845243988036}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 6

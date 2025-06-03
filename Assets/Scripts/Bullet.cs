@@ -1,10 +1,28 @@
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : MonoBehaviour, IInteractable
 {
-    public void Initialize(Vector2 position, Vector2 rotation)
+    [SerializeField] private float _speed;
+    [SerializeField] private Flipper _flipper;
+
+    private Vector2 _direction;
+
+    public void Initialize(Vector2 position, Vector2 direction)
     {
         transform.position = position;
-        transform.rotation = Quaternion.Euler(rotation);
+        
+        _flipper.Flip(direction);
+
+        _direction = direction;
+    }
+
+    private void Update()
+    {
+        Move();
+    }
+
+    private void Move()
+    {
+        transform.Translate(new Vector2(-_direction.x, 0) * _speed * Time.deltaTime);
     }
 }

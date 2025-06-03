@@ -16,6 +16,11 @@ public class Enemy : MonoBehaviour
 
     }
 
+    public void Initialize(Vector2 position)
+    {
+        transform.position = position;
+    }
+
     private void HandleAttack()
     {
 

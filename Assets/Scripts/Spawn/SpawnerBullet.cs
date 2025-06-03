@@ -2,9 +2,16 @@ using UnityEngine;
 
 public class SpawnerBullet : Spawner<Bullet>
 {
+    [Space]
+    [SerializeField] private Transform _container;
+    [Space]
+    [SerializeField] private DirectionBullet _directionBullet;
+
     protected override Bullet Create()
     {
         Bullet bullet = base.Create();
+
+        bullet.transform.parent = _container;
 
         //bullet.Destroyed += HandleRelease;
 
@@ -16,9 +23,7 @@ public class SpawnerBullet : Spawner<Bullet>
 
     protected override void Get(Bullet bullet)
     {
-        //Vector3 position = _zone.GetRandomPosition();
-
-        //bullet.Initialize(position);
+        bullet.Initialize(_directionBullet.transform.position, _directionBullet.transform.right);
 
         base.Get(bullet);
     }

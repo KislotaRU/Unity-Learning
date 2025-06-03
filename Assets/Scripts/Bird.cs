@@ -41,6 +41,10 @@ public class Bird : MonoBehaviour
         {
             GameOver?.Invoke();
         }
+        else if (interactable is Floor)
+        {
+            GameOver?.Invoke();
+        }
         else if (interactable is ScoreZone)
         {
             _scoreCounter.Add();

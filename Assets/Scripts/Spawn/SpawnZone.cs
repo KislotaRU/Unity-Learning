@@ -22,7 +22,7 @@ public class SpawnZone : MonoBehaviour
 
     public Vector2 GetRandomPosition()
     {
-        float positionX = _boxCollider2D.bounds.center.x;
+        float positionX = transform.position.x;
         float positionY = Random.Range(_boxCollider2D.bounds.min.y, _boxCollider2D.bounds.max.y);
 
         return new Vector2(positionX, positionY);

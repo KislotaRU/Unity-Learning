@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 36267196940165693}
   - component: {fileID: 5083986023667620265}
+  - component: {fileID: 3372755053472801812}
+  - component: {fileID: 8078088436995483167}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -84,3 +86,29 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3372755053472801812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7749677802706920895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed873971ad746d3469e5c952583ff5a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 2
+  _flipper: {fileID: 8078088436995483167}
+--- !u!114 &8078088436995483167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7749677802706920895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d6ee846cbb1f314b9780510ab4de521, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

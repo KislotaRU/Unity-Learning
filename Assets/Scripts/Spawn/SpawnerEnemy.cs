@@ -16,9 +16,6 @@ public class SpawnerEnemy : Spawner<Enemy>
 
         enemy.Destroyed += HandleRelease;
 
-        //if (_spawnerBullet != null)
-        //    enemy._spawnerBullet += _spawnerBullet.SpawnInPosition;
-
         return enemy;
     }
 
@@ -26,7 +23,7 @@ public class SpawnerEnemy : Spawner<Enemy>
     {
         Vector3 position = _zone.GetRandomPosition();
 
-        //enemy.Initialize(position);
+        enemy.Initialize(position);
 
         base.Get(enemy);
     }
@@ -34,9 +31,6 @@ public class SpawnerEnemy : Spawner<Enemy>
     protected override void Destroy(Enemy enemy)
     {
         enemy.Destroyed -= HandleRelease;
-
-        //if (_bombSpawner != null)
-        //    enemy.BombSpawning -= _bombSpawner.SpawnInPosition;
 
         Destroy(enemy.gameObject);
     }
