@@ -5,8 +5,6 @@ public class SpawnerEnemy : Spawner<Enemy>
     [SerializeField] private SpawnZone _zone;
     [Space]
     [SerializeField] private Transform _container;
-    [Space]
-    [SerializeField] private SpawnerBullet _spawnerBullet;
 
     protected override Enemy Create()
     {

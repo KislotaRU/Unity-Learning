@@ -39,11 +39,11 @@ public class Bird : MonoBehaviour
     {
         if (interactable is Bullet)
         {
-            GameOver?.Invoke();
+            HandleDie();
         }
         else if (interactable is Floor)
         {
-            GameOver?.Invoke();
+            HandleDie();
         }
         else if (interactable is ScoreZone)
         {
@@ -60,5 +60,10 @@ public class Bird : MonoBehaviour
     {
         if (_inputReader.IsShooting)
             _shooter.Shoot();
+    }
+
+    private void HandleDie()
+    {
+        GameOver?.Invoke();
     }
 }

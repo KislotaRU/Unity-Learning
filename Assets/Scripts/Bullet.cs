@@ -23,6 +23,6 @@ public class Bullet : MonoBehaviour, IInteractable
 
     private void Move()
     {
-        transform.Translate(new Vector2(-_direction.x, 0) * _speed * Time.deltaTime);
+        transform.Translate(_direction * _speed * Time.deltaTime);
     }
 }

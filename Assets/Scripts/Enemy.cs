@@ -7,13 +7,9 @@ public class Enemy : MonoBehaviour
 
     public event Action<Enemy> Destroyed;
 
-    private Vector2 _currentTargetPosition;
-
-    private Vector2 CurrentDirection => (_currentTargetPosition - (Vector2)transform.position).normalized;
-
     private void Update()
     {
-
+        HandleShoot();
     }
 
     public void Initialize(Vector2 position)
@@ -21,9 +17,9 @@ public class Enemy : MonoBehaviour
         transform.position = position;
     }
 
-    private void HandleAttack()
+    private void HandleShoot()
     {
-
+        _shooter.Shoot();
     }
 
     private void HandleDie()
