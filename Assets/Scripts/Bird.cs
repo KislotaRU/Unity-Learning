@@ -38,17 +38,11 @@ public class Bird : MonoBehaviour
     private void HandleCollision(IInteractable interactable)
     {
         if (interactable is Bullet)
-        {
             HandleDie();
-        }
         else if (interactable is Floor)
-        {
             HandleDie();
-        }
         else if (interactable is ScoreZone)
-        {
             _scoreCounter.Add();
-        }
     }
 
     private void HandleMovement()

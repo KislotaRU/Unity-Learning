@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1570751888053865489}
   - component: {fileID: 4641123526144500820}
   m_Layer: 0
-  m_Name: PointToShoot
+  m_Name: DirectionBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69badb754e94ab846ac2f310067149ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _direction: {x: 1, y: 0}
 --- !u!1 &7744373002453244900
 GameObject:
   m_ObjectHideFlags: 0
