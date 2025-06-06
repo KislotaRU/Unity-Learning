@@ -1,27 +1,59 @@
+using System;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour, IInteractable
 {
     [SerializeField] private float _speed;
+    [SerializeField] private CollisionHandler _collisionHandler;
 
-    [SerializeField] private SpriteRenderer _spriteRenderer;
-    private Vector2 _direction;
+    public event Action<Bullet> Destroyed;
 
-    public void Initialize(Vector2 position, Vector2 direction)
-    {
-        transform.position = position;
-        _direction = direction;
-
-        _spriteRenderer.flipX = direction.x > 0 ? true : false;
-    }
+    private IShooter _shooter;
 
     private void Update()
     {
         Move();
     }
 
-    private void Move() 
+    private void OnEnable()
     {
-        transform.Translate(_direction * _speed * Time.deltaTime);
+        _collisionHandler.CollisionDetected += HandleCollision;
+    }
+
+    private void OnDisable()
+    {
+        _collisionHandler.CollisionDetected -= HandleCollision;
+    }
+
+    public void Initialize(Vector2 position, Quaternion rotation, IShooter shooter)
+    {
+        transform.position = position;
+        transform.rotation = rotation;
+
+        _shooter = shooter;
+    }
+
+    private void HandleCollision(IInteractable interactable)
+    {
+        if (interactable is Floor)
+        {
+            HandleDestroy();
+        }
+        else if (interactable is Enemy)
+        {
+            _shooter?.AddScore();
+
+            HandleDestroy();
+        }
+    }
+
+    private void Move()
+    {
+        transform.Translate(transform.right * _speed * Time.deltaTime, Space.World);
+    }
+
+    private void HandleDestroy()
+    {
+        Destroyed?.Invoke(this);
     }
 }

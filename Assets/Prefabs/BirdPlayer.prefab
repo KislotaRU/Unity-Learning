@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5261829553738885456
+--- !u!1 &7452276688508371909
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1570751888053865489}
-  - component: {fileID: 4641123526144500820}
+  - component: {fileID: 5107461798698905772}
   m_Layer: 0
   m_Name: DirectionBullet
   m_TagString: Untagged
@@ -17,13 +16,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1570751888053865489
+--- !u!4 &5107461798698905772
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5261829553738885456}
+  m_GameObject: {fileID: 7452276688508371909}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3, y: 0, z: 0}
@@ -32,19 +31,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8353982863008333679}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4641123526144500820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5261829553738885456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69badb754e94ab846ac2f310067149ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _direction: {x: 1, y: 0}
 --- !u!1 &7744373002453244900
 GameObject:
   m_ObjectHideFlags: 0
@@ -84,7 +70,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4401451421393596503}
-  - {fileID: 1570751888053865489}
+  - {fileID: 5107461798698905772}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2751445475460996199
@@ -200,7 +186,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 6
+  m_Constraints: 4
 --- !u!114 &6928379514852308489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,7 +203,7 @@ MonoBehaviour:
   _mover: {fileID: 2162114165695825341}
   _shooter: {fileID: 4545839219168393743}
   _scoreCounter: {fileID: 838821154052092526}
-  _birdCollisionHandler: {fileID: 5882640202243957127}
+  _collisionHandler: {fileID: 5882640202243957127}
 --- !u!114 &5894653534604568113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -335,4 +321,4 @@ MonoBehaviour:
   _maxSize: 20
   _capacity: 0
   _container: {fileID: 0}
-  _directionBullet: {fileID: 4641123526144500820}
+  _direction: {fileID: 5107461798698905772}

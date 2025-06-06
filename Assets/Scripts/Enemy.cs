@@ -1,10 +1,10 @@
 using System;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IInteractable
 {
     [SerializeField] private Shooter _shooter;
-    [SerializeField] private BirdCollisionHandler _birdCollisionHandler;
+    [SerializeField] private CollisionHandler _collisionHandler;
 
     public event Action<Enemy> Destroyed;
 
@@ -15,12 +15,12 @@ public class Enemy : MonoBehaviour
 
     private void OnEnable()
     {
-        _birdCollisionHandler.CollisionDetected += HandleCollision;
+        _collisionHandler.CollisionDetected += HandleCollision;
     }
 
     private void OnDisable()
     {
-        _birdCollisionHandler.CollisionDetected -= HandleCollision;
+        _collisionHandler.CollisionDetected -= HandleCollision;
     }
 
     public void Initialize(Vector2 position)

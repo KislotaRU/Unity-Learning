@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Bird : MonoBehaviour
+public class Bird : MonoBehaviour, IShooter
 {
     [SerializeField] private InputReader _inputReader;
     [Space]
@@ -9,7 +9,7 @@ public class Bird : MonoBehaviour
     [SerializeField] private Shooter _shooter;
     [Space]
     [SerializeField] private ScoreCounter _scoreCounter;
-    [SerializeField] private BirdCollisionHandler _birdCollisionHandler;
+    [SerializeField] private CollisionHandler _collisionHandler;
 
     public Action GameOver;
 
@@ -21,12 +21,12 @@ public class Bird : MonoBehaviour
 
     private void OnEnable()
     {
-        _birdCollisionHandler.CollisionDetected += HandleCollision;
+        _collisionHandler.CollisionDetected += HandleCollision;
     }
 
     private void OnDisable()
     {
-        _birdCollisionHandler.CollisionDetected -= HandleCollision;
+        _collisionHandler.CollisionDetected -= HandleCollision;
     }
 
     public void Reset()
@@ -35,14 +35,17 @@ public class Bird : MonoBehaviour
         _mover.Reset();
     }
 
+    public void AddScore()
+    {
+        _scoreCounter.Add();
+    }
+
     private void HandleCollision(IInteractable interactable)
     {
         if (interactable is Bullet)
             HandleDie();
         else if (interactable is Floor)
             HandleDie();
-        else if (interactable is ScoreZone)
-            _scoreCounter.Add();
     }
 
     private void HandleMovement()
