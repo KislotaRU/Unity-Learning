@@ -14,6 +14,11 @@ public class Shooter : MonoBehaviour
 
     private Coroutine _currentCorountine;
 
+    private void OnDisable()
+    {
+        _currentCorountine = null;
+    }
+
     private IEnumerator Cooldowning()
     {
         WaitForSeconds delay = new WaitForSeconds(1);
