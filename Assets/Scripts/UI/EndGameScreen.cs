@@ -8,7 +8,6 @@ public class EndGameScreen : Window
     {
         WindowGroup.alpha = 0f;
         WindowGroup.blocksRaycasts = false;
-
         ActionButton.interactable = false;
     }
 
@@ -16,7 +15,6 @@ public class EndGameScreen : Window
     {
         WindowGroup.alpha = 1f;
         WindowGroup.blocksRaycasts = true;
-
         ActionButton.interactable = true;
     }
 

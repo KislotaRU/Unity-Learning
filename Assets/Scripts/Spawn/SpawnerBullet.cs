@@ -2,22 +2,20 @@ using UnityEngine;
 
 public class SpawnerBullet : Spawner<Bullet>
 {
-    [SerializeField] private Transform _container;
-    [Space]
-    [SerializeField] private Transform _direction;
+    [SerializeField] private Transform _position;
 
-    private IShooter _shooter;
+    private IReceiverScore _shooter;
 
     private void Start()
     {
-        _shooter = transform.parent.gameObject.GetComponent<IShooter>();
+        _shooter = transform.parent.gameObject.GetComponent<IReceiverScore>();
     }
 
     protected override Bullet Create()
     {
         Bullet bullet = base.Create();
 
-        bullet.transform.parent = _container;
+        bullet.transform.parent = Containers.BulletContainer;
 
         bullet.Destroyed += HandleRelease;
 
@@ -26,7 +24,7 @@ public class SpawnerBullet : Spawner<Bullet>
 
     protected override void Get(Bullet bullet)
     {
-        bullet.Initialize(_direction.transform.position, _direction.transform.rotation, _shooter);
+        bullet.Initialize(_position.transform.position, _position.transform.rotation, _shooter);
 
         base.Get(bullet);
     }

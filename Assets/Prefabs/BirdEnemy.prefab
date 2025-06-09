@@ -1,36 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3307694886572779026
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 367729812869249254}
-  m_Layer: 0
-  m_Name: ContainerBullet
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &367729812869249254
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3307694886572779026}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8714953137943510330}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3572318845243988036
 GameObject:
   m_ObjectHideFlags: 0
@@ -67,7 +36,6 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2476270381495280442}
-  - {fileID: 367729812869249254}
   - {fileID: 3755247800049178534}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -274,8 +242,7 @@ MonoBehaviour:
   _autoSpawning: 0
   _maxSize: 10
   _capacity: 0
-  _container: {fileID: 367729812869249254}
-  _direction: {fileID: 3755247800049178534}
+  _position: {fileID: 3755247800049178534}
 --- !u!1 &6031605113998700264
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,7 +253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3755247800049178534}
   m_Layer: 0
-  m_Name: DirectionBullet
+  m_Name: PositionBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -301,7 +268,7 @@ Transform:
   m_GameObject: {fileID: 6031605113998700264}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.5, y: 0, z: 0}
+  m_LocalPosition: {x: 3, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -3,14 +3,12 @@ using UnityEngine;
 public class SpawnerEnemy : Spawner<Enemy>
 {
     [SerializeField] private SpawnZone _zone;
-    [Space]
-    [SerializeField] private Transform _container;
 
     protected override Enemy Create()
     {
         Enemy enemy = base.Create();
 
-        enemy.transform.parent = _container;
+        enemy.transform.parent = Containers.EnemyContainer;
 
         enemy.Destroyed += HandleRelease;
 

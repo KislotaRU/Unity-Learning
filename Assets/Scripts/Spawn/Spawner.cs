@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -18,6 +20,8 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
 
     protected ObjectPool<T> _objectPool;
 
+    private HashSet<T> _activeObjects;
+
     private void OnValidate()
     {
         if (_capacity > _maxSize)
@@ -33,6 +37,8 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
                                         collectionCheck: true,
                                         defaultCapacity: _capacity,
                                         maxSize: _maxSize);
+
+        _activeObjects = new HashSet<T>();
     }
 
     private void Start()
@@ -45,6 +51,17 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
     {
         if (_objectPool.CountActive < _maxSize)
             _objectPool.Get();
+    }
+
+    public virtual void Reset()
+    {
+        foreach (var oneObject in _activeObjects.ToList())
+        {
+            if (oneObject != null)
+                _objectPool.Release(oneObject);
+        }
+
+        _objectPool.Clear();
     }
 
     protected void HandleRelease(T obj)
@@ -71,11 +88,15 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
 
     protected virtual void Get(T obj)
     {
+        _activeObjects.Add(obj);
+
         obj.gameObject.SetActive(true);
     }
 
     protected virtual void Release(T obj)
     {
+        _activeObjects.Remove(obj);
+
         obj.gameObject.SetActive(false);
     }
 

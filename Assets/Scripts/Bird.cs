@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Bird : MonoBehaviour, IShooter
+public class Bird : MonoBehaviour, IReceiverScore
 {
     [SerializeField] private InputReader _inputReader;
     [Space]
@@ -44,7 +44,7 @@ public class Bird : MonoBehaviour, IShooter
     {
         if (interactable is Bullet)
             HandleDie();
-        else if (interactable is Floor)
+        else if (interactable is Block)
             HandleDie();
     }
 

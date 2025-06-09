@@ -6,6 +6,18 @@ public class Game : MonoBehaviour
     [SerializeField] private StartScreen _startScreen;
     [SerializeField] private EndGameScreen _endGameScreen;
 
+    [Space]
+    [SerializeField] private Transform _enemyContainer;
+    [SerializeField] private Transform _bulletContainer;
+    [Space]
+    [SerializeField] private SpawnerEnemy _spawnerEnemy;
+
+    private void Awake()
+    {
+        Containers.EnemyContainer = _enemyContainer;
+        Containers.BulletContainer = _bulletContainer;
+    }
+
     private void OnEnable()
     {
         _startScreen.PlayButtonClicked += HandlePlayButtonClick;
@@ -23,12 +35,14 @@ public class Game : MonoBehaviour
     private void Start()
     {
         Time.timeScale = 0;
+
         _startScreen.Open();
     }
 
     private void HandleGameOver()
     {
         Time.timeScale = 0;
+
         _endGameScreen.Open();
     }
 
@@ -46,6 +60,14 @@ public class Game : MonoBehaviour
     private void StartGame()
     {
         Time.timeScale = 1;
+
         _bird.Reset();
+        _spawnerEnemy.Reset();
     }
+}
+
+public static class Containers
+{
+    public static Transform EnemyContainer { get; set; }
+    public static Transform BulletContainer { get; set; }
 }

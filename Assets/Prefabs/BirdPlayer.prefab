@@ -320,5 +320,4 @@ MonoBehaviour:
   _autoSpawning: 0
   _maxSize: 20
   _capacity: 0
-  _container: {fileID: 0}
-  _direction: {fileID: 5107461798698905772}
+  _position: {fileID: 0}

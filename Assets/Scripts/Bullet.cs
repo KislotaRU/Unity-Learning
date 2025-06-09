@@ -8,11 +8,11 @@ public class Bullet : MonoBehaviour, IInteractable
 
     public event Action<Bullet> Destroyed;
 
-    private IShooter _shooter;
+    private IReceiverScore _shooter;
 
     private void Update()
     {
-        Move();
+        HandleMove();
     }
 
     private void OnEnable()
@@ -25,7 +25,7 @@ public class Bullet : MonoBehaviour, IInteractable
         _collisionHandler.CollisionDetected -= HandleCollision;
     }
 
-    public void Initialize(Vector2 position, Quaternion rotation, IShooter shooter)
+    public void Initialize(Vector2 position, Quaternion rotation, IReceiverScore shooter)
     {
         transform.position = position;
         transform.rotation = rotation;
@@ -35,7 +35,7 @@ public class Bullet : MonoBehaviour, IInteractable
 
     private void HandleCollision(IInteractable interactable)
     {
-        if (interactable is Floor)
+        if (interactable is Block)
         {
             HandleDestroy();
         }
@@ -47,7 +47,7 @@ public class Bullet : MonoBehaviour, IInteractable
         }
     }
 
-    private void Move()
+    private void HandleMove()
     {
         transform.Translate(transform.right * _speed * Time.deltaTime, Space.World);
     }
