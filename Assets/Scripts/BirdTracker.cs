@@ -5,7 +5,7 @@ public class BirdTracker : MonoBehaviour
     [SerializeField] private Bird _bird;
     [SerializeField] private float _offsetX;
 
-    private void Update()
+    private void LateUpdate()
     {
         Vector3 position = transform.position;
 

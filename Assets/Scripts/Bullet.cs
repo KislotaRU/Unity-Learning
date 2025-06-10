@@ -6,9 +6,9 @@ public class Bullet : MonoBehaviour, IInteractable
     [SerializeField] private float _speed;
     [SerializeField] private CollisionHandler _collisionHandler;
 
-    public event Action<Bullet> Destroyed;
-
     private IReceiverScore _shooter;
+
+    public event Action<Bullet> Destroyed;
 
     private void Update()
     {

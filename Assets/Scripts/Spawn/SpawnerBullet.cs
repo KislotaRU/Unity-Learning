@@ -6,9 +6,11 @@ public class SpawnerBullet : Spawner<Bullet>
 
     private IReceiverScore _shooter;
 
-    private void Start()
+    protected override void Awake()
     {
-        _shooter = transform.parent.gameObject.GetComponent<IReceiverScore>();
+        base.Awake();
+
+        _shooter = transform.parent.GetComponent<IReceiverScore>();
     }
 
     protected override Bullet Create()

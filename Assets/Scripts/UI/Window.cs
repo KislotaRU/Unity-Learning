@@ -19,9 +19,8 @@ public abstract class Window : MonoBehaviour
         _actionButton.onClick.RemoveListener(HandleButtonClick);
     }
 
-    protected abstract void HandleButtonClick();
-
     public abstract void Open();
     public abstract void Close();
 
+    protected abstract void HandleButtonClick();
 }

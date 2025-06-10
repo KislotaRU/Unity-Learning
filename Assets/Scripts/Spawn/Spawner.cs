@@ -28,7 +28,7 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
             _capacity = _maxSize;
     }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _objectPool = new ObjectPool<T>(createFunc: () => Create(),
                                         actionOnGet: (obj) => Get(obj),

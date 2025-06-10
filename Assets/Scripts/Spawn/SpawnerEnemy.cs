@@ -22,6 +22,8 @@ public class SpawnerEnemy : Spawner<Enemy>
         enemy.Initialize(position);
 
         base.Get(enemy);
+
+        enemy.HandleShoot();
     }
 
     protected override void Destroy(Enemy enemy)

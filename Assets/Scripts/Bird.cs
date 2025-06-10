@@ -11,7 +11,7 @@ public class Bird : MonoBehaviour, IReceiverScore
     [SerializeField] private ScoreCounter _scoreCounter;
     [SerializeField] private CollisionHandler _collisionHandler;
 
-    public Action GameOver;
+    public event Action GameOver;
 
     private void Update()
     {

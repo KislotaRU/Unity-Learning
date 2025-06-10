@@ -8,11 +8,6 @@ public class Enemy : MonoBehaviour, IInteractable
 
     public event Action<Enemy> Destroyed;
 
-    private void Update()
-    {
-        HandleShoot();
-    }
-
     private void OnEnable()
     {
         _collisionHandler.CollisionDetected += HandleCollision;
@@ -28,15 +23,15 @@ public class Enemy : MonoBehaviour, IInteractable
         transform.position = position;
     }
 
+    public void HandleShoot()
+    {
+        _shooter.StartShooting();
+    }
+
     private void HandleCollision(IInteractable interactable)
     {
         if (interactable is Bullet)
             HandleDie();
-    }
-
-    private void HandleShoot()
-    {
-        _shooter.Shoot();
     }
 
     private void HandleDie()
