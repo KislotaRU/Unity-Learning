@@ -10,25 +10,25 @@ public class Shooter : MonoBehaviour
 
     private int _cooldown;
 
-    private Coroutine _corountineCooldowning;
+    private Coroutine _corountineCooldowningProcess;
     private Coroutine _ñorountineShootingProcess;
 
     private bool IsCooldowning => _cooldown > 0;
 
     private void OnDisable()
     {
-        StopShooting();
         StopCooldowning();
+        StopShooting();
     }
 
     public void Shoot()
     {
-        if (_corountineCooldowning != null)
+        if (_corountineCooldowningProcess != null)
             return;
 
         _cooldown = _maxCooldown;
 
-        _corountineCooldowning = StartCoroutine(Cooldowning());
+        _corountineCooldowningProcess = StartCoroutine(CooldowningProcess());
 
         _spawnerBullet.Spawn();
     }
@@ -51,19 +51,20 @@ public class Shooter : MonoBehaviour
 
     private void StopCooldowning()
     {
-        if (_corountineCooldowning == null)
+        if (_corountineCooldowningProcess == null)
             return;
 
-        StopCoroutine(_corountineCooldowning);
+        StopCoroutine(_corountineCooldowningProcess);
 
-        _corountineCooldowning = null;
+        _corountineCooldowningProcess = null;
+        _cooldown = 0;
     }
 
     private IEnumerator ShootingProcess()
     {
         WaitForSeconds delay = new WaitForSeconds(1);
 
-        while (true)
+        while (enabled)
         {
             if (_cooldown <= 0)
                 Shoot();
@@ -72,7 +73,7 @@ public class Shooter : MonoBehaviour
         }
     }
 
-    private IEnumerator Cooldowning()
+    private IEnumerator CooldowningProcess()
     {
         WaitForSeconds delay = new WaitForSeconds(1);
 
@@ -83,6 +84,6 @@ public class Shooter : MonoBehaviour
             yield return delay;
         }
 
-        _corountineCooldowning = null;
+        _corountineCooldowningProcess = null;
     }
 }

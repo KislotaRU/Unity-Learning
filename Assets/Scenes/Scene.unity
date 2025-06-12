@@ -169,7 +169,7 @@ MonoBehaviour:
   _prefab: {fileID: 355774916165621799, guid: 9397fd5a229fb194fbe36fbd081141e5, type: 3}
   _delay: 2
   _autoSpawning: 1
-  _maxSize: 10
+  _maxSize: 1
   _capacity: 0
   _zone: {fileID: 1965585002}
 --- !u!1 &62254471
@@ -919,8 +919,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1170916871}
-  - {fileID: 510887860}
   - {fileID: 617811570}
+  - {fileID: 510887860}
   - {fileID: 154259134}
   m_Father: {fileID: 1076435394}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
