@@ -206,7 +206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _material: {fileID: 2100000, guid: 98d2941df85d43e498d72ca1c53d2790, type: 2}
-  _color: {r: 1, g: 1, b: 1, a: 1}
+  _color: {r: 1, g: 0, b: 0, a: 1}
   _duration: 2
 --- !u!1001 &314457150
 PrefabInstance:
