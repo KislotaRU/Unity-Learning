@@ -1,0 +1,48 @@
+using UnityEngine;
+
+public class SpawnerItem : Spawner<Item>
+{
+    [Header("Parameters SpawnZone")]
+    [SerializeField] protected SpawnZoneStorage _spawnZoneStorage;
+
+    protected override void Start()
+    {
+        for (int i = 0; i < _capacity; i++)
+            if (_spawnZoneStorage.IsFreePosition)
+                _objectPool.Get();
+
+        base.Start();
+    }
+
+    public override void Spawn()
+    {
+        if (_spawnZoneStorage.IsFreePosition)
+            base.Spawn();
+    }
+
+    protected override Item Create()
+    {
+        Item item = base.Create();
+
+        item.transform.parent = _container;
+        item.Collected += HandleRelease;
+
+        return item;
+    }
+
+    protected override void Get(Item item)
+    {
+        Vector3 position = _spawnZoneStorage.GetRandomPosition();
+
+        item.Initialize(_spawnZoneStorage.CurrentSpawnZone, position); 
+
+        base.Get(item);
+    }
+
+    protected override void Destroy(Item item)
+    {
+        item.Collected -= HandleRelease;
+
+        Destroy(item.gameObject);
+    }
+}
