@@ -5,21 +5,20 @@ public class Item : MonoBehaviour
 {
     public event Action<Item> Collected;
 
-    private Vector3 _spawnPosition;
-    private SpawnZone _spawnZone;
+    public Vector3 SpawnPosition { get; private set; }
+    public SpawnZone SpawnZone { get; private set; }
 
     public void Initialize(SpawnZone spawnZone, Vector3 position)
     {
         transform.position = position;
         transform.rotation = Quaternion.identity;
 
-        _spawnZone = spawnZone;
-        _spawnPosition = position;
+        SpawnZone = spawnZone;
+        SpawnPosition = position;
     }
 
     public void HandleCollect()
     {
-        _spawnZone?.ReleasePosition(_spawnPosition);
         Collected?.Invoke(this);
     }
 }

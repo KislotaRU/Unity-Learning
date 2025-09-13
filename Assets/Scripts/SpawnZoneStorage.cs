@@ -9,7 +9,7 @@ public class SpawnZoneStorage : MonoBehaviour
     private List<SpawnZone> _unlockSpawnZones;
 
     public SpawnZone CurrentSpawnZone { get; private set; }
-    public bool IsFreePosition => _unlockSpawnZones.Count > 0;
+    public bool IsFreeZone => _unlockSpawnZones.Count > 0;
 
     private void Awake()
     {
@@ -29,33 +29,32 @@ public class SpawnZoneStorage : MonoBehaviour
 
     public Vector3 GetRandomPosition()
     {
-        int indexSpawnZone;
-        Vector3 randomPosition;
+        int index;
+        Vector3 position;
 
-        RefreshSpawnZones();
+        index = Random.Range(0, _unlockSpawnZones.Count);
+        CurrentSpawnZone = _unlockSpawnZones[index];
 
-        indexSpawnZone = Random.Range(0, _unlockSpawnZones.Count);
-        CurrentSpawnZone = _unlockSpawnZones[indexSpawnZone];
+        position = CurrentSpawnZone.GetRandomPosition();
 
-        randomPosition = CurrentSpawnZone.GetRandomPosition();
-
-        if (CurrentSpawnZone.IsFreeZone == false)
+        if (CurrentSpawnZone.IsFreePosition == false)
         {
             _unlockSpawnZones.Remove(CurrentSpawnZone);
             _lockSpawnZones.Add(CurrentSpawnZone);
         }
 
-        return randomPosition;
+        return position;
     }
 
-    public void RefreshSpawnZones()
+    public void ReleasePosition(SpawnZone spawnZone, Vector3 position)
     {
-        _unlockSpawnZones = new List<SpawnZone>(_spawnZones);
+        spawnZone.ReleasePosition(position);
 
-        _lockSpawnZones.RemoveAll(spawnZone => spawnZone.IsFreeZone);
-
-        foreach (SpawnZone lockSpawnZone in _lockSpawnZones)
-            _unlockSpawnZones.Remove(lockSpawnZone);
+        if (spawnZone.IsFreePosition)
+        {
+            _lockSpawnZones.Remove(spawnZone);
+            _unlockSpawnZones.Add(spawnZone);
+        }
     }
 
     [ContextMenu("Refresh Childs")]

@@ -12,7 +12,7 @@ public class SpawnZone : MonoBehaviour
 
     private BoxCollider _boxCollider;
 
-    public bool IsFreeZone => _unlockPositions.Count > 0;
+    public bool IsFreePosition => _unlockPositions.Count > 0;
 
     private void Awake()
     {
@@ -54,8 +54,8 @@ public class SpawnZone : MonoBehaviour
 
     public void ReleasePosition(Vector3 lockPosition)
     {
-        _lockPositions.Remove(lockPosition);
-        _unlockPositions.Add(lockPosition);
+        if (_lockPositions.Remove(lockPosition))
+            _unlockPositions.Add(lockPosition);
     }
 
     private void GeneratePositions()
