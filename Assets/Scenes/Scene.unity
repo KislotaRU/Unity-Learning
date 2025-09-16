@@ -1605,8 +1605,8 @@ PrefabInstance:
       value: Facility
       objectReference: {fileID: 0}
     - target: {fileID: 6216223724190575501, guid: 5830eb041b6848a4b80eaa9437e2e784, type: 3}
-      propertyPath: _targets.Array.size
-      value: 0
+      propertyPath: _units.Array.size
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6216223724190575501, guid: 5830eb041b6848a4b80eaa9437e2e784, type: 3}
       propertyPath: _units.Array.data[0]
@@ -1618,6 +1618,22 @@ PrefabInstance:
       objectReference: {fileID: 1743258228}
     - target: {fileID: 6216223724190575501, guid: 5830eb041b6848a4b80eaa9437e2e784, type: 3}
       propertyPath: _units.Array.data[2]
+      value: 
+      objectReference: {fileID: 607301821}
+    - target: {fileID: 6216223724190575501, guid: 5830eb041b6848a4b80eaa9437e2e784, type: 3}
+      propertyPath: _temporaryUnits.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6216223724190575501, guid: 5830eb041b6848a4b80eaa9437e2e784, type: 3}
+      propertyPath: _temporaryUnits.Array.data[0]
+      value: 
+      objectReference: {fileID: 1887699455}
+    - target: {fileID: 6216223724190575501, guid: 5830eb041b6848a4b80eaa9437e2e784, type: 3}
+      propertyPath: _temporaryUnits.Array.data[1]
+      value: 
+      objectReference: {fileID: 1743258228}
+    - target: {fileID: 6216223724190575501, guid: 5830eb041b6848a4b80eaa9437e2e784, type: 3}
+      propertyPath: _temporaryUnits.Array.data[2]
       value: 
       objectReference: {fileID: 607301821}
     - target: {fileID: 8900774302348442921, guid: 5830eb041b6848a4b80eaa9437e2e784, type: 3}

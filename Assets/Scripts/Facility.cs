@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class Facility : MonoBehaviour
@@ -8,11 +7,12 @@ public class Facility : MonoBehaviour
     [SerializeField] private Queue<Vector3> _targets;
     [SerializeField] private Scanner _scanner;
 
-    private readonly Dictionary<UnitStateType, List<Unit>> _unitsByState;
+    private Dictionary<UnitStateType, List<Unit>> _unitsByState;
 
     private void Awake()
     {
         _targets = new Queue<Vector3>();
+        _unitsByState = new Dictionary<UnitStateType, List<Unit>>();
 
         Initialize();
     }
@@ -39,15 +39,27 @@ public class Facility : MonoBehaviour
 
     private void HandleCollect()
     {
+        Vector3 targetPosition;
+
+        if (_targets.Count == 0)
+            return;
+
         if (TryGetUnitByState(UnitStateType.Idle, out Unit unit))
         {
-            unit.HandleMoving(_targets.Dequeue());
+            targetPosition = _targets.Dequeue();
+
+            unit.HandleMoving(targetPosition);
         }
     }
 
     public void RegisterUnit(Unit unit)
     {
         unit.StateChanged += HandleUnitStateChanged;
+
+        if (_unitsByState.ContainsKey(unit.CurrentStateType) == false)
+            _unitsByState.Add(unit.CurrentStateType, new List<Unit>());
+
+        _unitsByState[unit.CurrentStateType].Add(unit);
     }
 
     public void UnregisterUnit(Unit unit)
@@ -57,31 +69,17 @@ public class Facility : MonoBehaviour
 
     public bool TryGetUnitByState(UnitStateType stateType, out Unit unit)
     {
-        List<Unit> units;
-
         unit = null;
 
         if (_unitsByState.ContainsKey(stateType) == false)
             return false;
 
-        units = _unitsByState[stateType];
-
-        if (units[0] == null)
+        if (_unitsByState[stateType].Count == 0)
             return false;
 
-        unit = units[0];
+        unit = _unitsByState[stateType][0];
 
-        return true;
-    }
-
-    public List<Unit> GetUnitsInState(UnitStateType state)
-    {
-        return _unitsByState.TryGetValue(state, out var units) ? units : new List<Unit>();
-    }
-
-    public Unit GetFirstAvailableUnit(UnitStateType state)
-    {
-        return GetUnitsInState(state).FirstOrDefault();
+        return unit != null;
     }
 
     private void HandleUnitStateChanged(Unit unit, UnitStateType newState)

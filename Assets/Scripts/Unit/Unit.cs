@@ -18,8 +18,8 @@ public class Unit : MonoBehaviour
     public float MoveSpeed => _moveSpeed;
     public UnitStateType CurrentStateType
     {
-        get 
-        { 
+        get
+        {
             return _currentStateType; 
         }
 
@@ -39,6 +39,7 @@ public class Unit : MonoBehaviour
     private void Awake()
     {
         InitializeStates();
+
         SetState(UnitStateType.Idle);
     }
 
@@ -71,6 +72,7 @@ public class Unit : MonoBehaviour
 
         _previousStateType = CurrentStateType;
         CurrentStateType = newStateType;
+
         _currentState = _states[newStateType];
 
         if (_currentState is IParametrizedState parametrizedState)
