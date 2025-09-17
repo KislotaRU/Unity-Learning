@@ -4,89 +4,60 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    [SerializeField] private float _moveSpeed = 5f;
+    [SerializeField] private MovingStateConfiguration _movingConfiguration;
 
-    public event Action<Unit, UnitStateType> StateChanged;
+    public event Action<Unit, UnitStateType> ChangedState;
 
-    public Vector3 SpawnPosition { get; private set; }
+    private UnitStateMachine _stateMachine;
 
-    private Dictionary<UnitStateType, IUnitState> _states;
-    private IUnitState _currentState;
-    private UnitStateType _currentStateType;
-    private UnitStateType _previousStateType;
-
-    public float MoveSpeed => _moveSpeed;
-    public UnitStateType CurrentStateType
-    {
-        get
-        {
-            return _currentStateType; 
-        }
-
-        private set
-        {
-            if (_currentStateType != value)
-            {
-                _currentStateType = value;
-
-                StateChanged?.Invoke(this, value);
-            }
-        }
-    }
-
-    public UnitStateType PreviousStateType => _previousStateType;
+    public UnitStateType CurrentStateType => _stateMachine.CurrentStateType;
+    public UnitStateType PreviousStateType => _stateMachine.PreviousStateType;
 
     private void Awake()
     {
-        InitializeStates();
+        InitializeStateMachine();
+        HandleIdle();
+    }
 
-        SetState(UnitStateType.Idle);
+    private void OnDisable()
+    {
+        _stateMachine.ChangedState -= HandleChangedState;
     }
 
     private void Update()
     {
-        _currentState?.Update();
+        _stateMachine?.Update();
     }
 
-    public void Initialize(Vector3 position)
+    private void InitializeStateMachine()
     {
-        transform.position = position;
-        transform.rotation = Quaternion.identity;
+        var states = new Dictionary<UnitStateType, IState>
+        {
+            { UnitStateType.Idle, new IdleState(this) },
+            { UnitStateType.Moving, new MovingState(this, _movingConfiguration) },
+            { UnitStateType.Collecting, new CollectingState(this) }
+        };
 
-        SpawnPosition = position;
+        _stateMachine = new UnitStateMachine(states);
+
+        _stateMachine.ChangedState += HandleChangedState;
+    }
+
+    private void HandleChangedState(UnitStateType newStateType)
+    {
+        ChangedState?.Invoke(this, newStateType);
     }
 
     public void HandleIdle()
     {
-        SetState(UnitStateType.Idle);
+        _stateMachine.HandleState<IdleState>(UnitStateType.Idle, idleState => { });
     }
 
-    public void HandleMoving(Vector3 position)
+    public void HandleMoving(Vector3 targetPosition)
     {
-        SetState(UnitStateType.Moving, position);
-    }
-
-    public void SetState(UnitStateType newStateType, params object[] args)
-    {
-        _currentState?.Exit();
-
-        _previousStateType = CurrentStateType;
-        CurrentStateType = newStateType;
-
-        _currentState = _states[newStateType];
-
-        if (_currentState is IParametrizedState parametrizedState)
-            parametrizedState.SetParameters(args);
-
-        _currentState.Enter();
-    }
-
-    private void InitializeStates()
-    {
-        _states = new Dictionary<UnitStateType, IUnitState>
+        _stateMachine.HandleState<MovingState>(UnitStateType.Moving, movingState =>
         {
-            { UnitStateType.Idle, new IdleState(this) },
-            { UnitStateType.Moving, new MovingState(this) }
-        };
+            movingState.SetTargetPosition(targetPosition);
+        });
     }
 }

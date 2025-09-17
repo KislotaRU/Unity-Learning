@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class IdleState : IUnitState
+public class IdleState : BaseState
 {
     private readonly Unit _unit;
 
@@ -8,10 +8,4 @@ public class IdleState : IUnitState
     {
         _unit = unit;
     }
-
-    public void Enter() { }
-
-    public void Exit() { }
-
-    public void Update() { }
 }

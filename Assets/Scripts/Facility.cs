@@ -13,7 +13,10 @@ public class Facility : MonoBehaviour
     {
         _targets = new Queue<Vector3>();
         _unitsByState = new Dictionary<UnitStateType, List<Unit>>();
+    }
 
+    private void Start()
+    {
         Initialize();
     }
 
@@ -54,7 +57,7 @@ public class Facility : MonoBehaviour
 
     public void RegisterUnit(Unit unit)
     {
-        unit.StateChanged += HandleUnitStateChanged;
+        unit.ChangedState += HandleUnitStateChanged;
 
         if (_unitsByState.ContainsKey(unit.CurrentStateType) == false)
             _unitsByState.Add(unit.CurrentStateType, new List<Unit>());
@@ -64,7 +67,7 @@ public class Facility : MonoBehaviour
 
     public void UnregisterUnit(Unit unit)
     {
-        unit.StateChanged -= HandleUnitStateChanged;
+        unit.ChangedState -= HandleUnitStateChanged;
     }
 
     public bool TryGetUnitByState(UnitStateType stateType, out Unit unit)
@@ -82,16 +85,16 @@ public class Facility : MonoBehaviour
         return unit != null;
     }
 
-    private void HandleUnitStateChanged(Unit unit, UnitStateType newState)
+    private void HandleUnitStateChanged(Unit unit, UnitStateType newStateType)
     {
         _unitsByState[unit.PreviousStateType].Remove(unit);
 
         if (_unitsByState[unit.PreviousStateType].Count == 0)
             _unitsByState.Remove(unit.PreviousStateType);
 
-        if (_unitsByState.ContainsKey(newState) == false)
-            _unitsByState.Add(newState, new List<Unit>());
+        if (_unitsByState.ContainsKey(newStateType) == false)
+            _unitsByState.Add(newStateType, new List<Unit>());
 
-        _unitsByState[newState].Add(unit);
+        _unitsByState[newStateType].Add(unit);
     }
 }

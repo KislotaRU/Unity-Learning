@@ -739,7 +739,7 @@ MonoBehaviour:
   _prefab: {fileID: 4656390470560149144, guid: e8f6137f0ca0abd4b8ecdf5ae3535c22, type: 3}
   _delay: 3
   _autoSpawning: 1
-  _maxSize: 3
+  _maxSize: 5
   _capacity: 1
   _spawnZoneStorage: {fileID: 425531130}
 --- !u!1001 &607301819
@@ -1213,8 +1213,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1076435391}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.46591023, y: 0.1336668, z: -0.07134317, w: -0.87176317}
-  m_LocalPosition: {x: 5.8312216, y: 15.491108, z: -9.520321}
+  m_LocalRotation: {x: -0.42359653, y: 0.056223385, z: -0.026278287, w: -0.90372247}
+  m_LocalPosition: {x: 4.5542517, y: 7.614912, z: -4.5829535}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

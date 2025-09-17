@@ -1,33 +1,36 @@
 using UnityEngine;
 
-public class MovingState : IUnitState, IParametrizedState
+public class MovingState : BaseState
 {
+    private const float MaxDistance = 0.05f;
+
     private readonly Unit _unit;
+    private readonly MovingStateConfiguration _configuration;
 
     private Vector3 _targetPosition;
 
-    public MovingState(Unit unit)
+    private Vector3 Position
+    {
+        get => _unit.transform.position;
+        set => _unit.transform.position = value;
+    }
+
+    public MovingState(Unit unit, MovingStateConfiguration configuration)
     {
         _unit = unit;
+        _configuration = configuration;
     }
 
-    public void SetParameters(params object[] args)
+    public void SetTargetPosition(Vector3 targetPosition) =>
+        _targetPosition = targetPosition;
+
+    public override void Update()
     {
-        if (args.Length > 0 && args[0] is Vector3 target)
-            _targetPosition = target;
-    }
+        Position = Vector3.MoveTowards(Position, _targetPosition, _configuration.MoveSpeed * Time.deltaTime);
 
-    public void Enter() { }
-
-    public void Update()
-    {
-        _unit.transform.position = Vector3.MoveTowards(_unit.transform.position, _targetPosition, _unit.MoveSpeed * Time.deltaTime);
-
-        if (Vector3.Distance(_unit.transform.position, _targetPosition) < 0.1f)
+        if ((_targetPosition - Position).sqrMagnitude <= MaxDistance)
         {
-            _unit.SetState(UnitStateType.Idle);
+            _unit.HandleIdle();
         }
     }
-
-    public void Exit() { }
 }
