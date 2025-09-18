@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class IdleState : BaseState
+public class IdleState : State
 {
     private readonly Unit _unit;
 

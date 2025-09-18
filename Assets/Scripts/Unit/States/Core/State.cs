@@ -1,4 +1,4 @@
-public abstract class BaseState : IState
+public abstract class State : IState
 {
     public virtual void Enter() { }
 

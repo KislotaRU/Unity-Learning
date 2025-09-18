@@ -43,6 +43,7 @@ public class Facility : MonoBehaviour
     private void HandleCollect()
     {
         Vector3 targetPosition;
+        ICommand command;
 
         if (_targets.Count == 0)
             return;
@@ -51,7 +52,9 @@ public class Facility : MonoBehaviour
         {
             targetPosition = _targets.Dequeue();
 
-            unit.HandleMoving(targetPosition);
+            command = new MoveCommand(unit, targetPosition);
+
+            unit.AddCommand(command);
         }
     }
 

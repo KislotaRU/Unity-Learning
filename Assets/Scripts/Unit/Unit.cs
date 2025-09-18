@@ -9,14 +9,22 @@ public class Unit : MonoBehaviour
     public event Action<Unit, UnitStateType> ChangedState;
 
     private UnitStateMachine _stateMachine;
+    private HandlerCommand _handlerCommand;
 
+    public UnitStateMachine StateMachine => _stateMachine;
     public UnitStateType CurrentStateType => _stateMachine.CurrentStateType;
     public UnitStateType PreviousStateType => _stateMachine.PreviousStateType;
 
     private void Awake()
     {
         InitializeStateMachine();
-        HandleIdle();
+
+        _handlerCommand = new HandlerCommand();
+    }
+
+    private void OnEnable()
+    {
+        _stateMachine.ChangedState += HandleChangedState;
     }
 
     private void OnDisable()
@@ -39,25 +47,14 @@ public class Unit : MonoBehaviour
         };
 
         _stateMachine = new UnitStateMachine(states);
-
-        _stateMachine.ChangedState += HandleChangedState;
     }
 
-    private void HandleChangedState(UnitStateType newStateType)
-    {
+    public void AddCommand(ICommand command) =>
+        _handlerCommand.Enqueue(command);
+
+    public void ResetCommands() =>
+        _handlerCommand.Clear();
+
+    private void HandleChangedState(UnitStateType newStateType) =>
         ChangedState?.Invoke(this, newStateType);
-    }
-
-    public void HandleIdle()
-    {
-        _stateMachine.HandleState<IdleState>(UnitStateType.Idle, idleState => { });
-    }
-
-    public void HandleMoving(Vector3 targetPosition)
-    {
-        _stateMachine.HandleState<MovingState>(UnitStateType.Moving, movingState =>
-        {
-            movingState.SetTargetPosition(targetPosition);
-        });
-    }
 }

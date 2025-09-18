@@ -1,11 +1,14 @@
+using System;
 using UnityEngine;
 
-public class MovingState : BaseState
+public class MovingState : State
 {
     private const float MaxDistance = 0.05f;
 
     private readonly Unit _unit;
     private readonly MovingStateConfiguration _configuration;
+
+    public event Action ReachedTarget;
 
     private Vector3 _targetPosition;
 
@@ -30,7 +33,7 @@ public class MovingState : BaseState
 
         if ((_targetPosition - Position).sqrMagnitude <= MaxDistance)
         {
-            _unit.HandleIdle();
+            ReachedTarget?.Invoke();
         }
     }
 }

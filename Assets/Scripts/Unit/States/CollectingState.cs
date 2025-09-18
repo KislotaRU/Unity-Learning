@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CollectingState : BaseState
+public class CollectingState : State
 {
     private readonly Unit _unit;
     
