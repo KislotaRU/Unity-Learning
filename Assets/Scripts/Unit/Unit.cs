@@ -4,32 +4,31 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    [SerializeField] private MovingStateConfiguration _movingConfiguration;
+    [SerializeField] private MovingConfiguration _movingConfiguration;
 
-    public event Action<Unit, UnitStateType> ChangedState;
+    public event Action<Unit> CompletedCommand;
 
     private UnitStateMachine _stateMachine;
-    private HandlerCommand _handlerCommand;
+    private CommandHandler _commandHandler;
 
     public UnitStateMachine StateMachine => _stateMachine;
-    public UnitStateType CurrentStateType => _stateMachine.CurrentStateType;
-    public UnitStateType PreviousStateType => _stateMachine.PreviousStateType;
+    public bool IsFree => _commandHandler.IsProcess == false;
 
     private void Awake()
     {
         InitializeStateMachine();
 
-        _handlerCommand = new HandlerCommand();
+        _commandHandler = new CommandHandler();
     }
 
     private void OnEnable()
     {
-        _stateMachine.ChangedState += HandleChangedState;
+        _commandHandler.CompletedCommand += HandleCommandHandler;
     }
 
     private void OnDisable()
     {
-        _stateMachine.ChangedState -= HandleChangedState;
+        _commandHandler.CompletedCommand -= HandleCommandHandler;
     }
 
     private void Update()
@@ -50,11 +49,11 @@ public class Unit : MonoBehaviour
     }
 
     public void AddCommand(ICommand command) =>
-        _handlerCommand.Enqueue(command);
+        _commandHandler.Enqueue(command);
 
     public void ResetCommands() =>
-        _handlerCommand.Clear();
+        _commandHandler.Clear();
 
-    private void HandleChangedState(UnitStateType newStateType) =>
-        ChangedState?.Invoke(this, newStateType);
+    private void HandleCommandHandler() =>
+        CompletedCommand?.Invoke(this);
 }

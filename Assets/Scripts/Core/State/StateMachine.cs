@@ -5,7 +5,7 @@ public abstract class StateMachine<T> where T: Enum
 {
     protected readonly Dictionary<T, IState> _states;
 
-    public event Action<T> ChangedState;
+    public event Action ChangedState;
 
     protected IState _currentState;
 
@@ -20,17 +20,12 @@ public abstract class StateMachine<T> where T: Enum
         _states = new Dictionary<T, IState>(states);
     }
 
-    public void HandleState<K>(T newStateType, Action<K> setParameters) where K : class, IState
+    public void SetState<K>(T newStateType, Action<K> setParameters) where K : class, IState
     {
         var newState = _states[newStateType] as K;
 
         setParameters?.Invoke(newState);
 
-        SetState(newStateType, newState);
-    }
-
-    private void SetState(T newStateType, IState newState)
-    {
         _currentState?.Exit();
 
         PreviousStateType = CurrentStateType;
@@ -38,7 +33,7 @@ public abstract class StateMachine<T> where T: Enum
         CurrentStateType = newStateType;
         _currentState = newState;
 
-        ChangedState?.Invoke(CurrentStateType);
+        ChangedState?.Invoke();
 
         _currentState.Enter();
     }

@@ -4,15 +4,15 @@ using UnityEngine;
 public class Facility : MonoBehaviour
 {
     [SerializeField] private List<Unit> _units;
+    [SerializeField] private List<Unit> _freeUnits;
     [SerializeField] private Queue<Vector3> _targets;
     [SerializeField] private Scanner _scanner;
-
-    private Dictionary<UnitStateType, List<Unit>> _unitsByState;
+    [SerializeField] private Transform _basket;
 
     private void Awake()
     {
         _targets = new Queue<Vector3>();
-        _unitsByState = new Dictionary<UnitStateType, List<Unit>>();
+        _freeUnits = new List<Unit>();
     }
 
     private void Start()
@@ -43,61 +43,44 @@ public class Facility : MonoBehaviour
     private void HandleCollect()
     {
         Vector3 targetPosition;
-        ICommand command;
 
         if (_targets.Count == 0)
             return;
 
-        if (TryGetUnitByState(UnitStateType.Idle, out Unit unit))
+        if (TryGetFreeUnit(out Unit unit))
         {
+            _freeUnits.Remove(unit);
+
             targetPosition = _targets.Dequeue();
 
-            command = new MoveCommand(unit, targetPosition);
-
-            unit.AddCommand(command);
+            unit.ResetCommands();
+            unit.AddCommand(new MoveCommand(unit, targetPosition));
+            unit.AddCommand(new CollectCommand(unit));
+            unit.AddCommand(new MoveCommand(unit, _basket.transform.position));
         }
     }
 
     public void RegisterUnit(Unit unit)
     {
-        unit.ChangedState += HandleUnitStateChanged;
+        unit.CompletedCommand += HandleUnit;
 
-        if (_unitsByState.ContainsKey(unit.CurrentStateType) == false)
-            _unitsByState.Add(unit.CurrentStateType, new List<Unit>());
-
-        _unitsByState[unit.CurrentStateType].Add(unit);
+        if (unit.IsFree)
+            _freeUnits.Add(unit);
     }
 
     public void UnregisterUnit(Unit unit)
     {
-        unit.ChangedState -= HandleUnitStateChanged;
+        unit.CompletedCommand -= HandleUnit;
     }
 
-    public bool TryGetUnitByState(UnitStateType stateType, out Unit unit)
+    public bool TryGetFreeUnit(out Unit unit)
     {
-        unit = null;
-
-        if (_unitsByState.ContainsKey(stateType) == false)
-            return false;
-
-        if (_unitsByState[stateType].Count == 0)
-            return false;
-
-        unit = _unitsByState[stateType][0];
-
-        return unit != null;
+        return unit = _freeUnits.Count > 0 ? _freeUnits[0] : null;
     }
 
-    private void HandleUnitStateChanged(Unit unit, UnitStateType newStateType)
+    private void HandleUnit(Unit unit)
     {
-        _unitsByState[unit.PreviousStateType].Remove(unit);
-
-        if (_unitsByState[unit.PreviousStateType].Count == 0)
-            _unitsByState.Remove(unit.PreviousStateType);
-
-        if (_unitsByState.ContainsKey(newStateType) == false)
-            _unitsByState.Add(newStateType, new List<Unit>());
-
-        _unitsByState[newStateType].Add(unit);
+        if (unit.IsFree)
+            _freeUnits.Add(unit);
     }
 }

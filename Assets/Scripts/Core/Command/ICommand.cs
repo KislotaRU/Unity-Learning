@@ -7,5 +7,6 @@ public interface ICommand
     bool IsCompleted { get; }
 
     void Execute();
+    void CanExecute();
     void Undo();
 }

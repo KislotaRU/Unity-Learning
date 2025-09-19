@@ -6,7 +6,7 @@ public class MovingState : State
     private const float MaxDistance = 0.05f;
 
     private readonly Unit _unit;
-    private readonly MovingStateConfiguration _configuration;
+    private readonly MovingConfiguration _configuration;
 
     public event Action ReachedTarget;
 
@@ -18,7 +18,7 @@ public class MovingState : State
         set => _unit.transform.position = value;
     }
 
-    public MovingState(Unit unit, MovingStateConfiguration configuration)
+    public MovingState(Unit unit, MovingConfiguration configuration)
     {
         _unit = unit;
         _configuration = configuration;

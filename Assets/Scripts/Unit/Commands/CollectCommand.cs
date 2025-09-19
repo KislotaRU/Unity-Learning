@@ -1,25 +1,21 @@
 using System;
-using UnityEngine;
 
-public class MoveCommand : Command
+public class CollectCommand : Command
 {
     private Unit _unit;
-    private Vector3 _targetPosition;
 
     public override event Action Completed;
 
-    public MoveCommand(Unit unit, Vector3 targetPosition)
+    public CollectCommand(Unit unit)
     {
         _unit = unit;
-        _targetPosition = targetPosition;
     }
 
     public override void Execute()
     {
-        _unit.StateMachine.SetState<MovingState>(UnitStateType.Moving, movingState =>
+        _unit.StateMachine.SetState<CollectingState>(UnitStateType.Collecting, collectingState =>
         {
-            movingState.SetTargetPosition(_targetPosition);
-            movingState.ReachedTarget += HandleCommandCompleted;
+            collectingState.Collected += HandleCommandCompleted;
         });
     }
 

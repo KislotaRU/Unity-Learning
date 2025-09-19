@@ -8,5 +8,7 @@ public abstract class Command : ICommand
 
     public abstract void Execute();
 
+    public virtual void CanExecute() { }
+
     public abstract void Undo();
 }
