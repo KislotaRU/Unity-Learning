@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class MovingState : State
 {
-    private const float MaxDistance = 0.05f;
-
     private readonly Unit _unit;
     private readonly MovingConfiguration _configuration;
 
@@ -31,8 +29,10 @@ public class MovingState : State
     {
         Position = Vector3.MoveTowards(Position, _targetPosition, _configuration.MoveSpeed * Time.deltaTime);
 
-        if ((_targetPosition - Position).sqrMagnitude <= MaxDistance)
+        if ((_targetPosition - Position).sqrMagnitude <= 0)
         {
+            _unit.StateMachine.SetState<IdleState>(UnitStateType.Idle, null);
+
             ReachedTarget?.Invoke();
         }
     }

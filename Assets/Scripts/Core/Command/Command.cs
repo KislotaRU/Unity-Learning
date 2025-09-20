@@ -2,7 +2,7 @@ using System;
 
 public abstract class Command : ICommand
 {
-    public abstract event Action Completed;
+    public event Action Completed;
 
     public bool IsCompleted { get; protected set; }
 
@@ -10,5 +10,15 @@ public abstract class Command : ICommand
 
     public virtual void CanExecute() { }
 
-    public abstract void Undo();
+    public virtual void Undo()
+    {
+        HandleCommandCompleted();
+    }
+
+    protected virtual void HandleCommandCompleted()
+    {
+        IsCompleted = true;
+
+        Completed?.Invoke();
+    }
 }

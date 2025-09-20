@@ -5,8 +5,9 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
     [SerializeField] private MovingConfiguration _movingConfiguration;
+    [SerializeField] private Transform _hand;
 
-    public event Action<Unit> CompletedCommand;
+    public event Action<Unit> CompletedCommands;
 
     private UnitStateMachine _stateMachine;
     private CommandHandler _commandHandler;
@@ -23,18 +24,24 @@ public class Unit : MonoBehaviour
 
     private void OnEnable()
     {
-        _commandHandler.CompletedCommand += HandleCommandHandler;
+        _commandHandler.Completed += HandleCommandHandler;
     }
 
     private void OnDisable()
     {
-        _commandHandler.CompletedCommand -= HandleCommandHandler;
+        _commandHandler.Completed -= HandleCommandHandler;
     }
 
     private void Update()
     {
         _stateMachine?.Update();
     }
+
+    public void AddCommand(ICommand command) =>
+        _commandHandler.Enqueue(command);
+
+    public void ResetCommands() =>
+        _commandHandler.Clear();
 
     private void InitializeStateMachine()
     {
@@ -48,12 +55,6 @@ public class Unit : MonoBehaviour
         _stateMachine = new UnitStateMachine(states);
     }
 
-    public void AddCommand(ICommand command) =>
-        _commandHandler.Enqueue(command);
-
-    public void ResetCommands() =>
-        _commandHandler.Clear();
-
     private void HandleCommandHandler() =>
-        CompletedCommand?.Invoke(this);
+        CompletedCommands?.Invoke(this);
 }

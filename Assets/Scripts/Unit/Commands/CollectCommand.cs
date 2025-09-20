@@ -1,10 +1,8 @@
-using System;
+using UnityEngine;
 
 public class CollectCommand : Command
 {
     private Unit _unit;
-
-    public override event Action Completed;
 
     public CollectCommand(Unit unit)
     {
@@ -17,19 +15,5 @@ public class CollectCommand : Command
         {
             collectingState.Collected += HandleCommandCompleted;
         });
-    }
-
-    public override void Undo()
-    {
-        HandleCommandCompleted();
-    }
-
-    private void HandleCommandCompleted()
-    {
-        IsCompleted = true;
-
-        //_unit.StateMachine.SetState<IdleState>(UnitStateType.Idle, null);
-
-        Completed?.Invoke();
     }
 }

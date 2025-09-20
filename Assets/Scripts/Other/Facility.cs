@@ -29,7 +29,12 @@ public class Facility : MonoBehaviour
     private void Initialize()
     {
         foreach (var unit in _units)
+        {
             RegisterUnit(unit);
+
+            if (unit.IsFree)
+                _freeUnits.Add(unit);
+        }
     }
 
     private void HandleScanner()
@@ -60,27 +65,22 @@ public class Facility : MonoBehaviour
         }
     }
 
-    public void RegisterUnit(Unit unit)
-    {
-        unit.CompletedCommand += HandleUnit;
-
-        if (unit.IsFree)
-            _freeUnits.Add(unit);
-    }
-
-    public void UnregisterUnit(Unit unit)
-    {
-        unit.CompletedCommand -= HandleUnit;
-    }
-
-    public bool TryGetFreeUnit(out Unit unit)
-    {
-        return unit = _freeUnits.Count > 0 ? _freeUnits[0] : null;
-    }
-
     private void HandleUnit(Unit unit)
     {
         if (unit.IsFree)
             _freeUnits.Add(unit);
     }
+
+    private void RegisterUnit(Unit unit)
+    {
+        unit.CompletedCommands += HandleUnit;
+    }
+
+    private void UnregisterUnit(Unit unit)
+    {
+        unit.CompletedCommands -= HandleUnit;
+    }
+
+    private bool TryGetFreeUnit(out Unit unit) =>
+        unit = _freeUnits.Count > 0 ? _freeUnits[0] : null;
 }

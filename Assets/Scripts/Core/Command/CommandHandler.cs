@@ -3,60 +3,53 @@ using System.Collections.Generic;
 
 public class CommandHandler
 {
-    private Queue<ICommand> _commandQueue;
+    private Queue<ICommand> _commands;
     private ICommand _currentCommand;
 
-    public event Action CompletedCommand;
+    public event Action Completed;
 
-    public bool IsProcess {  get; private set; }
+    public bool IsProcess => _currentCommand != null || _commands.Count > 0;
 
     public CommandHandler()
     {
-        _commandQueue = new Queue<ICommand>();
+        _commands = new Queue<ICommand>();
     }
 
     public void Enqueue(ICommand command)
     {
-        _commandQueue.Enqueue(command);
+        _commands.Enqueue(command);
 
         Process();
     }
 
     public void Clear()
     {
-        _commandQueue.Clear();
+        _commands.Clear();
         _currentCommand?.Undo();
     }
 
     private void Process()
     {
-        if (_currentCommand != null && _currentCommand.IsCompleted == false)
+        if (_currentCommand?.IsCompleted == false)
             return;
 
-        if (_commandQueue.Count > 0)
+        if (_commands.Count == 0)
         {
-            IsProcess = true;
+            _currentCommand = null;
+            Completed?.Invoke();
 
-            _currentCommand = _commandQueue.Dequeue();
-            _currentCommand.Execute();
+            return;
+        }
 
-            _currentCommand.Completed += HandleCommandCompleted;
-        }
-        else
-        {
-            IsProcess = false;
-        }
+        _currentCommand = _commands.Dequeue();
+        _currentCommand.Completed += HandleCompleted;
+
+        _currentCommand.Execute();
     }
 
-    private void HandleCommandCompleted()
+    private void HandleCompleted()
     {
-        _currentCommand.Completed -= HandleCommandCompleted;
-        _currentCommand = null;
-
-        if (_commandQueue.Count == 0)
-            IsProcess = false;
-
-        CompletedCommand?.Invoke();
+        _currentCommand.Completed -= HandleCompleted;
 
         Process();
     }
