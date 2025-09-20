@@ -39,11 +39,9 @@ public class SpawnZoneStorage : MonoBehaviour
 
         if (CurrentSpawnZone.IsFreePosition == false)
         {
-            _unlockSpawnZones.Remove(CurrentSpawnZone);
-            _lockSpawnZones.Add(CurrentSpawnZone);
+            if (_unlockSpawnZones.Remove(CurrentSpawnZone))
+                _lockSpawnZones.Add(CurrentSpawnZone);
         }
-
-        Debug.Log($"_unlockSpawnZones.Count: {_unlockSpawnZones.Count}");
 
         return position;
     }

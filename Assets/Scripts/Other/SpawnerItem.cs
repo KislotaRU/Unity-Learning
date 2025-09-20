@@ -43,8 +43,6 @@ public class SpawnerItem : Spawner<Item>
     {
         item.transform.SetParent(_container);
 
-        _spawnZoneStorage.ReleasePosition(item.SpawnZone, item.SpawnPosition);
-
         base.Release(item);
     }
 

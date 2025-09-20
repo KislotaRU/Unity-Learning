@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39b6ddf0f903a984d84afe4d605936cc, type: 3}
   m_Name: CollectingConfiguration
   m_EditorClassIdentifier: 
-  CaptureRadius: 2
+  CaptureRadius: 0.25
   TargetMask:
     serializedVersion: 2
     m_Bits: 512
