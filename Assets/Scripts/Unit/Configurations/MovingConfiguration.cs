@@ -4,4 +4,5 @@ using UnityEngine;
 public class MovingConfiguration : ScriptableObject
 {
     [Range(0, 10)] public float MoveSpeed;
+    [Range(0, 10)] public float RotateSpeed;
 }

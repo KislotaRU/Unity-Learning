@@ -2,5 +2,6 @@ public enum UnitStateType
 {
     Idle,
     Moving,
-    Collecting
+    Collecting,
+    Giving
 }

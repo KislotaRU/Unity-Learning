@@ -4,6 +4,7 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     public event Action<Item> Collected;
+    public event Action<Item> Destroyed;
 
     public Vector3 SpawnPosition { get; private set; }
     public SpawnZone SpawnZone { get; private set; }
@@ -20,5 +21,10 @@ public class Item : MonoBehaviour
     public void HandleCollect()
     {
         Collected?.Invoke(this);
+    }
+
+    public void HandleDestroy()
+    {
+        Destroyed?.Invoke(this);
     }
 }

@@ -8,8 +8,7 @@ public class SpawnerItem : Spawner<Item>
     protected override void Start()
     {
         for (int i = 0; i < _capacity; i++)
-            if (_spawnZoneStorage.IsFreeZone)
-                _objectPool.Get();
+            Spawn();
 
         base.Start();
     }
@@ -25,7 +24,8 @@ public class SpawnerItem : Spawner<Item>
         Item item = base.Create();
 
         item.transform.parent = _container;
-        item.Collected += HandleRelease;
+        item.Collected += HandleReleasePosition;
+        item.Destroyed += HandleRelease;
 
         return item;
     }
@@ -41,6 +41,8 @@ public class SpawnerItem : Spawner<Item>
 
     protected override void Release(Item item)
     {
+        item.transform.SetParent(_container);
+
         _spawnZoneStorage.ReleasePosition(item.SpawnZone, item.SpawnPosition);
 
         base.Release(item);
@@ -48,8 +50,14 @@ public class SpawnerItem : Spawner<Item>
 
     protected override void Destroy(Item item)
     {
-        item.Collected -= HandleRelease;
+        item.Collected -= HandleReleasePosition;
+        item.Destroyed -= HandleRelease;
 
         Destroy(item.gameObject);
+    }
+
+    private void HandleReleasePosition(Item item)
+    {
+        _spawnZoneStorage.ReleasePosition(item.SpawnZone, item.SpawnPosition);
     }
 }

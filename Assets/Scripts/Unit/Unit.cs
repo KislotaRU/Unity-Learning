@@ -5,14 +5,15 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
     [SerializeField] private MovingConfiguration _movingConfiguration;
+    [SerializeField] private CollectingConfiguration _collectingConfiguration;
     [SerializeField] private Transform _hand;
 
     public event Action<Unit> CompletedCommands;
 
-    private UnitStateMachine _stateMachine;
     private CommandHandler _commandHandler;
 
-    public UnitStateMachine StateMachine => _stateMachine;
+    public UnitStateMachine StateMachine { get; private set; }
+    public Transform Hand => _hand;
     public bool IsFree => _commandHandler.IsProcess == false;
 
     private void Awake()
@@ -34,7 +35,7 @@ public class Unit : MonoBehaviour
 
     private void Update()
     {
-        _stateMachine?.Update();
+        StateMachine?.Update();
     }
 
     public void AddCommand(ICommand command) =>
@@ -49,10 +50,11 @@ public class Unit : MonoBehaviour
         {
             { UnitStateType.Idle, new IdleState(this) },
             { UnitStateType.Moving, new MovingState(this, _movingConfiguration) },
-            { UnitStateType.Collecting, new CollectingState(this) }
+            { UnitStateType.Collecting, new CollectingState(this, _collectingConfiguration) },
+            { UnitStateType.Giving, new GivingState(this) }
         };
 
-        _stateMachine = new UnitStateMachine(states);
+        StateMachine = new UnitStateMachine(states);
     }
 
     private void HandleCommandHandler() =>

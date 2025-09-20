@@ -22,14 +22,17 @@ public class Scanner : MonoBehaviour
         Gizmos.DrawWireCube(_boxCollider.bounds.center, _boxCollider.size);
     }
 
-    public Queue<Vector3> GetTargets()
+    public Queue<Item> GetTargets()
     {
         Collider[] targetsCollider = Physics.OverlapBox(_boxCollider.bounds.center, _boxCollider.size, Quaternion.identity, _targetLayer);
-        Queue<Vector3> targetsPosition = new Queue<Vector3>();
+        Queue<Item> targets = new Queue<Item>();
 
         foreach (Collider target in targetsCollider)
-            targetsPosition.Enqueue(target.transform.position);
+        {
+            if (target.TryGetComponent(out Item item))
+                targets.Enqueue(item);
+        }
 
-        return targetsPosition;
+        return targets;
     }
 }

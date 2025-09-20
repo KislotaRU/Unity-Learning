@@ -43,6 +43,8 @@ public class SpawnZoneStorage : MonoBehaviour
             _lockSpawnZones.Add(CurrentSpawnZone);
         }
 
+        Debug.Log($"_unlockSpawnZones.Count: {_unlockSpawnZones.Count}");
+
         return position;
     }
 
@@ -51,10 +53,8 @@ public class SpawnZoneStorage : MonoBehaviour
         spawnZone.ReleasePosition(position);
 
         if (spawnZone.IsFreePosition)
-        {
-            _lockSpawnZones.Remove(spawnZone);
-            _unlockSpawnZones.Add(spawnZone);
-        }
+            if (_lockSpawnZones.Remove(spawnZone))
+                _unlockSpawnZones.Add(spawnZone);
     }
 
     [ContextMenu("Refresh Childs")]

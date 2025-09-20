@@ -5,13 +5,14 @@ public class Facility : MonoBehaviour
 {
     [SerializeField] private List<Unit> _units;
     [SerializeField] private List<Unit> _freeUnits;
-    [SerializeField] private Queue<Vector3> _targets;
+    [SerializeField] private Queue<Item> _targets;
+
     [SerializeField] private Scanner _scanner;
     [SerializeField] private Transform _basket;
 
     private void Awake()
     {
-        _targets = new Queue<Vector3>();
+        _targets = new Queue<Item>();
         _freeUnits = new List<Unit>();
     }
 
@@ -47,7 +48,7 @@ public class Facility : MonoBehaviour
 
     private void HandleCollect()
     {
-        Vector3 targetPosition;
+        Item target;
 
         if (_targets.Count == 0)
             return;
@@ -56,12 +57,13 @@ public class Facility : MonoBehaviour
         {
             _freeUnits.Remove(unit);
 
-            targetPosition = _targets.Dequeue();
+            target = _targets.Dequeue();
 
             unit.ResetCommands();
-            unit.AddCommand(new MoveCommand(unit, targetPosition));
-            unit.AddCommand(new CollectCommand(unit));
+            unit.AddCommand(new MoveCommand(unit, target.transform.position));
+            unit.AddCommand(new CollectCommand(unit, target));
             unit.AddCommand(new MoveCommand(unit, _basket.transform.position));
+            unit.AddCommand(new GiveCommand(unit, target));
         }
     }
 

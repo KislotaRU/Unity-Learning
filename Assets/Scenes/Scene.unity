@@ -739,7 +739,7 @@ MonoBehaviour:
   _prefab: {fileID: 4656390470560149144, guid: e8f6137f0ca0abd4b8ecdf5ae3535c22, type: 3}
   _delay: 3
   _autoSpawning: 1
-  _maxSize: 5
+  _maxSize: 6
   _capacity: 1
   _spawnZoneStorage: {fileID: 425531130}
 --- !u!1001 &607301819
@@ -793,10 +793,6 @@ PrefabInstance:
     - target: {fileID: 4748424054986764985, guid: a029406a633623d44b5316edd756da2e, type: 3}
       propertyPath: m_Name
       value: Unit (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4748424054986764985, guid: a029406a633623d44b5316edd756da2e, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1217,8 +1213,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1076435391}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.5262883, y: 0.12708254, z: -0.079747714, w: -0.8369654}
-  m_LocalPosition: {x: 5.46126, y: 10.471672, z: -4.0760612}
+  m_LocalRotation: {x: -0.47586316, y: 0.08217107, z: -0.0445384, w: -0.8745391}
+  m_LocalPosition: {x: 4.810929, y: 6.7618613, z: -3.93409}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1436,10 +1432,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Unit (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 4748424054986764985, guid: a029406a633623d44b5316edd756da2e, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1614,7 +1606,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6216223724190575501, guid: 5830eb041b6848a4b80eaa9437e2e784, type: 3}
       propertyPath: _units.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6216223724190575501, guid: 5830eb041b6848a4b80eaa9437e2e784, type: 3}
       propertyPath: _units.Array.data[0]
