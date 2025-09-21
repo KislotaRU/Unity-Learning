@@ -6,10 +6,14 @@ public class Scanner : MonoBehaviour
 {
     [SerializeField] private LayerMask _targetLayer;
 
+    private HashSet<Item> _scanningItems; 
+
     private BoxCollider _boxCollider;
 
     private void Awake()
     {
+        _scanningItems = new HashSet<Item>();
+
         _boxCollider = GetComponent<BoxCollider>();
     }
 
@@ -24,15 +28,31 @@ public class Scanner : MonoBehaviour
 
     public Queue<Item> GetTargets()
     {
-        Collider[] targetsCollider = Physics.OverlapBox(_boxCollider.bounds.center, _boxCollider.size, Quaternion.identity, _targetLayer);
+        Collider[] colliders = Physics.OverlapBox(_boxCollider.bounds.center, _boxCollider.size, Quaternion.identity, _targetLayer);
         Queue<Item> targets = new Queue<Item>();
 
-        foreach (Collider target in targetsCollider)
+        foreach (Collider collider in colliders)
         {
-            if (target.TryGetComponent(out Item item))
-                targets.Enqueue(item);
+            if (collider.TryGetComponent(out Item item) == false)
+                continue;
+
+            if (_scanningItems.Add(item) == false)
+                continue;
+
+            item.Collected += HandleCollectItem;
+
+            targets.Enqueue(item);
         }
 
         return targets;
+    }
+
+    private void HandleCollectItem(Item item)
+    {
+        item.Collected -= HandleCollectItem;
+
+        _scanningItems.Remove(item);
+
+        Debug.Log($"Освобождение. Осталось: {_scanningItems.Count}");
     }
 }

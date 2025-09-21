@@ -23,8 +23,15 @@ public class Facility : MonoBehaviour
 
     public void Update()
     {
-        HandleScanner();
-        HandleCollect();
+        if (_targets.Count == 0)
+        {
+            HandleIdleUnit();
+            HandleScanner();
+        }
+        else
+        {
+            HandleCollect();
+        }
     }
 
     private void Initialize()
@@ -40,18 +47,12 @@ public class Facility : MonoBehaviour
 
     private void HandleScanner()
     {
-        if (_targets.Count != 0)
-            return;
-
         _targets = _scanner.GetTargets();
     }
 
     private void HandleCollect()
     {
         Item target;
-
-        if (_targets.Count == 0)
-            return;
 
         if (TryGetFreeUnit(out Unit unit))
         {
@@ -64,6 +65,19 @@ public class Facility : MonoBehaviour
             unit.AddCommand(new CollectCommand(unit, target));
             unit.AddCommand(new MoveCommand(unit, _basket.transform.position));
             unit.AddCommand(new GiveCommand(unit, target));
+        }
+    }
+
+    private void HandleIdleUnit()
+    {
+        if (TryGetFreeUnit(out Unit unit))
+        {
+            _freeUnits.Remove(unit);
+
+            if ((unit.transform.position - unit.SpawnPosition).sqrMagnitude == 0)
+
+            unit.ResetCommands();
+            unit.AddCommand(new MoveCommand(unit, unit.SpawnPosition));
         }
     }
 

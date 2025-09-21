@@ -14,10 +14,12 @@ public class Unit : MonoBehaviour
 
     public UnitStateMachine StateMachine { get; private set; }
     public Transform Hand => _hand;
+    public Vector3 SpawnPosition { get; private set; }
     public bool IsFree => _commandHandler.IsProcess == false;
 
     private void Awake()
     {
+        Initialize();
         InitializeStateMachine();
 
         _commandHandler = new CommandHandler();
@@ -37,6 +39,11 @@ public class Unit : MonoBehaviour
     {
         StateMachine?.Update();
     }
+
+    public void Initialize()
+    {
+        SpawnPosition = transform.position;
+    } 
 
     public void AddCommand(ICommand command) =>
         _commandHandler.Enqueue(command);

@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class MoveCommand : Command
 {
-    private Unit _unit;
-    private Vector3 _targetPosition;
+    private readonly Unit _unit;
+    private readonly Vector3 _targetPosition;
+
+    private MovingState _movingState;
 
     public MoveCommand(Unit unit, Vector3 targetPosition)
     {
@@ -15,8 +17,16 @@ public class MoveCommand : Command
     {
         _unit.StateMachine.SetState<MovingState>(UnitStateType.Moving, movingState =>
         {
-            movingState.SetTargetPosition(_targetPosition);
+            _movingState = movingState;
             movingState.ReachedTarget += HandleCommandCompleted;
+            movingState.SetTargetPosition(_targetPosition);
         });
+    }
+
+    protected override void HandleCommandCompleted()
+    {
+        _movingState.ReachedTarget -= HandleCommandCompleted;
+
+        base.HandleCommandCompleted();
     }
 }

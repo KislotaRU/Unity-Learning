@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class CollectCommand : Command
 {
-    private Unit _unit;
-    private Item _item;
+    private readonly Unit _unit;
+    private readonly Item _item;
+
+    private CollectingState _collectingState;
 
     public CollectCommand(Unit unit, Item item)
     {
@@ -15,8 +17,16 @@ public class CollectCommand : Command
     {
         _unit.StateMachine.SetState<CollectingState>(UnitStateType.Collecting, collectingState =>
         {
-            collectingState.SetTarget(_item);
+            _collectingState = collectingState;
             collectingState.Collected += HandleCommandCompleted;
+            collectingState.SetTarget(_item);
         });
+    }
+
+    protected override void HandleCommandCompleted()
+    {
+        _collectingState.Collected -= HandleCommandCompleted;
+
+        base.HandleCommandCompleted();
     }
 }

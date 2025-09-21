@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class GiveCommand : Command
 {
-    private Unit _unit;
-    private Item _item;
+    private readonly Unit _unit;
+    private readonly Item _item;
+
+    private GivingState _givingState;
 
     public GiveCommand(Unit unit, Item item)
     {
@@ -15,8 +17,16 @@ public class GiveCommand : Command
     {
         _unit.StateMachine.SetState<GivingState>(UnitStateType.Giving, givingState =>
         {
-            givingState.SetTarget(_item);
+            _givingState = givingState;
             givingState.Given += HandleCommandCompleted;
+            givingState.SetTarget(_item);
         });
+    }
+
+    protected override void HandleCommandCompleted()
+    {
+        _givingState.Given -= HandleCommandCompleted;
+
+        base.HandleCommandCompleted();
     }
 }
