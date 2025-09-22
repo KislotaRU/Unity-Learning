@@ -39,7 +39,7 @@ public class Scanner : MonoBehaviour
             if (_scanningItems.Add(item) == false)
                 continue;
 
-            item.Collected += HandleCollectItem;
+            item.Destroyed += HandleDestroyItem;
 
             targets.Enqueue(item);
         }
@@ -47,12 +47,10 @@ public class Scanner : MonoBehaviour
         return targets;
     }
 
-    private void HandleCollectItem(Item item)
+    private void HandleDestroyItem(Item item)
     {
-        item.Collected -= HandleCollectItem;
+        item.Destroyed -= HandleDestroyItem;
 
         _scanningItems.Remove(item);
-
-        Debug.Log($"Освобождение. Осталось: {_scanningItems.Count}");
     }
 }

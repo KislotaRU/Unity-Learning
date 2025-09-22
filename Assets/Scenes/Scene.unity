@@ -739,8 +739,8 @@ MonoBehaviour:
   _prefab: {fileID: 4656390470560149144, guid: e8f6137f0ca0abd4b8ecdf5ae3535c22, type: 3}
   _delay: 3
   _autoSpawning: 1
-  _maxSize: 1
-  _capacity: 1
+  _maxSize: 5
+  _capacity: 5
   _spawnZoneStorage: {fileID: 425531130}
 --- !u!1001 &607301819
 PrefabInstance:
@@ -1581,6 +1581,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 160fb7daa95c0334aa3ab432e0942975, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2125920788 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7685428054423394735, guid: a029406a633623d44b5316edd756da2e, type: 3}
+  m_PrefabInstance: {fileID: 1743258226}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 160fb7daa95c0334aa3ab432e0942975, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1035575645310304513
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1595,7 +1606,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6216223724190575501, guid: 5830eb041b6848a4b80eaa9437e2e784, type: 3}
       propertyPath: _units.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6216223724190575501, guid: 5830eb041b6848a4b80eaa9437e2e784, type: 3}
       propertyPath: _units.Array.data[0]
@@ -1604,7 +1615,7 @@ PrefabInstance:
     - target: {fileID: 6216223724190575501, guid: 5830eb041b6848a4b80eaa9437e2e784, type: 3}
       propertyPath: _units.Array.data[1]
       value: 
-      objectReference: {fileID: 607301821}
+      objectReference: {fileID: 2125920788}
     - target: {fileID: 6216223724190575501, guid: 5830eb041b6848a4b80eaa9437e2e784, type: 3}
       propertyPath: _units.Array.data[2]
       value: 

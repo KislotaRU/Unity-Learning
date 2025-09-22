@@ -23,15 +23,13 @@ public class Facility : MonoBehaviour
 
     public void Update()
     {
-        if (_targets.Count == 0)
-        {
+        if (_targets.Count == 0 && _freeUnits.Count > 0)
             HandleIdleUnit();
+
+        if (_targets.Count == 0)
             HandleScanner();
-        }
         else
-        {
             HandleCollect();
-        }
     }
 
     private void Initialize()
@@ -73,8 +71,6 @@ public class Facility : MonoBehaviour
         if (TryGetFreeUnit(out Unit unit))
         {
             _freeUnits.Remove(unit);
-
-            if ((unit.transform.position - unit.SpawnPosition).sqrMagnitude == 0)
 
             unit.ResetCommands();
             unit.AddCommand(new MoveCommand(unit, unit.SpawnPosition));
