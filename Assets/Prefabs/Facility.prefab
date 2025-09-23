@@ -826,6 +826,9 @@ MonoBehaviour:
   _freeUnits: []
   _scanner: {fileID: 5763637009554256697}
   _basket: {fileID: 5505942458010632785}
+  _inventoryCapacity:
+    _max: 100
+    _current: 0
 --- !u!1 &4610379206845382559
 GameObject:
   m_ObjectHideFlags: 0

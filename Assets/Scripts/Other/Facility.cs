@@ -10,6 +10,9 @@ public class Facility : MonoBehaviour
     [SerializeField] private Scanner _scanner;
     [SerializeField] private Transform _basket;
 
+    [Header("Inventory")]
+    [SerializeField] private StatValue _inventoryCapacity;
+
     private void Awake()
     {
         _targets = new Queue<Item>();
