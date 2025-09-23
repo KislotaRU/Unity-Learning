@@ -1076,17 +1076,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1199102708013119122, guid: a029406a633623d44b5316edd756da2e, type: 3}
   m_PrefabInstance: {fileID: 607301819}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &607301821 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7685428054423394735, guid: a029406a633623d44b5316edd756da2e, type: 3}
-  m_PrefabInstance: {fileID: 607301819}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 160fb7daa95c0334aa3ab432e0942975, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &703318738
 GameObject:
   m_ObjectHideFlags: 0
@@ -2141,17 +2130,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1199102708013119122, guid: a029406a633623d44b5316edd756da2e, type: 3}
   m_PrefabInstance: {fileID: 1887699453}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1887699455 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7685428054423394735, guid: a029406a633623d44b5316edd756da2e, type: 3}
-  m_PrefabInstance: {fileID: 1887699453}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 160fb7daa95c0334aa3ab432e0942975, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2028244975
 GameObject:
   m_ObjectHideFlags: 0
@@ -2323,17 +2301,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &2125920788 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7685428054423394735, guid: a029406a633623d44b5316edd756da2e, type: 3}
-  m_PrefabInstance: {fileID: 1743258226}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 160fb7daa95c0334aa3ab432e0942975, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1035575645310304513
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2347,17 +2314,9 @@ PrefabInstance:
       value: Facility
       objectReference: {fileID: 0}
     - target: {fileID: 6216223724190575501, guid: 5830eb041b6848a4b80eaa9437e2e784, type: 3}
-      propertyPath: _units.Array.data[0]
+      propertyPath: _unitContainer
       value: 
-      objectReference: {fileID: 1887699455}
-    - target: {fileID: 6216223724190575501, guid: 5830eb041b6848a4b80eaa9437e2e784, type: 3}
-      propertyPath: _units.Array.data[1]
-      value: 
-      objectReference: {fileID: 2125920788}
-    - target: {fileID: 6216223724190575501, guid: 5830eb041b6848a4b80eaa9437e2e784, type: 3}
-      propertyPath: _units.Array.data[2]
-      value: 
-      objectReference: {fileID: 607301821}
+      objectReference: {fileID: 573103737}
     - target: {fileID: 8900774302348442921, guid: 5830eb041b6848a4b80eaa9437e2e784, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

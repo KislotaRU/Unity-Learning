@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class CollectCommand : Command
 {
     private readonly Unit _unit;
@@ -18,6 +16,7 @@ public class CollectCommand : Command
         _unit.StateMachine.SetState<CollectingState>(UnitStateType.Collecting, collectingState =>
         {
             _collectingState = collectingState;
+
             collectingState.Collected += HandleCommandCompleted;
             collectingState.SetTarget(_item);
         });

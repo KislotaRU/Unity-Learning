@@ -819,11 +819,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c9056c989783da48aef3ffb2abca60c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _units:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  _units: []
   _freeUnits: []
+  _unitContainer: {fileID: 0}
   _scanner: {fileID: 5763637009554256697}
   _basket: {fileID: 5505942458010632785}
   _resourcesCapacity:

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 
 public class CommandHandler
 {
-    private Queue<ICommand> _commands;
-    private ICommand _currentCommand;
+    private readonly Queue<ICommand> _commands;
 
     public event Action Completed;
+
+    private ICommand _currentCommand;
 
     public bool IsProcess => _currentCommand != null || _commands.Count > 0;
 

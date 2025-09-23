@@ -7,6 +7,7 @@ public class Facility : MonoBehaviour
     [SerializeField] private List<Unit> _freeUnits;
     [SerializeField] private Queue<Item> _targets;
 
+    [SerializeField] private Transform _unitContainer;
     [SerializeField] private Scanner _scanner;
     [SerializeField] private Transform _basket;
 
@@ -16,24 +17,30 @@ public class Facility : MonoBehaviour
 
     private void Awake()
     {
-        _targets = new Queue<Item>();
+        _units = new List<Unit>();
         _freeUnits = new List<Unit>();
+        _targets = new Queue<Item>();
     }
 
     private void Start()
     {
+        RefreshUnits();
         Initialize();
     }
 
     public void Update()
     {
-        if (_targets.Count == 0 && _freeUnits.Count > 0)
-            HandleIdleUnit();
-
         if (_targets.Count == 0)
+        {
             HandleScanner();
+
+            if (_freeUnits.Count > 0)
+                HandleIdleUnit();
+        }
         else
+        {
             HandleCollect();
+        }
     }
 
     private void Initialize()
@@ -87,16 +94,25 @@ public class Facility : MonoBehaviour
             _freeUnits.Add(unit);
     }
 
-    private void RegisterUnit(Unit unit)
-    {
+    private void RegisterUnit(Unit unit) =>
         unit.CompletedCommands += HandleUnit;
-    }
 
-    private void UnregisterUnit(Unit unit)
-    {
+    private void UnregisterUnit(Unit unit) =>
         unit.CompletedCommands -= HandleUnit;
-    }
 
     private bool TryGetFreeUnit(out Unit unit) =>
         unit = _freeUnits.Count > 0 ? _freeUnits[0] : null;
+
+    [ContextMenu("Refresh Units")]
+    private void RefreshUnits()
+    {
+        foreach (Unit unit in _units)
+            UnregisterUnit(unit);
+
+        _units.Clear();
+
+        for (int i = 0; i < _unitContainer.transform.childCount; i++)
+            if (_unitContainer.transform.GetChild(i).TryGetComponent(out Unit unit))
+                _units.Add(unit);
+    }
 }
