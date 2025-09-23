@@ -30,9 +30,9 @@ public class StatValue
         {
             if (value > Min)
             {
-                Changed?.Invoke();
-
                 _max = value;
+
+                Changed?.Invoke();
             }
         }
     }
@@ -50,9 +50,9 @@ public class StatValue
 
             if (_current != newValue)
             {
-                Changed?.Invoke();
-
                 _current = value;
+
+                Changed?.Invoke();
             }
         }
     }

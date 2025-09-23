@@ -10,8 +10,9 @@ public class Facility : MonoBehaviour
     [SerializeField] private Scanner _scanner;
     [SerializeField] private Transform _basket;
 
-    [Header("Inventory")]
-    [SerializeField] private StatValue _inventoryCapacity;
+    [SerializeField] private StatValue _resourcesCapacity;
+
+    public StatValue ResourcesCapacity => _resourcesCapacity;
 
     private void Awake()
     {
@@ -65,7 +66,7 @@ public class Facility : MonoBehaviour
             unit.AddCommand(new MoveCommand(unit, target.transform.position));
             unit.AddCommand(new CollectCommand(unit, target));
             unit.AddCommand(new MoveCommand(unit, _basket.transform.position));
-            unit.AddCommand(new GiveCommand(unit, target));
+            unit.AddCommand(new GiveCommand(unit, target, this));
         }
     }
 

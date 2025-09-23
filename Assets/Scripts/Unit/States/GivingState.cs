@@ -1,13 +1,13 @@
 using System;
-using UnityEngine;
 
 public class GivingState : State
 {
     private readonly Unit _unit;
 
-    private Item _item;
-
     public event Action Given;
+
+    private Facility _facility;
+    private Item _item;
 
     public GivingState(Unit unit)
     {
@@ -17,12 +17,22 @@ public class GivingState : State
     public void SetTarget(Item item) =>
         _item = item;
 
+    public void SetReceiver(Facility facility) =>
+        _facility = facility;
+
     public override void Enter()
     {
-        if (_unit.Hand.transform.childCount > 0)
-            if (_unit.Hand.GetChild(0).TryGetComponent(out Item item))
-                if (_item.GetType() == item.GetType())
-                    item.HandleDestroy();
+        for (int i = 0; i < _unit.Hand.transform.childCount; i++)
+        {
+            if (_unit.Hand.GetChild(i).TryGetComponent(out Item item) == false)
+                continue;
+
+            if (_item.GetType() != item.GetType())
+                continue;
+
+            item.HandleDestroy();
+            _facility.ResourcesCapacity.Increase(1f);
+        }
 
         _unit.StateMachine.SetState<IdleState>(UnitStateType.Idle, null);
 
