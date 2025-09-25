@@ -3,29 +3,22 @@ using UnityEngine;
 
 public class Facility : MonoBehaviour
 {
-    [SerializeField] private List<Unit> _units;
-    [SerializeField] private List<Unit> _freeUnits;
-    [SerializeField] private Queue<Item> _targets;
-
-    [SerializeField] private Transform _unitContainer;
     [SerializeField] private Scanner _scanner;
+    [SerializeField] private Transform _unitContainer;
     [SerializeField] private Transform _basket;
+    [SerializeField] private SpawnerUnit _spawnerUnit;
 
+    [SerializeField] private List<Unit> _freeUnits;
     [SerializeField] private StatValue _resourcesCapacity;
+
+    private Queue<Item> _targets;
 
     public StatValue ResourcesCapacity => _resourcesCapacity;
 
     private void Awake()
     {
-        _units = new List<Unit>();
         _freeUnits = new List<Unit>();
         _targets = new Queue<Item>();
-    }
-
-    private void Start()
-    {
-        RefreshUnits();
-        Initialize();
     }
 
     public void Update()
@@ -43,15 +36,14 @@ public class Facility : MonoBehaviour
         }
     }
 
-    private void Initialize()
+    private void OnEnable()
     {
-        foreach (var unit in _units)
-        {
-            RegisterUnit(unit);
+        _spawnerUnit.Spawned += RegisterUnit;
+    }
 
-            if (unit.IsFree)
-                _freeUnits.Add(unit);
-        }
+    private void OnDisable()
+    {
+        _spawnerUnit.Spawned -= RegisterUnit;
     }
 
     private void HandleScanner()
@@ -88,31 +80,28 @@ public class Facility : MonoBehaviour
         }
     }
 
-    private void HandleUnit(Unit unit)
+    private void HandleCompletedCommands(Unit unit)
     {
         if (unit.IsFree)
             _freeUnits.Add(unit);
     }
 
-    private void RegisterUnit(Unit unit) =>
-        unit.CompletedCommands += HandleUnit;
+    private void RegisterUnit(Unit unit)
+    {
+        unit.CompletedCommands += HandleCompletedCommands;
+        unit.Destroyed += UnregisterUnit;
 
-    private void UnregisterUnit(Unit unit) =>
-        unit.CompletedCommands -= HandleUnit;
+        HandleCompletedCommands(unit);
+    }
+
+    private void UnregisterUnit(Unit unit)
+    {
+        unit.CompletedCommands -= HandleCompletedCommands;
+        unit.Destroyed -= UnregisterUnit;
+
+        _freeUnits.Remove(unit);
+    }
 
     private bool TryGetFreeUnit(out Unit unit) =>
         unit = _freeUnits.Count > 0 ? _freeUnits[0] : null;
-
-    [ContextMenu("Refresh Units")]
-    private void RefreshUnits()
-    {
-        foreach (Unit unit in _units)
-            UnregisterUnit(unit);
-
-        _units.Clear();
-
-        for (int i = 0; i < _unitContainer.transform.childCount; i++)
-            if (_unitContainer.transform.GetChild(i).TryGetComponent(out Unit unit))
-                _units.Add(unit);
-    }
 }

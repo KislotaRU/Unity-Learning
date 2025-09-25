@@ -9,17 +9,18 @@ public class Unit : MonoBehaviour
     [SerializeField] private Transform _hand;
 
     public event Action<Unit> CompletedCommands;
+    public event Action<Unit> Destroyed;
 
     private CommandHandler _commandHandler;
 
     public UnitStateMachine StateMachine { get; private set; }
     public Transform Hand => _hand;
+    public SpawnZone SpawnZone { get; private set; }
     public Vector3 SpawnPosition { get; private set; }
     public bool IsFree => _commandHandler.IsProcess == false;
 
     private void Awake()
     {
-        Initialize();
         InitializeStateMachine();
 
         _commandHandler = new CommandHandler();
@@ -40,9 +41,13 @@ public class Unit : MonoBehaviour
         StateMachine?.Update();
     }
 
-    public void Initialize()
+    public void Initialize(SpawnZone spawnZone, Vector3 spawnPosition)
     {
-        SpawnPosition = transform.position;
+        transform.position = spawnPosition;
+        transform.rotation = Quaternion.identity;
+
+        SpawnZone = spawnZone;
+        SpawnPosition = spawnPosition;
     } 
 
     public void AddCommand(ICommand command) =>
@@ -66,4 +71,7 @@ public class Unit : MonoBehaviour
 
     private void HandleCommandHandler() =>
         CompletedCommands?.Invoke(this);
+
+    private void HandleDestroy() =>
+        Destroyed?.Invoke(this);
 }

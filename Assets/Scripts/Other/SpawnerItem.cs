@@ -5,18 +5,14 @@ public class SpawnerItem : Spawner<Item>
     [Header("Parameters SpawnZone")]
     [SerializeField] protected SpawnZoneStorage _spawnZoneStorage;
 
-    protected override void Start()
+    public override Item Spawn()
     {
-        for (int i = 0; i < _capacity; i++)
-            Spawn();
+        Item item = null;
 
-        base.Start();
-    }
-
-    public override void Spawn()
-    {
         if (_spawnZoneStorage.IsFreeZone)
-            base.Spawn();
+            item = base.Spawn();
+
+        return item;
     }
 
     protected override Item Create()

@@ -71,6 +71,9 @@ public class StatValue
 
     public void Increase(float value)
     {
+        if (value > 0)
+            return;
+
         Current += value;
 
         Increased?.Invoke();
@@ -81,6 +84,9 @@ public class StatValue
 
     public void Decrease(float value)
     {
+        if (value > 0)
+            return;
+
         Current -= value;
 
         Decreased?.Invoke();

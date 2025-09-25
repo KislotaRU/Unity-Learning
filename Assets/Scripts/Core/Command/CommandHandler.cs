@@ -27,6 +27,8 @@ public class CommandHandler
     {
         _commands.Clear();
         _currentCommand?.Undo();
+
+        _currentCommand = null;
     }
 
     private void Process()

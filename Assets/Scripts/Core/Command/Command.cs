@@ -3,16 +3,20 @@ using System;
 public abstract class Command : ICommand
 {
     public event Action Completed;
+    public event Action Cancelled;
 
     public bool IsCompleted { get; protected set; }
 
     public abstract void Execute();
 
-    public virtual void CanExecute() { }
+    public virtual bool CanExecute()
+    {
+        return false;
+    }
 
     public virtual void Undo()
     {
-        HandleCommandCompleted();
+        HandleCommandCancelled();
     }
 
     protected virtual void HandleCommandCompleted()
@@ -20,5 +24,12 @@ public abstract class Command : ICommand
         IsCompleted = true;
 
         Completed?.Invoke();
+    }
+
+    protected virtual void HandleCommandCancelled()
+    {
+        IsCompleted = false;
+
+        Cancelled?.Invoke();
     }
 }

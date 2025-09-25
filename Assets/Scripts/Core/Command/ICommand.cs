@@ -3,10 +3,11 @@ using System;
 public interface ICommand
 {
     event Action Completed;
+    event Action Cancelled;
 
     bool IsCompleted { get; }
 
     void Execute();
-    void CanExecute();
+    bool CanExecute();
     void Undo();
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -17,12 +18,13 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
     [SerializeField, Min(0)] protected int _maxSize;
     [SerializeField, Min(0)] protected int _capacity;
 
+    public event Action<T> Spawned;
+
     protected ObjectPool<T> _objectPool;
 
     private void OnValidate()
     {
-        if (_capacity > _maxSize)
-            _capacity = _maxSize;
+        _capacity = _capacity > _maxSize ? _maxSize : _capacity;
     }
 
     protected virtual void Awake()
@@ -38,25 +40,35 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
 
     protected virtual void Start()
     {
+        for (int i = 0; i < _capacity; i++)
+            Spawn();
+
         if (_autoSpawning)
             StartCoroutine(SpawningWithDelay());
     }
 
-    public virtual void Spawn()
+    public virtual T Spawn()
     {
+        T @object = null;
+
         if (_objectPool.CountActive < _maxSize)
-            _objectPool.Get();
+        {
+            @object = _objectPool.Get();
+            Spawned?.Invoke(@object);
+        }
+
+        return @object;
     }
 
     protected IEnumerator SpawningWithDelay()
     {
-        WaitForSeconds delay = new WaitForSeconds(_delay);
+        WaitForSeconds delay = new (_delay);
 
-        while (enabled)
+        while (_autoSpawning)
         {
-            Spawn();
-
             yield return delay;
+
+            Spawn();
         }
     }
 
