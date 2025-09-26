@@ -1,11 +1,11 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Facility : MonoBehaviour
 {
     [SerializeField] private Scanner _scanner;
-    [SerializeField] private Transform _unitContainer;
-    [SerializeField] private Transform _basket;
+    [SerializeField] private Transform _resourceStorage;
     [SerializeField] private SpawnerUnit _spawnerUnit;
 
     [SerializeField] private List<Unit> _freeUnits;
@@ -14,6 +14,7 @@ public class Facility : MonoBehaviour
     private Queue<Item> _targets;
 
     public StatValue ResourcesCapacity => _resourcesCapacity;
+    public Vector3 StoragePosition => _resourceStorage.position;
 
     private void Awake()
     {
@@ -21,14 +22,14 @@ public class Facility : MonoBehaviour
         _targets = new Queue<Item>();
     }
 
-    public void Update()
+    private void Update()
     {
         if (_targets.Count == 0)
         {
-            HandleScanner();
+            Scan();
 
-            if (_freeUnits.Count > 0)
-                HandleIdleUnit();
+            //if (_freeUnits.Count > 0)
+            //    HandleIdleUnit();
         }
         else
         {
@@ -46,57 +47,57 @@ public class Facility : MonoBehaviour
         _spawnerUnit.Spawned -= RegisterUnit;
     }
 
-    private void HandleScanner()
+    private void Scan()
     {
         _targets = _scanner.GetTargets();
     }
 
     private void HandleCollect()
     {
-        Item target;
+        IEnumerator sequence;
+        Item item;
 
         if (TryGetFreeUnit(out Unit unit))
         {
             _freeUnits.Remove(unit);
+            item = _targets.Dequeue();
 
-            target = _targets.Dequeue();
+            sequence = Collect(unit, item, _resourceStorage.position);
 
-            unit.ResetCommands();
-            unit.AddCommand(new MoveCommand(unit, target.transform.position));
-            unit.AddCommand(new CollectCommand(unit, target));
-            unit.AddCommand(new MoveCommand(unit, _basket.transform.position));
-            unit.AddCommand(new GiveCommand(unit, target, this));
+            unit.ExecuteSequence(sequence);
         }
     }
 
-    private void HandleIdleUnit()
+    private IEnumerator Collect(Unit unit, Item item, Vector3 storagePosition)
     {
-        if (TryGetFreeUnit(out Unit unit))
-        {
-            _freeUnits.Remove(unit);
+        yield return unit.RotateTo(item.transform.position);
+        yield return unit.MoveTo(item.transform.position);
+        yield return unit.Collect(item);
+        yield return unit.RotateTo(storagePosition);
+        yield return unit.MoveTo(storagePosition);
+        yield return unit.GiveItem(item);
 
-            unit.ResetCommands();
-            unit.AddCommand(new MoveCommand(unit, unit.SpawnPosition));
-        }
+        _resourcesCapacity.Increase();
+        _freeUnits.Add(unit);
     }
 
-    private void HandleCompletedCommands(Unit unit)
+    private IEnumerator Waiting(Unit unit)
     {
-        if (unit.IsFree)
-            _freeUnits.Add(unit);
+        yield return unit.MoveTo(unit.SpawnPosition);
     }
 
     private void RegisterUnit(Unit unit)
     {
-        unit.CompletedCommands += HandleCompletedCommands;
+        if (_freeUnits.Remove(unit))
+            UnregisterUnit(unit);
+
         unit.Destroyed += UnregisterUnit;
 
-        HandleCompletedCommands(unit);
+        _freeUnits.Add(unit);
     }
 
     private void UnregisterUnit(Unit unit)
     {
-        unit.CompletedCommands -= HandleCompletedCommands;
         unit.Destroyed -= UnregisterUnit;
 
         _freeUnits.Remove(unit);

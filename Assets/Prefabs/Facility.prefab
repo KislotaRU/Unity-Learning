@@ -341,7 +341,7 @@ Transform:
   m_GameObject: {fileID: 1105169345893107717}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -364,8 +364,8 @@ MonoBehaviour:
   _prefab: {fileID: 7685428054423394735, guid: a029406a633623d44b5316edd756da2e, type: 3}
   _delay: 0
   _autoSpawning: 0
-  _maxSize: 3
-  _capacity: 3
+  _maxSize: 1
+  _capacity: 1
   _spawnZoneStorage: {fileID: 8546891278185597093}
 --- !u!1 &1234316003587780566
 GameObject:
@@ -377,7 +377,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5099320081729826149}
   m_Layer: 0
-  m_Name: Basket
+  m_Name: ResourceStorage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -873,8 +873,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scanner: {fileID: 5763637009554256697}
-  _unitContainer: {fileID: 0}
-  _basket: {fileID: 5505942458010632785}
+  _resourceStorage: {fileID: 5099320081729826149}
   _spawnerUnit: {fileID: 1835383503577787639}
   _freeUnits: []
   _resourcesCapacity:

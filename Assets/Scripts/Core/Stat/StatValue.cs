@@ -69,9 +69,9 @@ public class StatValue
         Current = currentValue;
     }
 
-    public void Increase(float value)
+    public void Increase(float value = 1f)
     {
-        if (value > 0)
+        if (value < 0)
             return;
 
         Current += value;
@@ -82,9 +82,9 @@ public class StatValue
             Filled?.Invoke();
     }
 
-    public void Decrease(float value)
+    public void Decrease(float value = 1f)
     {
-        if (value > 0)
+        if (value < 0)
             return;
 
         Current -= value;
