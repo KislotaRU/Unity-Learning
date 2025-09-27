@@ -28,8 +28,8 @@ public class Facility : MonoBehaviour
         {
             Scan();
 
-            //if (_freeUnits.Count > 0)
-            //    HandleIdleUnit();
+            if (_freeUnits.Count > 0)
+                HandleWait();
         }
         else
         {
@@ -62,13 +62,27 @@ public class Facility : MonoBehaviour
             _freeUnits.Remove(unit);
             item = _targets.Dequeue();
 
-            sequence = Collect(unit, item, _resourceStorage.position);
+            sequence = Collecting(unit, item, _resourceStorage.position);
 
             unit.ExecuteSequence(sequence);
         }
     }
 
-    private IEnumerator Collect(Unit unit, Item item, Vector3 storagePosition)
+    private void HandleWait()
+    {
+        IEnumerator sequence;
+
+        if (TryGetFreeUnit(out Unit unit))
+        {
+            _freeUnits.Remove(unit);
+
+            sequence = Waiting(unit);
+
+            unit.ExecuteSequence(sequence);
+        }
+    }
+
+    private IEnumerator Collecting(Unit unit, Item item, Vector3 storagePosition)
     {
         yield return unit.RotateTo(item.transform.position);
         yield return unit.MoveTo(item.transform.position);
@@ -83,7 +97,13 @@ public class Facility : MonoBehaviour
 
     private IEnumerator Waiting(Unit unit)
     {
-        yield return unit.MoveTo(unit.SpawnPosition);
+        if (unit.transform.position != unit.SpawnPosition)
+        {
+            yield return unit.RotateTo(unit.SpawnPosition);
+            yield return unit.MoveTo(unit.SpawnPosition);
+        }
+
+        _freeUnits.Add(unit);
     }
 
     private void RegisterUnit(Unit unit)

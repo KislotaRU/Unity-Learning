@@ -21,32 +21,32 @@ public class CollectingState : State
 
     public override void Enter()
     {
-        Item item = null;
+        //Item item = null;
 
-        Collider[] colliders = Physics.OverlapSphere(_unit.Hand.transform.position, _configuration.CaptureRadius, _configuration.TargetMask);
+        //Collider[] colliders = Physics.OverlapSphere(_unit.Hand.transform.position, _configuration.CaptureRadius, _configuration.TargetMask);
 
-        foreach (Collider collider in colliders)
-        {
-            if (collider.TryGetComponent(out Item temporaryItem) == false)
-                continue;
+        //foreach (Collider collider in colliders)
+        //{
+        //    if (collider.TryGetComponent(out Item temporaryItem) == false)
+        //        continue;
 
-            if (temporaryItem.GetType() == _item.GetType())
-            {
-                item = temporaryItem;
-                break;
-            }
-        }
+        //    if (temporaryItem.GetType() == _item.GetType())
+        //    {
+        //        item = temporaryItem;
+        //        break;
+        //    }
+        //}
 
-        if (item != null)
-        {
-            item.transform.SetParent(_unit.Hand);
-            item.transform.position = _unit.Hand.position;
+        //if (item != null)
+        //{
+        //    item.transform.SetParent(_unit.Hand);
+        //    item.transform.position = _unit.Hand.position;
 
-            item.HandleCollect();
-        }
+        //    item.HandleCollect();
+        //}
 
-        _unit.StateMachine.SetState<IdleState>(UnitStateType.Idle, null);
+        //_unit.StateMachine.SetState<IdleState>(UnitStateType.Idle, null);
 
-        Collected?.Invoke();
+        //Collected?.Invoke();
     }
 }

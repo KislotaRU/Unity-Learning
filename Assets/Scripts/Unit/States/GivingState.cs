@@ -22,20 +22,20 @@ public class GivingState : State
 
     public override void Enter()
     {
-        for (int i = 0; i < _unit.Hand.transform.childCount; i++)
-        {
-            if (_unit.Hand.GetChild(i).TryGetComponent(out Item item) == false)
-                continue;
+        //for (int i = 0; i < _unit.Hand.transform.childCount; i++)
+        //{
+        //    if (_unit.Hand.GetChild(i).TryGetComponent(out Item item) == false)
+        //        continue;
 
-            if (_item.GetType() != item.GetType())
-                continue;
+        //    if (_item.GetType() != item.GetType())
+        //        continue;
 
-            item.HandleDestroy();
-            _facility.ResourcesCapacity.Increase(1f);
-        }
+        //    item.HandleDestroy();
+        //    _facility.ResourcesCapacity.Increase(1f);
+        //}
 
-        _unit.StateMachine.SetState<IdleState>(UnitStateType.Idle, null);
+        //_unit.StateMachine.SetState<IdleState>(UnitStateType.Idle, null);
 
-        Given?.Invoke();
+        //Given?.Invoke();
     }
 }

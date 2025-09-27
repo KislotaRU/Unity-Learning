@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: MovingConfiguration
   m_EditorClassIdentifier: 
   MoveSpeed: 4
-  RotateSpeed: 6
+  RotateSpeed: 8

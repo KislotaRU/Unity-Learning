@@ -15,12 +15,12 @@ public class MoveCommand : Command
 
     public override void Execute()
     {
-        _unit.StateMachine.SetState<MovingState>(UnitStateType.Moving, movingState =>
-        {
-            _movingState = movingState;
-            movingState.ReachedTarget += HandleCommandCompleted;
-            movingState.SetTargetPosition(_targetPosition);
-        });
+        //_unit.StateMachine.SetState<MovingState>(UnitStateType.Moving, movingState =>
+        //{
+        //    _movingState = movingState;
+        //    movingState.ReachedTarget += HandleCommandCompleted;
+        //    movingState.SetTargetPosition(_targetPosition);
+        //});
     }
 
     protected override void HandleCommandCompleted()

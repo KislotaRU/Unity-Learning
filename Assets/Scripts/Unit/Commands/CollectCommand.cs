@@ -13,13 +13,13 @@ public class CollectCommand : Command
 
     public override void Execute()
     {
-        _unit.StateMachine.SetState<CollectingState>(UnitStateType.Collecting, collectingState =>
-        {
-            _collectingState = collectingState;
+        //_unit.StateMachine.SetState<CollectingState>(UnitStateType.Collecting, collectingState =>
+        //{
+        //    _collectingState = collectingState;
 
-            collectingState.Collected += HandleCommandCompleted;
-            collectingState.SetTarget(_item);
-        });
+        //    collectingState.Collected += HandleCommandCompleted;
+        //    collectingState.SetTarget(_item);
+        //});
     }
 
     protected override void HandleCommandCompleted()

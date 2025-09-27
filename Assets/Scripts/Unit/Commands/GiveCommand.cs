@@ -15,14 +15,14 @@ public class GiveCommand : Command
 
     public override void Execute()
     {
-        _unit.StateMachine.SetState<GivingState>(UnitStateType.Giving, givingState =>
-        {
-            _givingState = givingState;
+        //_unit.StateMachine.SetState<GivingState>(UnitStateType.Giving, givingState =>
+        //{
+        //    _givingState = givingState;
 
-            givingState.Given += HandleCommandCompleted;
-            givingState.SetTarget(_item);
-            givingState.SetReceiver(_facility);
-        });
+        //    givingState.Given += HandleCommandCompleted;
+        //    givingState.SetTarget(_item);
+        //    givingState.SetReceiver(_facility);
+        //});
     }
 
     protected override void HandleCommandCompleted()

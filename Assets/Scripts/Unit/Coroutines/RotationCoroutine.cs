@@ -15,14 +15,19 @@ public class RotationCoroutine : MonoBehaviour
         Vector3 direction = targetPosition - transform.position;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
 
-        while (transform.rotation != targetRotation)
-        {
-            targetRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _configuration.RotateSpeed * Time.deltaTime);
+        float dotThreshold = 1f;
 
+        while (Vector3.Dot(transform.forward, direction.normalized) < dotThreshold)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _configuration.RotateSpeed * Time.deltaTime);
             direction = targetPosition - transform.position;
+
+            if (direction != Vector3.zero)
+                targetRotation = Quaternion.LookRotation(direction);
 
             yield return null;
         }
+
+        transform.rotation = targetRotation;
     }
 }

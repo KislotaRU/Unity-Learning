@@ -13,8 +13,6 @@ public class Unit : MonoBehaviour
 
     public event Action<Unit> Destroyed;
 
-    public UnitStateMachine StateMachine { get; private set; }
-    public Transform Hand => _hand;
     public SpawnZone SpawnZone { get; private set; }
     public Vector3 SpawnPosition { get; private set; }
 
@@ -56,27 +54,11 @@ public class Unit : MonoBehaviour
 
     public IEnumerator Collect(Item item)
     {
-        yield return _collectCoroutine.Collect(item, Hand);
+        yield return _collectCoroutine.Collect(item, _hand);
     }
 
     public IEnumerator GiveItem(Item item)
     {
-        yield return _giveCoroutine.GiveItem(item, Hand);
+        yield return _giveCoroutine.GiveItem(item, _hand);
     }
-
-    //private void InitializeStateMachine()
-    //{
-    //    var states = new Dictionary<UnitStateType, IState>
-    //    {
-    //        { UnitStateType.Idle, new IdleState(this) },
-    //        { UnitStateType.Moving, new MovingState(this, _movingConfiguration) },
-    //        { UnitStateType.Collecting, new CollectingState(this, _collectingConfiguration) },
-    //        { UnitStateType.Giving, new GivingState(this) }
-    //    };
-
-    //    StateMachine = new UnitStateMachine(states);
-    //}
-
-    private void HandleDestroy() =>
-        Destroyed?.Invoke(this);
 }
