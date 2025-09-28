@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,19 +5,20 @@ public class Facility : MonoBehaviour
 {
     [SerializeField] private Scanner _scanner;
     [SerializeField] private Transform _resourceStorage;
-    [SerializeField] private SpawnerUnit _spawnerUnit;
+    [SerializeField] private SpawnerBot _spawnerBot;
+    [SerializeField] private BotCommandFactory _botCommandFactory;
 
-    [SerializeField] private List<Unit> _freeUnits;
     [SerializeField] private StatValue _resourcesCapacity;
+    [SerializeField] private List<Bot> _freeBots;
 
     private Queue<Item> _targets;
 
     public StatValue ResourcesCapacity => _resourcesCapacity;
-    public Vector3 StoragePosition => _resourceStorage.position;
+    public Transform ResourceStorage => _resourceStorage;
 
     private void Awake()
     {
-        _freeUnits = new List<Unit>();
+        _freeBots = new List<Bot>();
         _targets = new Queue<Item>();
     }
 
@@ -28,7 +28,7 @@ public class Facility : MonoBehaviour
         {
             Scan();
 
-            if (_freeUnits.Count > 0)
+            if (_freeBots.Count > 0)
                 HandleWait();
         }
         else
@@ -39,12 +39,12 @@ public class Facility : MonoBehaviour
 
     private void OnEnable()
     {
-        _spawnerUnit.Spawned += RegisterUnit;
+        _spawnerBot.Spawned += RegisterBot;
     }
 
     private void OnDisable()
     {
-        _spawnerUnit.Spawned -= RegisterUnit;
+        _spawnerBot.Spawned -= RegisterBot;
     }
 
     private void Scan()
@@ -54,75 +54,62 @@ public class Facility : MonoBehaviour
 
     private void HandleCollect()
     {
-        IEnumerator sequence;
+        List<IBotCommand> commands;
         Item item;
 
-        if (TryGetFreeUnit(out Unit unit))
+        if (TryGetFreeUnit(out Bot bot))
         {
-            _freeUnits.Remove(unit);
+            _freeBots.Remove(bot);
             item = _targets.Dequeue();
 
-            sequence = Collecting(unit, item, _resourceStorage.position);
+            commands = _botCommandFactory.CreateCommandCollect(item, ResourceStorage.position, ResourcesCapacity);
 
-            unit.ExecuteSequence(sequence);
+            bot.MissionCompleted += HandleCompletedCommand;
+
+            bot.Execute(commands);
         }
     }
 
     private void HandleWait()
     {
-        IEnumerator sequence;
+        List<IBotCommand> commands;
 
-        if (TryGetFreeUnit(out Unit unit))
+        if (TryGetFreeUnit(out Bot bot))
         {
-            _freeUnits.Remove(unit);
+            _freeBots.Remove(bot);
 
-            sequence = Waiting(unit);
+            commands = _botCommandFactory.CreateCommandWait(bot.SpawnPosition);
 
-            unit.ExecuteSequence(sequence);
+            bot.MissionCompleted += HandleCompletedCommand;
+
+            bot.Execute(commands);
         }
     }
 
-    private IEnumerator Collecting(Unit unit, Item item, Vector3 storagePosition)
+    private void HandleCompletedCommand(Bot bot)
     {
-        yield return unit.RotateTo(item.transform.position);
-        yield return unit.MoveTo(item.transform.position);
-        yield return unit.Collect(item);
-        yield return unit.RotateTo(storagePosition);
-        yield return unit.MoveTo(storagePosition);
-        yield return unit.GiveItem(item);
+        bot.MissionCompleted -= HandleCompletedCommand;
 
-        _resourcesCapacity.Increase();
-        _freeUnits.Add(unit);
+        _freeBots.Add(bot);
     }
 
-    private IEnumerator Waiting(Unit unit)
+    private void RegisterBot(Bot bot)
     {
-        if (unit.transform.position != unit.SpawnPosition)
-        {
-            yield return unit.RotateTo(unit.SpawnPosition);
-            yield return unit.MoveTo(unit.SpawnPosition);
-        }
+        if (_freeBots.Remove(bot))
+            UnregisterUnit(bot);
 
-        _freeUnits.Add(unit);
+        bot.Destroyed += UnregisterUnit;
+
+        _freeBots.Add(bot);
     }
 
-    private void RegisterUnit(Unit unit)
+    private void UnregisterUnit(Bot bot)
     {
-        if (_freeUnits.Remove(unit))
-            UnregisterUnit(unit);
+        bot.Destroyed -= UnregisterUnit;
 
-        unit.Destroyed += UnregisterUnit;
-
-        _freeUnits.Add(unit);
+        _freeBots.Remove(bot);
     }
 
-    private void UnregisterUnit(Unit unit)
-    {
-        unit.Destroyed -= UnregisterUnit;
-
-        _freeUnits.Remove(unit);
-    }
-
-    private bool TryGetFreeUnit(out Unit unit) =>
-        unit = _freeUnits.Count > 0 ? _freeUnits[0] : null;
+    private bool TryGetFreeUnit(out Bot bot) =>
+        bot = _freeBots.Count > 0 ? _freeBots[0] : null;
 }
