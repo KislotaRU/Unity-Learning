@@ -24,23 +24,20 @@ public class RotateCommand : BotCommand
         Vector3 direction;
         Quaternion targetRotation;
 
-        if (bot.transform.position != targetPosition)
+        direction = targetPosition - bot.transform.position;
+        targetRotation = Quaternion.LookRotation(bot.transform.forward);
+
+        while (Vector3.Dot(bot.transform.forward, direction.normalized) < dotThreshold)
         {
+            if (direction != Vector3.zero)
+                targetRotation = Quaternion.LookRotation(direction);
+
+            bot.transform.rotation = Quaternion.Slerp(bot.transform.rotation, targetRotation, _configuration.RotateSpeed * Time.deltaTime);
             direction = targetPosition - bot.transform.position;
-            targetRotation = Quaternion.LookRotation(bot.transform.forward);
 
-            while (Vector3.Dot(bot.transform.forward, direction.normalized) < dotThreshold)
-            {
-                if (direction != Vector3.zero)
-                    targetRotation = Quaternion.LookRotation(direction);
-
-                bot.transform.rotation = Quaternion.Slerp(bot.transform.rotation, targetRotation, _configuration.RotateSpeed * Time.deltaTime);
-                direction = targetPosition - bot.transform.position;
-
-                yield return null;
-            }
-
-            bot.transform.rotation = targetRotation;
+            yield return null;
         }
+
+        bot.transform.rotation = targetRotation;
     }
 }

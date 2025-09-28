@@ -9,12 +9,11 @@ public class Facility : MonoBehaviour
     [SerializeField] private BotCommandFactory _botCommandFactory;
 
     [SerializeField] private StatValue _resourcesCapacity;
-    [SerializeField] private List<Bot> _freeBots;
 
+    private List<Bot> _freeBots;
     private Queue<Item> _targets;
 
     public StatValue ResourcesCapacity => _resourcesCapacity;
-    public Transform ResourceStorage => _resourceStorage;
 
     private void Awake()
     {
@@ -62,7 +61,7 @@ public class Facility : MonoBehaviour
             _freeBots.Remove(bot);
             item = _targets.Dequeue();
 
-            commands = _botCommandFactory.CreateCommandCollect(item, ResourceStorage.position, ResourcesCapacity);
+            commands = _botCommandFactory.CreateCommandCollect(item, _resourceStorage.position, _resourcesCapacity);
 
             bot.MissionCompleted += HandleCompletedCommand;
 
@@ -76,6 +75,9 @@ public class Facility : MonoBehaviour
 
         if (TryGetFreeUnit(out Bot bot))
         {
+            if (bot.transform.position == bot.SpawnPosition)
+                return;
+
             _freeBots.Remove(bot);
 
             commands = _botCommandFactory.CreateCommandWait(bot.SpawnPosition);
