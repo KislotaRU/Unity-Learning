@@ -957,8 +957,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 35984287}
   - {fileID: 425531131}
+  - {fileID: 35984287}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &581597109
@@ -973,13 +973,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38ed9e01deb193c49ad95bb59adcc8c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _container: {fileID: 35984287}
   _prefab: {fileID: 4656390470560149144, guid: e8f6137f0ca0abd4b8ecdf5ae3535c22, type: 3}
-  _delay: 3
-  _autoSpawning: 1
+  _spawnZoneStorage: {fileID: 425531130}
+  _container: {fileID: 35984287}
   _maxSize: 5
   _capacity: 5
-  _spawnZoneStorage: {fileID: 425531130}
+  _autoSpawning: 1
+  _delay: 3
 --- !u!1 &703318738
 GameObject:
   m_ObjectHideFlags: 0

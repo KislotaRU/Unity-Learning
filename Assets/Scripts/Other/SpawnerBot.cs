@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class SpawnerBot : Spawner<Bot>
 {
-    [Header("Parameters SpawnZone")]
-    [SerializeField] protected SpawnZoneStorage _spawnZoneStorage;
-
     public override Bot Spawn()
     {
         Bot bot = null;

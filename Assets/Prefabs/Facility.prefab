@@ -361,13 +361,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b784f64f8a7296f43bed4aec821b465f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _container: {fileID: 944803047193563512}
   _prefab: {fileID: -3584199515955241511, guid: a029406a633623d44b5316edd756da2e, type: 3}
-  _delay: 0
-  _autoSpawning: 0
+  _container: {fileID: 944803047193563512}
   _maxSize: 3
-  _capacity: 3
+  _capacity: 1
   _spawnZoneStorage: {fileID: 8546891278185597093}
+  _autoSpawning: 0
+  _delay: 0
 --- !u!1 &1234316003587780566
 GameObject:
   m_ObjectHideFlags: 0
@@ -873,10 +873,11 @@ MonoBehaviour:
   _resourceStorage: {fileID: 5099320081729826149}
   _spawnerBot: {fileID: 1835383503577787639}
   _botCommandFactory: {fileID: -4290211960675379723}
+  _costBot: 3
+  _costFacility: 5
   _resourcesCapacity:
     _max: 100
     _current: 0
-  _freeBots: []
 --- !u!114 &-4290211960675379723
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -8,6 +8,9 @@ public class Facility : MonoBehaviour
     [SerializeField] private SpawnerBot _spawnerBot;
     [SerializeField] private BotCommandFactory _botCommandFactory;
 
+    [SerializeField] private float _costBot;
+    [SerializeField] private float _costFacility;
+
     [SerializeField] private StatValue _resourcesCapacity;
 
     private List<Bot> _freeBots;
@@ -23,27 +26,27 @@ public class Facility : MonoBehaviour
 
     private void Update()
     {
-        if (_targets.Count == 0)
+        if (_targets.Count > 0)
         {
-            Scan();
-
-            if (_freeBots.Count > 0)
-                HandleWait();
+            HandleCollect();
         }
         else
         {
-            HandleCollect();
+            Scan();
+            HandleWait();
         }
     }
 
     private void OnEnable()
     {
         _spawnerBot.Spawned += RegisterBot;
+        _resourcesCapacity.Changed += HandleResources;
     }
 
     private void OnDisable()
     {
         _spawnerBot.Spawned -= RegisterBot;
+        _resourcesCapacity.Changed -= HandleResources;
     }
 
     private void Scan()
@@ -85,6 +88,15 @@ public class Facility : MonoBehaviour
             bot.MissionCompleted += HandleCompletedCommand;
 
             bot.Execute(commands);
+        }
+    }
+
+    private void HandleResources()
+    {
+        if (_resourcesCapacity.Current >= _costBot)
+        {
+            _resourcesCapacity.Decrease(_costBot);
+            _spawnerBot.Spawn();
         }
     }
 

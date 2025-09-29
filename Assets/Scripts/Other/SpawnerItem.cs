@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class SpawnerItem : Spawner<Item>
 {
-    [Header("Parameters SpawnZone")]
-    [SerializeField] protected SpawnZoneStorage _spawnZoneStorage;
-
     public override Item Spawn()
     {
         Item item = null;

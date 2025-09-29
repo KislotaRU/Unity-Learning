@@ -5,18 +5,17 @@ using UnityEngine.Pool;
 
 public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
 {
-    [Header("Parameters Spawner")]
+    [Header("Main Parameters")]
+    [SerializeField] protected T _prefab;
+    [SerializeField] protected SpawnZoneStorage _spawnZoneStorage;
     [SerializeField] protected Transform _container;
     [Space]
-    [SerializeField] protected T _prefab;
-    [Space]
-    [SerializeField, Min(0f)] protected float _delay;
-    [Space]
-    [SerializeField] protected bool _autoSpawning;
-
-    [Header("Parameters ObjectPool")]
     [SerializeField, Min(0)] protected int _maxSize;
     [SerializeField, Min(0)] protected int _capacity;
+
+    [Header("AutoSpawning Parameters")]
+    [SerializeField] protected bool _autoSpawning;
+    [SerializeField, Min(0f)] protected float _delay;
 
     public event Action<T> Spawned;
 
