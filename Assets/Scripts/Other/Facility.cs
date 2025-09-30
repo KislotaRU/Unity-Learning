@@ -13,19 +13,28 @@ public class Facility : MonoBehaviour
 
     [SerializeField] private StatValue _resourcesCapacity;
 
+    private List<Bot> _bots;
     private List<Bot> _freeBots;
     private Queue<Item> _targets;
 
+    private Builder _builder;
+
     public StatValue ResourcesCapacity => _resourcesCapacity;
+    public bool IsConstructionMode { get; private set; }
 
     private void Awake()
     {
-        _freeBots = new List<Bot>();
-        _targets = new Queue<Item>();
+        Initialize();
     }
 
     private void Update()
     {
+        if (IsConstructionMode)
+        {
+            if (_resourcesCapacity.Current >= _costFacility)
+                HandleBuild();
+        }
+
         if (_targets.Count > 0)
         {
             HandleCollect();
@@ -47,6 +56,24 @@ public class Facility : MonoBehaviour
     {
         _spawnerBot.Spawned -= RegisterBot;
         _resourcesCapacity.Changed -= HandleResources;
+    }
+
+    public void Initialize()
+    {
+        _bots = new List<Bot>();
+        _freeBots = new List<Bot>();
+        _targets = new Queue<Item>();
+    }
+
+    public bool CanBuild()
+    {
+        return _bots.Count > 1;
+    }
+
+    public void SetConstructionMode(bool flag, Builder builder)
+    {
+        IsConstructionMode = flag;
+        _builder = builder;
     }
 
     private void Scan()
@@ -91,12 +118,36 @@ public class Facility : MonoBehaviour
         }
     }
 
+    private void HandleBuild()
+    {
+        List<IBotCommand> commands;
+
+        if (_builder.IsPlaced == false)
+            return;
+
+        if (TryGetFreeUnit(out Bot bot))
+        {
+            IsConstructionMode = false;
+
+            _freeBots.Remove(bot);
+
+            commands = _botCommandFactory.CreateCommandBuild(_builder, _builder.BuildPosition);
+
+            bot.MissionCompleted += HandleCompletedCommand;
+
+            bot.Execute(commands);
+        }
+    }
+
     private void HandleResources()
     {
+        if (IsConstructionMode)
+            return;
+
         if (_resourcesCapacity.Current >= _costBot)
         {
-            _resourcesCapacity.Decrease(_costBot);
-            _spawnerBot.Spawn();
+            if (_spawnerBot.Spawn() != null)
+                _resourcesCapacity.Decrease(_costBot);
         }
     }
 
@@ -115,6 +166,7 @@ public class Facility : MonoBehaviour
         bot.Destroyed += UnregisterUnit;
 
         _freeBots.Add(bot);
+        _bots.Add(bot);
     }
 
     private void UnregisterUnit(Bot bot)
@@ -122,6 +174,7 @@ public class Facility : MonoBehaviour
         bot.Destroyed -= UnregisterUnit;
 
         _freeBots.Remove(bot);
+        _bots.Remove(bot);
     }
 
     private bool TryGetFreeUnit(out Bot bot) =>

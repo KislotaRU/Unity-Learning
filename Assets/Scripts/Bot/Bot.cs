@@ -14,7 +14,6 @@ public class Bot : MonoBehaviour
 
     public SpawnZone SpawnZone { get; private set; }
     public Vector3 SpawnPosition { get; private set; }
-
     public Transform Storage => _storage;
 
     public void Initialize(SpawnZone spawnZone, Vector3 spawnPosition)

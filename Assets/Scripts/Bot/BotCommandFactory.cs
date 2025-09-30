@@ -29,4 +29,15 @@ public class BotCommandFactory : MonoBehaviour
 
         return commands;
     }
+
+    public List<IBotCommand> CreateCommandBuild(Builder builder, Vector3 position)
+    {
+        List<IBotCommand> commands = new List<IBotCommand>();
+
+        commands.Add(new RotateCommand(_movingConfiguration, position));
+        commands.Add(new MoveCommand(_movingConfiguration, position));
+        commands.Add(new BuildCommand(builder));
+
+        return commands;
+    }
 }

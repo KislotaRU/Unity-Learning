@@ -9,6 +9,7 @@ public class Scanner : MonoBehaviour
     private HashSet<Item> _scanningItems; 
 
     private BoxCollider _boxCollider;
+    private Vector3 HalfExtent => _boxCollider.size / 2f;
 
     private void Awake()
     {
@@ -28,7 +29,7 @@ public class Scanner : MonoBehaviour
 
     public Queue<Item> GetTargets()
     {
-        Collider[] colliders = Physics.OverlapBox(_boxCollider.bounds.center, _boxCollider.size, Quaternion.identity, _targetLayer);
+        Collider[] colliders = Physics.OverlapBox(_boxCollider.bounds.center, HalfExtent, Quaternion.identity, _targetLayer);
         Queue<Item> targets = new Queue<Item>();
 
         foreach (Collider collider in colliders)
