@@ -14,6 +14,7 @@ public class Bot : MonoBehaviour
 
     public SpawnZone SpawnZone { get; private set; }
     public Vector3 SpawnPosition { get; private set; }
+    public Facility CurrentFacility { get; private set; }
     public Transform Storage => _storage;
 
     public void Initialize(SpawnZone spawnZone, Vector3 spawnPosition)
@@ -23,6 +24,11 @@ public class Bot : MonoBehaviour
 
         SpawnZone = spawnZone;
         SpawnPosition = spawnPosition;
+    }
+
+    public void SetFacility(Facility facility)
+    {
+        CurrentFacility = facility;
     }
 
     public void Execute(List<IBotCommand> commands)

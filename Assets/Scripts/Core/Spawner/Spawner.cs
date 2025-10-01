@@ -59,6 +59,22 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
         return @object;
     }
 
+    public void AddExistingObjectToPool(T existingObject)
+    {
+        if (existingObject == null)
+            return;
+
+        if (_objectPool.CountInactive >= _maxSize)
+            return;
+
+        if (_container != null)
+            existingObject.transform.SetParent(_container);
+
+        _objectPool.Release(existingObject);
+
+        Spawn();
+    }
+
     protected IEnumerator SpawningWithDelay()
     {
         WaitForSeconds delay = new (_delay);

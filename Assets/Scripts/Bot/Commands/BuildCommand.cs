@@ -11,12 +11,18 @@ public class BuildCommand : BotCommand
 
     public override IEnumerator Execute(Bot bot)
     {
-        yield return Build(_builder);
+        yield return Build(bot, _builder);
     }
 
-    public IEnumerator Build(Builder builder)
+    public IEnumerator Build(Bot bot, Builder builder)
     {
-        builder.Build();
+        Facility newFacility = builder.Build();
+
+        bot.CurrentFacility.RemoveBot(bot);
+
+        bot.SetFacility(newFacility);
+
+        bot.CurrentFacility.AddBot(bot);
 
         yield return null;
     }

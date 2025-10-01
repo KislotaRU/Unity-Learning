@@ -10,6 +10,7 @@ public class Facility : MonoBehaviour
 
     [SerializeField] private float _costBot;
     [SerializeField] private float _costFacility;
+    [SerializeField] private float _costBuilding;
 
     [SerializeField] private StatValue _resourcesCapacity;
 
@@ -65,9 +66,21 @@ public class Facility : MonoBehaviour
         _targets = new Queue<Item>();
     }
 
+    public void AddBot(Bot bot)
+    {
+        RegisterBot(bot);
+
+        _spawnerBot.AddExistingObjectToPool(bot);
+    }
+
+    public void RemoveBot(Bot bot)
+    {
+        UnregisterBot(bot);
+    }
+
     public bool CanBuild()
     {
-        return _bots.Count > 1;
+        return _bots.Count > _costBuilding;
     }
 
     public void SetConstructionMode(bool flag, Builder builder)
@@ -133,8 +146,6 @@ public class Facility : MonoBehaviour
 
             commands = _botCommandFactory.CreateCommandBuild(_builder, _builder.BuildPosition);
 
-            bot.MissionCompleted += HandleCompletedCommand;
-
             bot.Execute(commands);
         }
     }
@@ -161,17 +172,19 @@ public class Facility : MonoBehaviour
     private void RegisterBot(Bot bot)
     {
         if (_freeBots.Remove(bot))
-            UnregisterUnit(bot);
+            UnregisterBot(bot);
 
-        bot.Destroyed += UnregisterUnit;
+        bot.Destroyed += UnregisterBot;
+
+        bot.SetFacility(this);
 
         _freeBots.Add(bot);
         _bots.Add(bot);
     }
 
-    private void UnregisterUnit(Bot bot)
+    private void UnregisterBot(Bot bot)
     {
-        bot.Destroyed -= UnregisterUnit;
+        bot.Destroyed -= UnregisterBot;
 
         _freeBots.Remove(bot);
         _bots.Remove(bot);

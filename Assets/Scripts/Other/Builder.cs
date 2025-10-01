@@ -27,21 +27,7 @@ public class Builder : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
-
-                if (Physics.Raycast(ray, out _raycastHit) == false)
-                    return;
-
-                if (_raycastHit.transform.TryGetComponent(out Facility facility) == false)
-                    return;
-
-                if (facility.CanBuild() == false)
-                    return;
-
-                _facility = facility;
-
-                _facility.SetConstructionMode(true, this);
-                EnablePlacement();
+                HandlePlacement();
             }
         }
         else
@@ -50,14 +36,10 @@ public class Builder : MonoBehaviour
         }
 
         if (Input.GetMouseButtonDown(1))
-        {
             Place();
-        }
 
         if (Input.GetMouseButtonDown(2))
-        {
             DisablePlacement();
-        }
     }
 
     public void EnablePlacement()
@@ -74,17 +56,21 @@ public class Builder : MonoBehaviour
 
         if (_buildPreview.IsActive)
             _buildPreview.Disable();
+
+        _facility?.SetConstructionMode(false, this);
     }
 
-    public void Build()
+    public Facility Build()
     {
         DisablePlacement();
 
-        Instantiate(_prefab, _buildPreview.transform.position, _buildPreview.transform.rotation);
+        Facility facility = Instantiate(_prefab, _buildPreview.transform.position, _buildPreview.transform.rotation);
 
-        _prefab.Initialize();
+        facility.Initialize();
 
         IsPlaced = false;
+
+        return facility;
     }
 
     private void UpdatePlacementPosition()
@@ -100,9 +86,31 @@ public class Builder : MonoBehaviour
         _buildPreview.transform.position = _raycastHit.point;
     }
 
+    private void HandlePlacement()
+    {
+        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out _raycastHit) == false)
+            return;
+
+        if (_raycastHit.transform.TryGetComponent(out Facility facility) == false)
+            return;
+
+        if (facility.CanBuild() == false)
+            return;
+
+        _facility = facility;
+
+        _facility.SetConstructionMode(false, this);
+
+        EnablePlacement();
+    }
+
     private void Place()
     {
         IsPlaced = true;
         IsPlacing = false;
+
+        _facility.SetConstructionMode(true, this);
     }
 }
