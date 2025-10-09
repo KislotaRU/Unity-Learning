@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Pool;
 
 public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
 {
@@ -28,12 +27,11 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
 
     protected virtual void Awake()
     {
-        _objectPool = new ObjectPool<T>(createFunc: () => Create(),
-                                        actionOnGet: (@object) => Get(@object),
-                                        actionOnRelease: (@object) => Release(@object),
-                                        actionOnDestroy: (@object) => Destroy(@object),
-                                        collectionCheck: true,
-                                        defaultCapacity: _capacity,
+        _objectPool = new ObjectPool<T>(create: () => Create(),
+                                        get: (@object) => Get(@object),
+                                        release: (@object) => Release(@object),
+                                        destroy: (@object) => Destroy(@object),
+                                        capacity: _capacity,
                                         maxSize: _maxSize);
     }
 
@@ -59,20 +57,25 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
         return @object;
     }
 
-    public void AddExistingObjectToPool(T existingObject)
+    public void Add(T @object)
     {
-        if (existingObject == null)
-            return;
-
-        if (_objectPool.CountInactive >= _maxSize)
+        if (@object == null)
             return;
 
         if (_container != null)
-            existingObject.transform.SetParent(_container);
+            @object.transform.SetParent(_container);
 
-        _objectPool.Release(existingObject);
+        _objectPool.Add(@object);
 
         Spawn();
+    }
+
+    public void Remove(T @object)
+    {
+        if (@object == null)
+            return;
+
+        _objectPool.Remove(@object);
     }
 
     protected IEnumerator SpawningWithDelay()

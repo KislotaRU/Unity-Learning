@@ -70,12 +70,14 @@ public class Facility : MonoBehaviour
     {
         RegisterBot(bot);
 
-        _spawnerBot.AddExistingObjectToPool(bot);
+        _spawnerBot.Add(bot);
     }
 
     public void RemoveBot(Bot bot)
     {
         UnregisterBot(bot);
+
+        _spawnerBot.Remove(bot);
     }
 
     public bool CanBuild()
@@ -153,7 +155,12 @@ public class Facility : MonoBehaviour
     private void HandleResources()
     {
         if (IsConstructionMode)
+        {
+            if (_resourcesCapacity.Current >= _costFacility)
+                _resourcesCapacity.Decrease(_costBot);
+
             return;
+        }
 
         if (_resourcesCapacity.Current >= _costBot)
         {
