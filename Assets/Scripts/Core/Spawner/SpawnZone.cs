@@ -62,22 +62,19 @@ public class SpawnZone : MonoBehaviour
     {
         Vector3Int dimensions = new Vector3Int((int)_boxCollider.bounds.size.x, (int)_boxCollider.bounds.size.y, (int)_boxCollider.bounds.size.z);
         Vector3 minPosition = _boxCollider.bounds.min + Vector3.one * _offsetPosition;
+        int totalPositions = dimensions.x * dimensions.y * dimensions.z;
 
-        for (int x = 0; x < dimensions.x; x++)
+        for (int i = 0; i < totalPositions; i++)
         {
-            float minPositionX = minPosition.x + x;
+            int x = i % dimensions.x;
+            int y = (i / dimensions.x) % dimensions.y;
+            int z = i / (dimensions.x * dimensions.y);
 
-            for (int y = 0; y < dimensions.y; y++)
-            {
-                float minPositionY = minPosition.y + y;
-
-                for (int z = 0; z < dimensions.z; z++)
-                {
-                    float minPositionZ = minPosition.z + z;
-
-                    _positions.Add(new Vector3(minPositionX, minPositionY, minPositionZ));
-                }
-            }
+            _positions.Add(new Vector3(
+                minPosition.x + x,
+                minPosition.y + y,
+                minPosition.z + z
+            ));
         }
     }
 }
