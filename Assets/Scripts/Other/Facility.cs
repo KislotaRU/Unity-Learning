@@ -31,10 +31,7 @@ public class Facility : MonoBehaviour
     private void Update()
     {
         if (IsConstructionMode)
-        {
-            if (_resourcesCapacity.Current >= _costFacility)
-                HandleBuild();
-        }
+            HandleBuild();
 
         if (_targets.Count > 0)
         {
@@ -137,12 +134,16 @@ public class Facility : MonoBehaviour
     {
         List<IBotCommand> commands;
 
+        if (_resourcesCapacity.Current < _costFacility)
+            return;
+
         if (_builder.IsPlaced == false)
             return;
 
         if (TryGetFreeUnit(out Bot bot))
         {
             IsConstructionMode = false;
+            _resourcesCapacity.Decrease(_costFacility);
 
             _freeBots.Remove(bot);
 
@@ -155,12 +156,7 @@ public class Facility : MonoBehaviour
     private void HandleResources()
     {
         if (IsConstructionMode)
-        {
-            if (_resourcesCapacity.Current >= _costFacility)
-                _resourcesCapacity.Decrease(_costBot);
-
             return;
-        }
 
         if (_resourcesCapacity.Current >= _costBot)
         {

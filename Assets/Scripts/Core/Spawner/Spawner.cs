@@ -57,25 +57,24 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
         return @object;
     }
 
-    public void Add(T @object)
+    public virtual bool Add(T @object)
     {
+        bool isAdded = false;
+
         if (@object == null)
-            return;
+            return isAdded;
 
-        if (_container != null)
-            @object.transform.SetParent(_container);
+        isAdded = _objectPool.Add(@object);
 
-        _objectPool.Add(@object);
-
-        Spawn();
+        return isAdded;
     }
 
-    public void Remove(T @object)
+    public virtual bool Remove(T @object)
     {
         if (@object == null)
-            return;
+            return false;
 
-        _objectPool.Remove(@object);
+        return _objectPool.Remove(@object);
     }
 
     protected IEnumerator SpawningWithDelay()
@@ -107,6 +106,8 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
 
     protected virtual void Release(T @object)
     {
+        @object.transform.parent = _container;
+
         @object.gameObject.SetActive(false);
     }
 

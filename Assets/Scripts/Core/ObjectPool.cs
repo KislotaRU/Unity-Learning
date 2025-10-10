@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class ObjectPool<T> where T : class
 {
@@ -66,24 +67,25 @@ public class ObjectPool<T> where T : class
         _destroy?.Invoke(@object);
     }
 
-    public void Add(T @object)
+    public bool Add(T @object)
     {
         if (_pool.Contains(@object))
-            return;
+            return false;
 
         Release(@object);
 
         CountAll++;
+
+        return true;
     }
 
     public bool Remove(T @object)
     {
-        bool isRemoved = _pool.Remove(@object);
+        _pool.Remove(@object);
 
-        if (isRemoved)
-            CountAll--;
-
-        return isRemoved;
+        CountAll--;
+            
+        return true;
     }
 
     public void Clear()

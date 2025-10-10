@@ -12,6 +12,34 @@ public class SpawnerBot : Spawner<Bot>
         return bot;
     }
 
+    public override bool Add(Bot bot)
+    {
+        bool isAdded;
+
+        isAdded = base.Add(bot);
+
+        if (isAdded)
+        {
+            bot.Destroyed += HandleRelease;
+
+            Spawn();
+        }
+
+        return isAdded;
+    }
+
+    public override bool Remove(Bot bot)
+    {
+        bool isRemoved;
+
+        isRemoved = base.Remove(bot);
+
+        if (isRemoved)
+            bot.Destroyed -= HandleRelease;
+
+        return isRemoved;
+    }
+
     protected override Bot Create()
     {
         Bot bot = base.Create();
@@ -35,8 +63,6 @@ public class SpawnerBot : Spawner<Bot>
 
     protected override void Release(Bot bot)
     {
-        bot.transform.SetParent(_container);
-
         base.Release(bot);
     }
 

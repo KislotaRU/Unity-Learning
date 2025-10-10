@@ -34,8 +34,6 @@ public class SpawnerItem : Spawner<Item>
 
     protected override void Release(Item item)
     {
-        item.transform.SetParent(_container);
-
         base.Release(item);
     }
 
