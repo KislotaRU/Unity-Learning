@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character_Soldier_Male_01_Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2243224427704663638, guid: 98399b98c1fc4984b96f0990f8b77dfe, type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
     - target: {fileID: 5986526989751684683, guid: 98399b98c1fc4984b96f0990f8b77dfe, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.20997155
@@ -176,9 +180,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1864710217517547459, guid: 98399b98c1fc4984b96f0990f8b77dfe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1076435394}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98399b98c1fc4984b96f0990f8b77dfe, type: 3}
+--- !u!4 &580090906 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1864710217517547459, guid: 98399b98c1fc4984b96f0990f8b77dfe, type: 3}
+  m_PrefabInstance: {fileID: 580090905}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1076435391
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,11 +277,11 @@ Transform:
   m_GameObject: {fileID: 1076435391}
   serializedVersion: 2
   m_LocalRotation: {x: 0.25917053, y: 0.011588567, z: -0.003109886, w: 0.9657571}
-  m_LocalPosition: {x: -0.023956299, y: 2.8949265, z: -2.4334006}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -23.392784, y: 289.49265, z: -296.76813}
+  m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 580090906}
   m_LocalEulerAnglesHint: {x: 20.59, y: 0, z: 0}
 --- !u!1 &1173926276
 GameObject:
@@ -475,7 +487,6 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1076435394}
   - {fileID: 1173926278}
   - {fileID: 1681181163}
   - {fileID: 580090905}
