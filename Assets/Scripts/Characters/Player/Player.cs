@@ -1,13 +1,16 @@
+using System;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerController))]
 public class Player : MonoBehaviour
 {
     private PlayerController _playerController;
 
     private void Awake()
     {
-        _playerController = GetComponent<PlayerController>();
+        if (TryGetComponent(out PlayerController playerController) == false)
+            throw new ArgumentNullException(nameof(playerController));
+
+        _playerController = playerController;
     }
 
     private void Update()

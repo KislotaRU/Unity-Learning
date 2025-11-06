@@ -37,8 +37,8 @@ public class PlayerController : MonoBehaviour
 
     public void UpdateInput()
     {
-        _mover.Move(_inputActions.Player.Move.ReadValue<Vector2>());
-        _rotator.Look(_inputActions.Player.Look.ReadValue<Vector2>());
+        _mover.HandleMove(_inputActions.Player.Move.ReadValue<Vector2>());
+        _rotator.HandleLook(_inputActions.Player.Look.ReadValue<Vector2>());
     }
 
     private void OnShoot(InputAction.CallbackContext context)
