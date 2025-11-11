@@ -569,6 +569,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d120061d466ffd40bf7942c2847b5c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _configurator: {fileID: 11400000, guid: 89a0e032033d15748b42e654726d289e, type: 2}
   _playerAnimator: {fileID: 2499434498322611878}
   _playerController: {fileID: 1463697144238450025}
 --- !u!114 &2499434498322611878
