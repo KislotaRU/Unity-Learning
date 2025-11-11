@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     private Rotator _rotator;
     private Shooter _shooter;
 
+    public float SpeedMovement => _mover.SpeedMovement;
+
     private void Awake()
     {
         _inputActions = new PlayerInput();

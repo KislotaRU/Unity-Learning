@@ -3,76 +3,100 @@ using UnityEngine;
 
 public class Rotator : MonoBehaviour
 {
-    private const float _defaultHeadLocalPitchY = -90f;
+    private const float MinSqrMagnitude = 0.1f;
 
-    [SerializeField] private float _lookSpeed;
-    [SerializeField] private Transform _headBone;
-    [SerializeField] private Transform _neckBone;
+    [Header("Rigging Settings")]
+    [SerializeField] private Transform _lookTarget;
+    [SerializeField] private float _lookDistance = 3f;
+    [SerializeField] private float _headHeight = 1.6f;
 
-    [SerializeField] private float _neckRotationMinLimit = -50f;
-    [SerializeField] private float _neckRotationMaxLimit = 50f;
-    [SerializeField] private float _headPitchMinLimit = 60f;
-    [SerializeField] private float _headPitchMaxLimit = 130f;
+    [Header("Look Settings")]
+    [SerializeField] private float _lookSpeed = 2f;
+    [SerializeField] private float _bodyRotationSpeed = 1f;
 
-    private float _bodyRotation;
-    private float _neckLocalRotation;
-    private float _headLocalPitch;
-    private float _accumulatedNeckRotation;
+    [Header("Rotation Limits")]
+    [SerializeField] private float _neckRotationLimit = 50f;
+    [SerializeField] private float _headPitchLimit = 50f;
+    [SerializeField] private float _bodyRotationThreshold = 0.8f;
+
+    private float _currentYaw;
+    private float _currentPitch;
+    private Vector2 _smoothLookInput;
+    private float _accumulatedYaw;
+
+    private Vector3 HeadPosition => transform.position + Vector3.up * _headHeight;
 
     private void Start()
     {
-        _bodyRotation = transform.rotation.y;
+        if (_lookTarget == null)
+            throw new ArgumentNullException(nameof(_lookTarget));
 
-        if (_headBone == null)
-            throw new ArgumentNullException(nameof(_headBone));
-
-        if (_neckBone == null)
-            throw new ArgumentNullException(nameof(_neckBone));
-
-        _neckLocalRotation = _neckBone.localRotation.y;
-        _headLocalPitch = _headBone.localRotation.x;
+        ResetLookTarget();
     }
 
     public void HandleLook(Vector2 direction)
     {
-        if (direction.sqrMagnitude <= 0.1f)
+        if ((direction.sqrMagnitude >= MinSqrMagnitude) == false)
             return;
 
-        Look(direction);
+        _smoothLookInput = Vector2.Lerp(_smoothLookInput, direction, _lookSpeed * Time.deltaTime);
+
+        Look(_smoothLookInput);
     }
 
     private void Look(Vector2 direction)
     {
-        Vector2 lookDelta = _lookSpeed * Time.deltaTime * direction;
+        Vector2 angleDelta = _lookSpeed * Time.deltaTime * direction;
 
-        _headLocalPitch -= lookDelta.y;
-        _headLocalPitch = Mathf.Clamp(_headLocalPitch, _headPitchMinLimit, _headPitchMaxLimit);
+        _currentYaw += angleDelta.x;
+        _currentPitch -= angleDelta.y;
 
-        float desiredNeckRotation = _neckLocalRotation + lookDelta.x;
-        _accumulatedNeckRotation += Mathf.Abs(lookDelta.x);
+        _accumulatedYaw += Mathf.Abs(angleDelta.x);
 
-        if (Mathf.Abs(desiredNeckRotation) > _neckRotationMaxLimit ||
-            _accumulatedNeckRotation > _neckRotationMaxLimit)
-        {
-            _bodyRotation += lookDelta.x;
-            _accumulatedNeckRotation = 0f;
+        _currentYaw = Mathf.Clamp(_currentYaw, -_neckRotationLimit, _neckRotationLimit);
+        _currentPitch = Mathf.Clamp(_currentPitch, -_headPitchLimit, _headPitchLimit);
 
-            _neckLocalRotation = Mathf.MoveTowards(_neckLocalRotation, 0f, _lookSpeed * Time.deltaTime);
-        }
-        else
-        {
-            _neckLocalRotation = desiredNeckRotation;
-            _neckLocalRotation = Mathf.Clamp(_neckLocalRotation, _neckRotationMinLimit, _neckRotationMaxLimit);
-        }
+        if (ShouldRotateBody())
+            RotateBodySmoothly(angleDelta.x);
 
-        ApplyRotations();
+        UpdateLookTarget();
     }
 
-    private void ApplyRotations()
+    private bool ShouldRotateBody()
     {
-        transform.rotation = Quaternion.Euler(0f, _bodyRotation, 0f);
+        return Mathf.Abs(_currentYaw) >= _neckRotationLimit * _bodyRotationThreshold ||
+               _accumulatedYaw >= _neckRotationLimit;
+    }
 
-        _neckBone.localRotation = Quaternion.Euler(-_neckLocalRotation, 0f, 0f);
-        _headBone.localRotation = Quaternion.Euler(_headLocalPitch, _defaultHeadLocalPitchY, 0f);
+    private void RotateBodySmoothly(float inputDelta)
+    {
+        float bodyRotationAmount = Mathf.Sign(_currentYaw) * _bodyRotationSpeed * Time.deltaTime;
+        transform.Rotate(0f, bodyRotationAmount, 0f);
+
+        _currentYaw -= bodyRotationAmount;
+        _accumulatedYaw = Mathf.Max(0f, _accumulatedYaw - Mathf.Abs(bodyRotationAmount));
+
+        _currentYaw = Mathf.Clamp(_currentYaw, -_neckRotationLimit, _neckRotationLimit);
+    }
+
+    private void UpdateLookTarget()
+    {
+        Quaternion headLocalRotation = Quaternion.Euler(_currentPitch, _currentYaw, 0f);
+
+        Vector3 lookDirection = transform.rotation * headLocalRotation * Vector3.forward;
+
+        Vector3 targetPosition = HeadPosition + lookDirection * _lookDistance;
+
+        _lookTarget.position = targetPosition;
+    }
+
+    public void ResetLookTarget()
+    {
+        _currentYaw = 0f;
+        _currentPitch = 0f;
+        _smoothLookInput = Vector2.zero;
+        _accumulatedYaw = 0f;
+
+        _lookTarget.position = HeadPosition + transform.forward * _lookDistance;
     }
 }
