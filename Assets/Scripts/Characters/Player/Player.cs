@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private EntityConfigurator _configurator;
+    [SerializeField] private EntityConfiguration _configurator;
 
     [SerializeField] private PlayerAnimator _playerAnimator;
     [SerializeField] private PlayerController _playerController;
