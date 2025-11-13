@@ -1,6 +1,14 @@
 public class WeaponAxe : MeleeWeapon
 {
-    public WeaponAxe(MeleeWeaponConfiguration configuration) : base(configuration)
+    public WeaponAxe(
+        float damage,
+        float attackRate,
+        float range,
+        int maxTarget)
+        : base(damage,
+            attackRate,
+            range,
+            maxTarget)
     {
     }
 }

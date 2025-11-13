@@ -1,6 +1,14 @@
 public class WeaponPickacxe : MeleeWeapon
 {
-    public WeaponPickacxe(MeleeWeaponConfiguration configuration) : base(configuration)
+    public WeaponPickacxe(
+        float damage,
+        float attackRate,
+        float range,
+        int maxTarget)
+        : base(damage,
+            attackRate,
+            range,
+            maxTarget)
     {
     }
 }

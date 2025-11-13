@@ -3,15 +3,7 @@ using UnityEngine;
 
 public class Attacker : MonoBehaviour
 {
-    private WeaponFactory _weaponFactory;
     private IWeapon _weapon;
-
-    private void Awake()
-    {
-        _weaponFactory = new WeaponFactory();
-
-        SetWeapon(_weaponFactory.CreateHands(null));
-    }
 
     public void Attack()
     {
