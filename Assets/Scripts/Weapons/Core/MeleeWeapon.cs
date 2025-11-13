@@ -1,15 +1,10 @@
 using System;
 
-public abstract class MeleeWeapon : Weapon
+public class MeleeWeapon : Weapon
 {
-    public MeleeWeapon(
-        float damage,
-        float attackRate,
-        float range,
+    public MeleeWeapon(float damage, float attackRate, float range, ITimerService<IWeapon> timerService,
         int maxTarget)
-        : base(damage,
-            attackRate,
-            range)
+        : base(damage, attackRate, range, timerService)
     {
         MaxTargets = maxTarget > 0 ? maxTarget : throw new ArgumentOutOfRangeException(nameof(maxTarget));
     }

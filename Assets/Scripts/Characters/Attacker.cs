@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Attacker : MonoBehaviour
 {
-    private IWeapon _weapon;
+    private Weapon _weapon;
 
     public void Attack()
     {
@@ -15,7 +15,7 @@ public class Attacker : MonoBehaviour
         _weapon?.Reload();
     }
 
-    public void SetWeapon(IWeapon weapon)
+    public void SetWeapon(Weapon weapon)
     {
         _weapon = weapon ?? throw new ArgumentNullException(nameof(weapon));
     }

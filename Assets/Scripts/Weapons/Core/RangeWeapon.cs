@@ -1,18 +1,10 @@
 using System;
 
-public abstract class RangeWeapon : Weapon
+public class RangeWeapon : Weapon
 {
-    public RangeWeapon(
-        float damage,
-        float attackRate,
-        float range,
-        int maxAmmo,
-        float reloadTime,
-        float projectileVelocity,
-        int projectilesPerShot)
-        : base(damage,
-            attackRate,
-            range)
+    public RangeWeapon(float damage, float attackRate, float range, ITimerService<IWeapon> timerService,
+        int maxAmmo, float reloadTime, float projectileVelocity, int projectilesPerShot)
+        : base(damage, attackRate, range, timerService)
     {
         MaxAmmo = maxAmmo > 0 ? maxAmmo : throw new ArgumentOutOfRangeException(nameof(maxAmmo));
         ReloadTime = reloadTime >= 0f ? reloadTime : throw new ArgumentOutOfRangeException(nameof(reloadTime));
