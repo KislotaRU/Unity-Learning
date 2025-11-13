@@ -1,31 +1,23 @@
 using System;
-using UnityEngine;
 
-public class MeleeWeapon : Weapon
+public abstract class MeleeWeapon : Weapon
 {
-    public MeleeWeapon(MeleeWeaponConfiguration configuration) : base(configuration)
+    public MeleeWeapon(
+        float damage,
+        float attackRate,
+        float range,
+        int maxTarget)
+        : base(damage,
+            attackRate,
+            range)
     {
-        MaxTargets = configuration.MaxTargets;
+        MaxTargets = maxTarget > 0 ? maxTarget : throw new ArgumentOutOfRangeException(nameof(maxTarget));
     }
 
     public int MaxTargets { get; }
 
-    public override void Attack(IHealth health)
-    {
-        if (CanAttack() == false)
-            return;
-
-        if (health == null)
-            throw new ArgumentNullException(nameof(health));
-    }
-
-    public override bool CanAttack()
-    {
-        return true;
-    }
-
     public override void Reload()
     {
-        Debug.Log("Reloaded");
+        throw new NotImplementedException();
     }
 }

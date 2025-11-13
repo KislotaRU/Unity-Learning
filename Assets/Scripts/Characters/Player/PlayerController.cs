@@ -3,14 +3,14 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Mover))]
 [RequireComponent(typeof(Rotator))]
-[RequireComponent(typeof(Shooter))]
+[RequireComponent(typeof(Attacker))]
 public class PlayerController : MonoBehaviour
 {
     private PlayerInput _inputActions;
 
     private Mover _mover;
     private Rotator _rotator;
-    private Shooter _shooter;
+    private Attacker _attacker;
 
     public float SpeedMovement => _mover.SpeedMovement;
 
@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
 
         _mover = GetComponent<Mover>();
         _rotator = GetComponent<Rotator>();
-        _shooter = GetComponent<Shooter>();
+        _attacker = GetComponent<Attacker>();
     }
 
     private void OnEnable()
@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
         _inputActions.Player.Enable();
 
         _inputActions.Player.Shoot.performed += OnShoot;
+        _inputActions.Player.Reload.performed += OnReload;
     }
 
     private void OnDisable()
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour
         _inputActions.Player.Disable();
 
         _inputActions.Player.Shoot.performed -= OnShoot;
+        _inputActions.Player.Reload.performed -= OnReload;
     }
 
     public void UpdateInput()
@@ -45,6 +47,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnShoot(InputAction.CallbackContext context)
     {
-        _shooter.Shoot();
+        _attacker.Attack();
+    }
+
+    private void OnReload(InputAction.CallbackContext context)
+    {
+        _attacker.Reload();
     }
 }

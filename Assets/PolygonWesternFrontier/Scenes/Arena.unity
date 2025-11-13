@@ -191,10 +191,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character_Soldier_Male_01_Player
       objectReference: {fileID: 0}
-    - target: {fileID: 2243224427704663638, guid: 98399b98c1fc4984b96f0990f8b77dfe, type: 3}
-      propertyPath: m_Interpolate
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5986526989751684683, guid: 98399b98c1fc4984b96f0990f8b77dfe, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.20997155

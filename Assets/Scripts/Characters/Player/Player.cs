@@ -39,7 +39,17 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        HandleInput();
+        HandleAnimator();
+    }
+
+    private void HandleInput()
+    {
         _playerController.UpdateInput();
+    }
+
+    private void HandleAnimator()
+    {
         _playerAnimator.SetParametrs(_playerController.SpeedMovement);
     }
 

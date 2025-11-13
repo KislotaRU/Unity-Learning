@@ -438,8 +438,8 @@ GameObject:
   - component: {fileID: 2499434498322611878}
   - component: {fileID: 1463697144238450025}
   - component: {fileID: 388572504883316326}
+  - component: {fileID: 3183300702761386627}
   - component: {fileID: 9155578020272433750}
-  - component: {fileID: 6742320676568980428}
   - component: {fileID: 8304720407587331983}
   m_Layer: 0
   m_Name: Character_Soldier_Male_01_Player
@@ -569,7 +569,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d120061d466ffd40bf7942c2847b5c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _configurator: {fileID: 11400000, guid: 89a0e032033d15748b42e654726d289e, type: 2}
+  _configurator: {fileID: 11400000, guid: 5cace1935c0fd9c4988d17dd28bc4286, type: 2}
   _playerAnimator: {fileID: 2499434498322611878}
   _playerController: {fileID: 1463697144238450025}
 --- !u!114 &2499434498322611878
@@ -609,6 +609,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 5
+--- !u!114 &3183300702761386627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 849601763847879717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f082f9674ea494245bc8d2560d186792, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &9155578020272433750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -629,18 +641,6 @@ MonoBehaviour:
   _neckRotationLimit: 50
   _headPitchLimit: 50
   _bodyRotationThreshold: 1
---- !u!114 &6742320676568980428
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 849601763847879717}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c64abb14bb755aa48a1dfa737ee55410, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8304720407587331983
 MonoBehaviour:
   m_ObjectHideFlags: 0

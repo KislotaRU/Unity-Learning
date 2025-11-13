@@ -1,44 +1,35 @@
 using System;
-using System.Collections;
-using UnityEngine;
 
-public class RangeWeapon : Weapon
+public abstract class RangeWeapon : Weapon
 {
-    public RangeWeapon(RangeWeaponConfiguration configuration) : base(configuration)
+    public RangeWeapon(
+        float damage,
+        float attackRate,
+        float range,
+        int maxAmmo,
+        float reloadTime,
+        float projectileVelocity,
+        int projectilesPerShot)
+        : base(damage,
+            attackRate,
+            range)
     {
-        MaxAmmo = configuration.MaxAmmo;
-        ReloadTime = configuration.ReloadTime;
-        ProjectileVelocity = configuration.ProjectileVelocity;
-
+        MaxAmmo = maxAmmo > 0 ? maxAmmo : throw new ArgumentOutOfRangeException(nameof(maxAmmo));
+        ReloadTime = reloadTime >= 0f ? reloadTime : throw new ArgumentOutOfRangeException(nameof(reloadTime));
+        ProjectileVelocity = projectileVelocity >= 0f ? projectileVelocity : throw new ArgumentOutOfRangeException(nameof(projectileVelocity));
+        ProjectilesPerShot = projectilesPerShot > 0 ? projectilesPerShot : throw new ArgumentOutOfRangeException(nameof(projectilesPerShot));
         Magazine = new Counter(MaxAmmo);
     }
 
     public int MaxAmmo { get; }
     public float ReloadTime { get; }
     public float ProjectileVelocity { get; }
+    public int ProjectilesPerShot { get; }
     public ICounter Magazine { get; }
-
-    public IEnumerator CooldownCoroutine(float cooldownInSecond)
-    {
-        yield return new WaitForSeconds(cooldownInSecond);
-    }
-
-    public override void Attack(IHealth health)
-    {
-        if (CanAttack() == false)
-            return;
-
-        if (health == null)
-            throw new ArgumentNullException(nameof(health));
-    }
-
-    public override bool CanAttack()
-    {
-        return false;
-    }
+    public override bool CanAttack => Magazine.CurrentValue >= ProjectilesPerShot;
 
     public override void Reload()
     {
-        Debug.Log("Reloaded");
+        throw new NotImplementedException();
     }
 }
