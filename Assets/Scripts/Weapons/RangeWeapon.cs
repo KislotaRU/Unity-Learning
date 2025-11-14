@@ -22,6 +22,9 @@ public class RangeWeapon : Weapon
 
     public override void Reload()
     {
-        throw new NotImplementedException();
+        _timerService.CreateTimer(this, ReloadTime, () =>
+        {
+            Magazine.Fill();
+        });
     }
 }
