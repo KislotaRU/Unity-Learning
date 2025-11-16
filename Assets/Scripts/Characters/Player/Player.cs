@@ -1,60 +1,41 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private EntityConfiguration _configurator;
+    private MovementInputHandler _movementInputHandler;
+    private CombatInputHandler _combatInputHandler;
 
-    [SerializeField] private PlayerAnimator _playerAnimator;
-    [SerializeField] private PlayerController _playerController;
-
-    private IHealth _health;
+    [Inject]
+    private void Construct(MovementInputHandler movementInputHandler, CombatInputHandler combatInputHandler)
+    {
+        _movementInputHandler = movementInputHandler;
+        _combatInputHandler = combatInputHandler;
+    }
 
     private void Awake()
     {
-        if (_configurator == null)
-            throw new ArgumentNullException(nameof(_configurator));
+        if (_movementInputHandler == null)
+            throw new ArgumentNullException(nameof(_movementInputHandler));
 
-        if (TryGetComponent(out PlayerAnimator playerAnimator) == false)
-            throw new ArgumentNullException(nameof(playerAnimator));
-
-        if (TryGetComponent(out PlayerController playerController) == false)
-            throw new ArgumentNullException(nameof(playerController));
-
-        _playerAnimator = playerAnimator;
-        _playerController = playerController;
-
-        _health = new Health(_configurator.MaxValueHealth);
-    }
-
-    private void OnEnable()
-    {
-        _health.Devastated += HandleDied;
-    }
-
-    private void OnDisable()
-    {
-        _health.Devastated -= HandleDied;
+        if (_combatInputHandler == null)
+            throw new ArgumentNullException(nameof(_combatInputHandler));
     }
 
     private void Update()
     {
         HandleInput();
-        HandleAnimator();
     }
 
     private void HandleInput()
     {
-        _playerController.UpdateInput();
+        _movementInputHandler.UpdateInput();
     }
 
-    private void HandleAnimator()
+    private void OnDestroy()
     {
-        _playerAnimator.SetParametrs(_playerController.SpeedMovement);
-    }
-
-    private void HandleDied()
-    {
-        Debug.Log("Died");
+        _movementInputHandler.Dispose();
+        _combatInputHandler.Dispose();
     }
 }

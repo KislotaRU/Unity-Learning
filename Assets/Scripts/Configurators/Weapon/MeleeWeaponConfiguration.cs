@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "MeleeWeaponConfiguration", menuName = "Configurators/Weapon/MeleeWeaponConfiguration")]
