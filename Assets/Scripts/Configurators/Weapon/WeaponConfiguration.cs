@@ -2,12 +2,8 @@ using UnityEngine;
 
 public abstract class WeaponConfiguration : ScriptableObject
 {
-    [Header("Base Weapon Settings")]
-    [SerializeField, Min(0f)] private float _damage;
-    [SerializeField, Min(0f)] private float _attackRate;
-    [SerializeField, Min(0f)] private float _range;
-
-    public float Damage => _damage;
-    public float AttackRate => _attackRate;
-    public float Range => _range;
+    [field: Header("Base Weapon Settings")]
+    [field: SerializeField, Min(0f)] public float Damage { get; private set; }
+    [field: SerializeField, Min(0f)] public float AttackRate { get; private set; }
+    [field: SerializeField, Min(0f)] public float Range { get; private set; }
 }

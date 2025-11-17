@@ -22,7 +22,7 @@ public class CombatInputHandler : MonoBehaviour
     public void Dispose() =>
         Unsubscribe();
 
-    private void Subscribe()
+    public void Subscribe()
     {
         _inputActions.Player.Enable();
 

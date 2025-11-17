@@ -3,14 +3,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "RangeWeaponConfiguration", menuName = "Configurators/Weapon/RangeWeaponConfiguration")]
 public class RangeWeaponConfiguration : WeaponConfiguration
 {
-    [Header("Ranged Specific")]
-    [SerializeField, Range(1, 200)] private int _maxAmmo;
-    [SerializeField, Min(0f)] private float _reloadTime;
-    [SerializeField, Min(0f)] private float _projectileVelocity;
-    [SerializeField, Min(1)] private int _projectilesPerShot;
-
-    public int MaxAmmo => _maxAmmo;
-    public float ReloadTime => _reloadTime;
-    public float ProjectileVelocity => _projectileVelocity;
-    public int ProjectilesPerShot => _projectilesPerShot;
+    [field: Header("Ranged Specific")]
+    [field: SerializeField, Min(0f)] public float ReloadTime { get; private set; }
+    [field: SerializeField, Min(0f)] public float ProjectileVelocity { get; private set; }
+    [field: SerializeField, Range(1, 200)] public int MaxAmmo { get; private set; }
+    [field: SerializeField, Range(1, 100)] public int ProjectilesPerShot { get; private set; }
 }

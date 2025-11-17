@@ -2,14 +2,14 @@ using System;
 
 public class MeleeWeapon : Weapon
 {
-    public MeleeWeapon(float damage, float attackRate, float range, ITimerService<IWeapon> timerService,
-        int maxTarget)
-        : base(damage, attackRate, range, timerService)
+    private readonly MeleeWeaponConfiguration _configuration;
+
+    public MeleeWeapon(MeleeWeaponConfiguration configuration, ITimerService<IWeapon> timerService) : base(configuration, timerService)
     {
-        MaxTargets = maxTarget > 0 ? maxTarget : throw new ArgumentOutOfRangeException(nameof(maxTarget));
+        _configuration = configuration != null ? configuration : throw new ArgumentNullException(nameof(configuration));
     }
 
-    public int MaxTargets { get; }
+    public int MaxTargets => _configuration.MaxTargets;
 
     public override void Reload()
     {

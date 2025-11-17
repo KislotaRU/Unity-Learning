@@ -27,7 +27,7 @@ public class MovementInputHandler : IDisposable
         Rotator.HandleLook(_inputActions.Player.Look.ReadValue<Vector2>());
     }
 
-    private void Subscribe()
+    public void Subscribe()
     {
         _inputActions.Player.Enable();
     }

@@ -23,6 +23,18 @@ public class Player : MonoBehaviour
             throw new ArgumentNullException(nameof(_combatInputHandler));
     }
 
+    private void OnEnable()
+    {
+        _movementInputHandler.Subscribe();
+        _combatInputHandler.Subscribe();
+    }
+
+    private void OnDisable()
+    {
+        _movementInputHandler.Dispose();
+        _combatInputHandler.Dispose();
+    }
+
     private void Update()
     {
         HandleInput();
@@ -31,11 +43,5 @@ public class Player : MonoBehaviour
     private void HandleInput()
     {
         _movementInputHandler.UpdateInput();
-    }
-
-    private void OnDestroy()
-    {
-        _movementInputHandler.Dispose();
-        _combatInputHandler.Dispose();
     }
 }

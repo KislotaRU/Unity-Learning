@@ -1,10 +1,8 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MeleeWeaponConfiguration", menuName = "Configurators/Weapon/MeleeWeaponConfiguration")]
+[CreateAssetMenu(fileName = "MeleeWeaponConfiguration1", menuName = "Configurators/Weapon/MeleeWeaponConfiguration")]
 public class MeleeWeaponConfiguration : WeaponConfiguration
 {
-    [Header("Melee Specific")]
-    [SerializeField, Min(1)] private int _maxTargets;
-
-    public int MaxTargets => _maxTargets;
+    [field: Header("Melee Specific")]
+    [field: SerializeField, Min(1)] public int MaxTargets { get; private set; }
 }
