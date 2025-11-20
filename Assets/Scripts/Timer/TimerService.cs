@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class TimerService<T> : ITimerService<T>
 {
@@ -27,6 +28,11 @@ public class TimerService<T> : ITimerService<T>
             throw new ArgumentNullException(nameof(context));
 
         _timers.RemoveAll(timer => timer.Context.Equals(context));
+    }
+
+    public float GetAccumulatedTime(T context)
+    {
+        return _timers.First(timer => timer.Context.Equals(context)).AccumulatedTime;
     }
 
     public void Tick(float deltaTime)

@@ -11,8 +11,29 @@ public class MeleeWeapon : Weapon
 
     public int MaxTargets => _configuration.MaxTargets;
 
+    public override bool CanAttack => CanHit;
+    private bool CanHit { get; set; }
+
+    public override void Attack()
+    {
+        base.Attack();
+
+        CanHit = false;
+
+        Reload();
+    }
+
     public override void Reload()
     {
-        throw new NotImplementedException();
+        if (CanHit)
+            return;
+
+        if (_timerService.GetAccumulatedTime(this) > 0f)
+            return;
+
+        _timerService.CreateTimer(this, TimeBetweenAttacks, () =>
+        {
+            CanHit = true;
+        });
     }
 }
