@@ -7,6 +7,7 @@ public class Mover : MonoBehaviour, IMover
     [SerializeField] private float _moveSpeed;
 
     public float CurrentSpeed { get; private set; }
+    public float Speed => _moveSpeed;
 
     public void HandleMove(Vector2 direction)
     {

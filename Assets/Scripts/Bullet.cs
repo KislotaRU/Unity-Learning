@@ -3,15 +3,12 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private BulletConfiguration _configuration;
-    [SerializeField] private Mover _mover;
-
     private ITimerService<Bullet> _timerService;
 
     public event Action<IHealth> Hit;
     public event Action<Bullet> Destroyed;
 
-    public Vector2 Direction { get; private set; }
+    public float ProjectileVelocity { get; private set; }
 
     private void Awake()
     {
@@ -20,7 +17,8 @@ public class Bullet : MonoBehaviour
 
     private void Update()
     {
-        _mover.HandleMove(Direction);
+        transform.position += ProjectileVelocity * Time.deltaTime * transform.forward;
+
         _timerService.Tick(Time.deltaTime);
     }
 
@@ -42,12 +40,14 @@ public class Bullet : MonoBehaviour
         Destroyed = null;
     }
 
-    public void Initialize(Vector2 position, Vector2 direction)
+    public void Initialize(Vector3 position, Quaternion rotation, float projectileVelocity, float projectileLifeTime)
     {
         transform.position = position;
-        Direction = direction;
+        transform.rotation = rotation;
 
-        _timerService.CreateTimer(this, _configuration.LifeTime, () =>
+        ProjectileVelocity = projectileVelocity;
+
+        _timerService.CreateTimer(this, projectileLifeTime, () =>
         {
             Destroyed?.Invoke(this);
         });

@@ -7,7 +7,9 @@ public class RangeWeapon : Weapon
 
     [SerializeField] private RangeWeaponConfiguration _configuration;
     [SerializeField] private BulletSpawner _bulletSpawner;
-    [SerializeField] private Transform _spawnPointBullet;
+    [SerializeField] private Transform _transformParent;
+    [SerializeField] private Transform _transformBullet;
+    [SerializeField] private Transform _directionBullet;
 
     private ITimerService<Weapon> _timerService;
 
@@ -17,6 +19,7 @@ public class RangeWeapon : Weapon
     public float ProjectileCount { get; private set; }
     public float ReloadTime => _configuration.ReloadTime;
     public float ProjectileVelocity => _configuration.ProjectileVelocity;
+    public float ProjectileLifeTime => _configuration.ProjectileLifeTime;
     public int MaxAmmo => _configuration.MaxAmmo;
     public int ProjectilesPerShot => _configuration.ProjectilesPerShot;
     public float TimeBetweenAttacks => SecondCount / AttackRate;
@@ -34,6 +37,8 @@ public class RangeWeapon : Weapon
 
         CanShoot = true;
         CanReload = true;
+
+        transform.parent = _transformParent;
     }
 
     private void Start()
@@ -60,7 +65,7 @@ public class RangeWeapon : Weapon
         bullet.Destroyed += HandleProjectileDestroyed;
         bullet.Hit += HandleProjectileHit;
 
-        bullet.Initialize(_spawnPointBullet.position, _spawnPointBullet.up);
+        bullet.Initialize(_transformBullet.position, _transformBullet.rotation, ProjectileVelocity, ProjectileLifeTime);
 
         CanShoot = false;
 

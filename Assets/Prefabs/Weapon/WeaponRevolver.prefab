@@ -261,7 +261,6 @@ GameObject:
   - component: {fileID: 33019810325464768}
   - component: {fileID: 23299499522456724}
   - component: {fileID: 3607249722029554292}
-  - component: {fileID: 8733086638761029885}
   m_Layer: 0
   m_Name: WeaponRevolver
   m_TagString: Untagged
@@ -280,7 +279,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4472006624568314}
   - {fileID: 4617934776814192}
@@ -353,20 +352,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _configuration: {fileID: 11400000, guid: 180285a14d10b094a8de0327e54562de, type: 2}
   _bulletSpawner: {fileID: 4324062786748548119}
-  _spawnPointBullet: {fileID: 3739469162211414816}
---- !u!114 &8733086638761029885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1902353365401686}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8650aa20c6dc6fd4aace7296a621bba3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _moveSpeed: 0.1
+  _transformParent: {fileID: 0}
+  _transformBullet: {fileID: 0}
 --- !u!1 &1871211165447179333
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,7 +430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34cdd05df2834c24dbc1ec9e012afe31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 2290391219448457889, guid: 29771efc815adad40b3dd4e10c1b01b1, type: 3}
+  _prefab: {fileID: 8571219078498381116, guid: 29771efc815adad40b3dd4e10c1b01b1, type: 3}
   _container: {fileID: 7345508053471264154}
   _maxSize: 6
   _capacity: 0
