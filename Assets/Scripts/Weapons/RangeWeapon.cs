@@ -3,34 +3,55 @@ using UnityEngine;
 
 public class RangeWeapon : Weapon
 {
-    private readonly BulletSpawner _bulletSpawner;
-    private readonly RangeWeaponConfiguration _configuration;
+    private const int SecondCount = 60;
 
-    public RangeWeapon(RangeWeaponConfiguration configuration, ITimerService<IWeapon> timerService, BulletSpawner bulletSpawner) : base(configuration, timerService)
-    {
-        _configuration = configuration != null ? configuration : throw new ArgumentNullException(nameof(configuration));
-        _bulletSpawner = bulletSpawner != null ? bulletSpawner : throw new ArgumentNullException(nameof(bulletSpawner));
+    [SerializeField] private RangeWeaponConfiguration _configuration;
+    [SerializeField] private BulletSpawner _bulletSpawner;
+    [SerializeField] private Transform _spawnPointBullet;
 
-        ProjectileCount = MaxAmmo;
-    }
+    private ITimerService<Weapon> _timerService;
 
-    public Vector2 Position { get; private set; }
-    public Vector2 Direction => Vector2.right;
+    public float Damage => _configuration.Damage;
+    public float AttackRate => _configuration.AttackRate;
+    public float Range => _configuration.Range;
     public float ProjectileCount { get; private set; }
     public float ReloadTime => _configuration.ReloadTime;
     public float ProjectileVelocity => _configuration.ProjectileVelocity;
     public int MaxAmmo => _configuration.MaxAmmo;
     public int ProjectilesPerShot => _configuration.ProjectilesPerShot;
-
-    public override bool CanAttack => IsReloaded && CanShoot;
+    public float TimeBetweenAttacks => SecondCount / AttackRate;
+    public bool CanAttack => IsReloaded && CanShoot;
     private bool IsReloaded => ProjectileCount >= ProjectilesPerShot;
     private bool CanShoot { get; set; }
+    private bool CanReload { get; set; }
+
+    private void Awake()
+    {
+        if (_configuration == null)
+            throw new ArgumentNullException(nameof(_configuration));
+
+        _timerService = new TimerService<Weapon>();
+
+        CanShoot = true;
+        CanReload = true;
+    }
+
+    private void Start()
+    {
+        ProjectileCount = MaxAmmo;
+    }
+
+    private void Update()
+    {
+        _timerService.Tick(Time.deltaTime);
+    }
 
     public override void Attack()
     {
-        Bullet bullet;
+        if (CanAttack == false)
+            return;
 
-        base.Attack();
+        Bullet bullet;
 
         ProjectileCount -= ProjectilesPerShot;
 
@@ -39,7 +60,8 @@ public class RangeWeapon : Weapon
         bullet.Destroyed += HandleProjectileDestroyed;
         bullet.Hit += HandleProjectileHit;
 
-        bullet.Initialize(Position, Direction);
+        bullet.Initialize(_spawnPointBullet.position, _spawnPointBullet.up);
+
         CanShoot = false;
 
         _timerService.CreateTimer(this, TimeBetweenAttacks, () =>
@@ -53,11 +75,14 @@ public class RangeWeapon : Weapon
         if (ProjectileCount >= MaxAmmo)
             return;
 
-        if (_timerService.GetAccumulatedTime(this) > 0f)
+        if (CanReload == false)
             return;
+
+        CanReload = false;
 
         _timerService.CreateTimer(this, ReloadTime, () =>
         {
+            CanReload = true;
             ProjectileCount = MaxAmmo;
         });
     }

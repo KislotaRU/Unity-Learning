@@ -1,21 +1,12 @@
 using System;
 using UnityEngine;
-using Zenject;
 
 public class Bullet : MonoBehaviour
 {
-    private BulletConfiguration _configuration;
+    [SerializeField] private BulletConfiguration _configuration;
+    [SerializeField] private Mover _mover;
 
     private ITimerService<Bullet> _timerService;
-    private IMover _mover;
-
-    [Inject]
-    private void Construct(BulletConfiguration configuration, ITimerService<Bullet> timerService, IMover mover)
-    {
-        _configuration = configuration;
-        _timerService = timerService;
-        _mover = mover;
-    }
 
     public event Action<IHealth> Hit;
     public event Action<Bullet> Destroyed;
@@ -24,16 +15,13 @@ public class Bullet : MonoBehaviour
 
     private void Awake()
     {
-        if (_timerService != null)
-            throw new ArgumentNullException(nameof(_timerService));
-
-        if (_mover != null)
-            throw new ArgumentNullException(nameof(_mover));
+        _timerService = new TimerService<Bullet>();
     }
 
     private void Update()
     {
         _mover.HandleMove(Direction);
+        _timerService.Tick(Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider other)

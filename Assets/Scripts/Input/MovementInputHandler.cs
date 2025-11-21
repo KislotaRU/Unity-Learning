@@ -1,39 +1,41 @@
 using System;
 using UnityEngine;
+using Zenject;
 
-public class MovementInputHandler : IDisposable
+public class MovementInputHandler : MonoBehaviour
 {
-    private readonly InputActions _inputActions;
+    [SerializeField] private Mover _mover;
+    [SerializeField] private Rotator _rotator;
 
-    public MovementInputHandler(InputActions inputActions, IMover mover, IRotator rotator)
+    private InputActions _inputActions;
+
+    [Inject]
+    private void Consturct(InputActions inputActions)
     {
-        _inputActions = inputActions ?? throw new ArgumentNullException(nameof(inputActions));
-
-        Mover = mover ?? throw new ArgumentNullException(nameof(mover));
-        Rotator = rotator ?? throw new ArgumentNullException(nameof(rotator));
-
-        Subscribe();
+        _inputActions = inputActions;
     }
 
-    public IMover Mover { get; }
-    public IRotator Rotator { get; }
+    public IMover Mover { get; private set; }
+    public IRotator Rotator { get; private set; }
 
-    public void Dispose() =>
-        Unsubscribe();
+    private void Awake()
+    {
+        if (_inputActions == null)
+            throw new ArgumentNullException(nameof(_inputActions));
+
+        if (_mover == null)
+            throw new ArgumentNullException(nameof(_mover));
+
+        if (_rotator == null)
+            throw new ArgumentNullException(nameof(_rotator));
+
+        Mover = _mover;
+        Rotator = _rotator;
+    }
 
     public void UpdateInput()
     {
         Mover.HandleMove(_inputActions.Player.Move.ReadValue<Vector2>());
         Rotator.HandleLook(_inputActions.Player.Look.ReadValue<Vector2>());
     }
-
-    public void Subscribe()
-    {
-        _inputActions.Player.Enable();
-    }
-
-    private void Unsubscribe()
-    {
-        _inputActions.Player.Disable();
-    }
-}
+}  

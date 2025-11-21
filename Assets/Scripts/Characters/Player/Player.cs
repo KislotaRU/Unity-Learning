@@ -4,18 +4,23 @@ using Zenject;
 
 public class Player : MonoBehaviour
 {
-    private MovementInputHandler _movementInputHandler;
-    private CombatInputHandler _combatInputHandler;
+    [SerializeField] private PlayerAnimator _playerAnimator;
+    [SerializeField] private MovementInputHandler _movementInputHandler;
+    [SerializeField] private CombatInputHandler _combatInputHandler;
+
+    private InputActions _inputActions;
 
     [Inject]
-    private void Construct(MovementInputHandler movementInputHandler, CombatInputHandler combatInputHandler)
+    private void Consturct(InputActions inputActions)
     {
-        _movementInputHandler = movementInputHandler;
-        _combatInputHandler = combatInputHandler;
+        _inputActions = inputActions;
     }
 
     private void Awake()
     {
+        if (_playerAnimator == null)
+            throw new ArgumentNullException(nameof(_playerAnimator));
+
         if (_movementInputHandler == null)
             throw new ArgumentNullException(nameof(_movementInputHandler));
 
@@ -25,23 +30,27 @@ public class Player : MonoBehaviour
 
     private void OnEnable()
     {
-        _movementInputHandler.Subscribe();
-        _combatInputHandler.Subscribe();
+        _inputActions.Player.Enable();
     }
 
     private void OnDisable()
     {
-        _movementInputHandler.Dispose();
-        _combatInputHandler.Dispose();
+        _inputActions.Player.Disable();
     }
 
     private void Update()
     {
         HandleInput();
+        HandleAnimator();
     }
 
     private void HandleInput()
     {
         _movementInputHandler.UpdateInput();
+    }
+
+    private void HandleAnimator()
+    {
+        _playerAnimator.SetParametrs(_movementInputHandler.Mover.CurrentSpeed);
     }
 }

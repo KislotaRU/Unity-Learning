@@ -1,22 +1,39 @@
 using System;
+using UnityEngine;
 
 public class MeleeWeapon : Weapon
 {
-    private readonly MeleeWeaponConfiguration _configuration;
+    private const int SecondCount = 60;
 
-    public MeleeWeapon(MeleeWeaponConfiguration configuration, ITimerService<IWeapon> timerService) : base(configuration, timerService)
+    [SerializeField] private MeleeWeaponConfiguration _configuration;
+
+    private ITimerService<IWeapon> _timerService;
+
+    public float Damage => _configuration.Damage;
+    public float AttackRate => _configuration.AttackRate;
+    public float Range => _configuration.Range;
+    public int MaxTargets => _configuration.MaxTargets;
+    public float TimeBetweenAttacks => SecondCount / AttackRate;
+    public bool CanAttack => CanHit;
+    private bool CanHit { get; set; }
+
+    private void Awake()
     {
-        _configuration = configuration != null ? configuration : throw new ArgumentNullException(nameof(configuration));
+        if (_configuration == null)
+            throw new ArgumentNullException(nameof(_configuration));
+
+        _timerService = new TimerService<IWeapon>();
     }
 
-    public int MaxTargets => _configuration.MaxTargets;
-
-    public override bool CanAttack => CanHit;
-    private bool CanHit { get; set; }
+    private void Update()
+    {
+        _timerService.Tick(Time.deltaTime);
+    }
 
     public override void Attack()
     {
-        base.Attack();
+        if (CanAttack == false)
+            return;
 
         CanHit = false;
 
@@ -26,9 +43,6 @@ public class MeleeWeapon : Weapon
     public override void Reload()
     {
         if (CanHit)
-            return;
-
-        if (_timerService.GetAccumulatedTime(this) > 0f)
             return;
 
         _timerService.CreateTimer(this, TimeBetweenAttacks, () =>

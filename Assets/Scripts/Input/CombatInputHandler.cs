@@ -1,59 +1,55 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
-public class CombatInputHandler : MonoBehaviour
+public class CombatInputHandler :MonoBehaviour
 {
-    private readonly InputActions _inputActions;
+    [SerializeField] private WeaponController _weaponController;
 
-    public CombatInputHandler(InputActions inputActions, IAttacker attacker, IHealer healer)
+    private InputActions _inputActions;
+
+    [Inject]
+    private void Consturct(InputActions inputActions)
     {
-        _inputActions = inputActions ?? throw new ArgumentNullException(nameof(inputActions));
-
-        Attacker = attacker ?? throw new ArgumentNullException(nameof(attacker));
-        Healer = healer ?? throw new ArgumentNullException(nameof(healer));
-
-        Subscribe();
+        _inputActions = inputActions;
     }
 
-    public IAttacker Attacker { get; }
-    public IHealer Healer { get; }
-
-    public void Dispose() =>
-        Unsubscribe();
-
-    public void Subscribe()
+    private void Awake()
     {
-        _inputActions.Player.Enable();
+        if (_inputActions == null)
+            throw new ArgumentNullException(nameof(_inputActions));
 
+        if (_weaponController == null)
+            throw new ArgumentNullException(nameof(_weaponController));
+    }
+
+    private void OnEnable()
+    {
         _inputActions.Player.Shoot.performed += OnShoot;
         _inputActions.Player.Reload.performed += OnReload;
-
-        _inputActions.Player.Heal.performed += OnHeal;
+        _inputActions.Player.SwitchWeapon.performed += OnSwitch;
     }
 
-    private void Unsubscribe()
+    private void OnDisable()
     {
         _inputActions.Player.Shoot.performed -= OnShoot;
         _inputActions.Player.Reload.performed -= OnReload;
-
-        _inputActions.Player.Heal.performed -= OnHeal;
-
-        _inputActions.Player.Disable();
+        _inputActions.Player.SwitchWeapon.performed -= OnSwitch;
     }
 
     private void OnShoot(InputAction.CallbackContext context)
     {
-        Attacker.Attack();
+        _weaponController.Attack();
     }
 
     private void OnReload(InputAction.CallbackContext context)
     {
-        Attacker.Reload();
+        _weaponController.Reload();
     }
 
-    private void OnHeal(InputAction.CallbackContext context)
+    private void OnSwitch(InputAction.CallbackContext context)
     {
-        Healer.Heal();
+        _weaponController.Switch();
     }
 }

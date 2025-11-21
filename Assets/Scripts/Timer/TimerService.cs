@@ -30,19 +30,14 @@ public class TimerService<T> : ITimerService<T>
         _timers.RemoveAll(timer => timer.Context.Equals(context));
     }
 
-    public float GetAccumulatedTime(T context)
-    {
-        return _timers.First(timer => timer.Context.Equals(context)).AccumulatedTime;
-    }
-
     public void Tick(float deltaTime)
     {
         if (deltaTime < 0)
             throw new ArgumentOutOfRangeException(nameof(deltaTime));
 
-        foreach (Timer timer in _timers)
+        foreach (Timer timer in _timers.ToList())
         {
-            timer.Increase(deltaTime);
+            timer.AccumulatedTime += deltaTime;
 
             if (timer.IsCompleted)
             {
@@ -52,12 +47,13 @@ public class TimerService<T> : ITimerService<T>
         }
     }
 
-    private struct Timer
+    private class Timer
     {
-        public float AccumulatedTime;
         public readonly float Duration;
         public readonly T Context;
         public readonly Action OnCompleted;
+
+        public float AccumulatedTime;
 
         public Timer(T context, float duration, Action onCompleted)
         {
@@ -67,9 +63,6 @@ public class TimerService<T> : ITimerService<T>
             AccumulatedTime = 0f;
         }
 
-        public readonly bool IsCompleted => AccumulatedTime >= Duration;
-
-        public void Increase(float deltaTime) =>
-            AccumulatedTime += deltaTime > 0f ? deltaTime : throw new ArgumentOutOfRangeException(nameof(deltaTime));
+        public bool IsCompleted => AccumulatedTime >= Duration;
     }
 }

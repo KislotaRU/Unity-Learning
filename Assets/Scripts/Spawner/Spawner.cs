@@ -6,7 +6,7 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
 {
     [Header("Main Parameters")]
     [SerializeField] protected T _prefab;
-    [SerializeField] protected Transform _parent;
+    [SerializeField] protected Transform _container;
     [Space]
     [SerializeField, Min(0)] protected int _maxSize;
     [SerializeField, Min(0)] protected int _capacity;
@@ -23,7 +23,7 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
         _capacity = _capacity > _maxSize ? _maxSize : _capacity;
     }
 
-    protected virtual void Awake()
+    private void Awake()
     {
         _objectPool = new ObjectPool<T>(functionCreate: () => Create(),
                                         actionGet: (@object) => Get(@object),
@@ -33,9 +33,9 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
                                         capacity: _capacity);
     }
 
-    protected virtual void Start()
+    private void Start()
     {
-        for (int i = 0; i < _objectPool.CountInactive; i++)
+        for (int i = 0; i < _capacity; i++)
             Spawn();
 
         if (_autoSpawning)
@@ -90,6 +90,8 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
 
     protected virtual void Get(T @object)
     {
+        @object.transform.parent = null;
+
         @object.gameObject.SetActive(true);
     }
 
@@ -100,9 +102,9 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
 
     protected virtual void Release(T @object)
     {
-        @object.transform.parent = _parent;
-
         @object.gameObject.SetActive(false);
+
+        @object.transform.parent = _container;
     }
 
     protected virtual void Destroy(T @object)

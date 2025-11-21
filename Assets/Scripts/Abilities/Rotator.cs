@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using Zenject;
 
 public class Rotator : MonoBehaviour, IRotator
 {
@@ -12,7 +11,7 @@ public class Rotator : MonoBehaviour, IRotator
     [SerializeField] private float _headHeight = 1.6f;
 
     [Header("Look Settings")]
-    [SerializeField] private float _lookSpeed = 2f;
+    [SerializeField] private float _lookSpeed = 200f;
     [SerializeField] private float _bodyRotationSpeed = 1f;
 
     [Header("Rotation Limits")]
@@ -26,12 +25,6 @@ public class Rotator : MonoBehaviour, IRotator
     private float _accumulatedYaw;
 
     private Vector3 HeadPosition => transform.position + Vector3.up * _headHeight;
-
-    [Inject]
-    private void Cunstruct(Transform lookTarget)
-    {
-        _lookTarget = lookTarget;
-    }
 
     private void Awake()
     {
