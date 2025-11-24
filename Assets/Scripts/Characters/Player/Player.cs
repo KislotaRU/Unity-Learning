@@ -4,7 +4,7 @@ using Zenject;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private PlayerAnimator _playerAnimator;
+    [SerializeField] private EntityAnimator _entityAnimator;
     [SerializeField] private MovementInputHandler _movementInputHandler;
     [SerializeField] private CombatInputHandler _combatInputHandler;
 
@@ -18,8 +18,8 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        if (_playerAnimator == null)
-            throw new ArgumentNullException(nameof(_playerAnimator));
+        if (_entityAnimator == null)
+            throw new ArgumentNullException(nameof(_entityAnimator));
 
         if (_movementInputHandler == null)
             throw new ArgumentNullException(nameof(_movementInputHandler));
@@ -51,6 +51,6 @@ public class Player : MonoBehaviour
 
     private void HandleAnimator()
     {
-        _playerAnimator.SetParametrs(_movementInputHandler.Mover.CurrentSpeed);
+        _entityAnimator.SetParametrs(_movementInputHandler.Mover.CurrentSpeed);
     }
 }

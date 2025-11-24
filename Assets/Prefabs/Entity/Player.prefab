@@ -305,9 +305,9 @@ GameObject:
   - component: {fileID: 2469684691380416996}
   - component: {fileID: 1161835277477449815}
   - component: {fileID: 5167732130440317325}
-  - component: {fileID: 6221334217141508475}
   - component: {fileID: 3366517787042472698}
   - component: {fileID: 7805739903229250285}
+  - component: {fileID: 2399238826106061074}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -394,7 +394,7 @@ Animator:
   m_GameObject: {fileID: 849601763847879717}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 72b83be23d80d604bbe50cdfeebcf552, type: 3}
-  m_Controller: {fileID: 9100000, guid: 48056e0889b2b5f4fb0e36d147e15959, type: 2}
+  m_Controller: {fileID: 9100000, guid: 17799b58f214ca64fa34e5bd8ed177c3, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -441,7 +441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d120061d466ffd40bf7942c2847b5c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerAnimator: {fileID: 6221334217141508475}
+  _entityAnimator: {fileID: 2399238826106061074}
   _movementInputHandler: {fileID: 3366517787042472698}
   _combatInputHandler: {fileID: 7805739903229250285}
 --- !u!114 &2469684691380416996
@@ -491,18 +491,6 @@ MonoBehaviour:
   _neckRotationLimit: 50
   _headPitchLimit: 50
   _bodyRotationThreshold: 0.8
---- !u!114 &6221334217141508475
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 849601763847879717}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e674aa7294ae7054192c600a74850ceb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3366517787042472698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -530,6 +518,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponController: {fileID: 2469684691380416996}
+--- !u!114 &2399238826106061074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 849601763847879717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b27e8a2a4febff242bbd90c13b92b895, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animationConfiguration: {fileID: 11400000, guid: 868bdd9f42cffd14fa92d32a9b1b8385, type: 2}
 --- !u!1 &897829365055188033
 GameObject:
   m_ObjectHideFlags: 0
@@ -2349,14 +2350,31 @@ PrefabInstance:
       value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 3607249722029554292, guid: b31b5347109047244ab8fedbf6cef074, type: 3}
+      propertyPath: _directionBullet
+      value: 
+      objectReference: {fileID: 9200509247341548635}
+    - target: {fileID: 3607249722029554292, guid: b31b5347109047244ab8fedbf6cef074, type: 3}
+      propertyPath: _transformBullet
+      value: 
+      objectReference: {fileID: 5501750054839493071}
+    - target: {fileID: 3607249722029554292, guid: b31b5347109047244ab8fedbf6cef074, type: 3}
       propertyPath: _transformParent
       value: 
       objectReference: {fileID: 4439819879283937065}
+    - target: {fileID: 4324062786748548119, guid: b31b5347109047244ab8fedbf6cef074, type: 3}
+      propertyPath: _maxSize
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b31b5347109047244ab8fedbf6cef074, type: 3}
+--- !u!4 &5501750054839493071 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3739469162211414816, guid: b31b5347109047244ab8fedbf6cef074, type: 3}
+  m_PrefabInstance: {fileID: 9205190398955369199}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &5598222169623529627 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3607249722029554292, guid: b31b5347109047244ab8fedbf6cef074, type: 3}

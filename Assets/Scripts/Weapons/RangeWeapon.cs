@@ -9,7 +9,6 @@ public class RangeWeapon : Weapon
     [SerializeField] private BulletSpawner _bulletSpawner;
     [SerializeField] private Transform _transformParent;
     [SerializeField] private Transform _transformBullet;
-    [SerializeField] private Transform _directionBullet;
 
     private ITimerService<Weapon> _timerService;
 
