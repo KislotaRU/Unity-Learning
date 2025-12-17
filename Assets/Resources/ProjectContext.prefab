@@ -74,4 +74,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7787b3e728ab6884bb8f02663348d52a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ammoController: {fileID: 433518797945905045, guid: a38b70bfb81eeec419d9a0f661247276, type: 3}
+  _config: {fileID: 11400000, guid: a5420639854858b459adc4676bf37d37, type: 2}
