@@ -20,26 +20,26 @@ public class GameBootstrapper : MonoBehaviour
 
     private async UniTaskVoid InitializeApplicationAsync()
     {
-        _loadingScreen.Show();
+        await _loadingScreen.Show();
 
         _loadingScreen.UpdateMessage("Initializing...");
-        _loadingScreen.UpdateProgress(0.1f);
+        _loadingScreen.UpdateProgress(10f);
         await InitializeCoreServicesAsync();
 
         _loadingScreen.UpdateMessage("Loading Configurations...");
-        _loadingScreen.UpdateProgress(0.3f);
+        _loadingScreen.UpdateProgress(26f);
         await LoadConfigurationsAsync();
 
         _loadingScreen.UpdateMessage("Loading Critical Assets...");
-        _loadingScreen.UpdateProgress(0.5f);
+        _loadingScreen.UpdateProgress(53f);
         await PreloadCriticalAssetsAsync();
 
         _loadingScreen.UpdateMessage("Starting game...");
-        _loadingScreen.UpdateProgress(0.8f);
+        _loadingScreen.UpdateProgress(97f);
         await StartGameAsync();
 
         _loadingScreen.UpdateMessage($"Completion...");
-        _loadingScreen.UpdateProgress(1f);
+        _loadingScreen.UpdateProgress(100f);
         await UniTask.Delay(1000);
 
         await _loadingScreen.Hide();

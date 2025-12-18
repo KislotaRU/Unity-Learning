@@ -1,6 +1,6 @@
 public class Counter : Countable, ICounter
 {
-    public Counter(float maxValue) : base(maxValue)
+    public Counter(float maxValue = 1f) : base(maxValue)
     {
     }
 

@@ -11,7 +11,7 @@ public abstract class Countable : ICountable
     public event Action Filled;
     public event Action Devastated;
 
-    public Countable(float maxValue)
+    public Countable(float maxValue = 1f)
     {
         MaxValue = maxValue >= MinValue ? maxValue : throw new ArgumentOutOfRangeException(nameof(maxValue));
 

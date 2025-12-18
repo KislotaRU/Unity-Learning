@@ -1,16 +1,37 @@
+using System;
 using TMPro;
 using UnityEngine;
 
 public class TextBar : Bar
 {
-    [SerializeField] protected TextMeshProUGUI _textMeshPro;
-    [SerializeField] private bool _isPercentage;
+    [Header("Setting TextBar")]
+    [SerializeField] private TextMeshProUGUI _textMeshPro;
+    [SerializeField] private TypeDisplay _typeDisplay;
+    [Space]
+    [SerializeField] private bool _isPercentageValue;
 
-    protected override void HandleView()
+    protected override void Display()
     {
-        if (_isPercentage)
-            _textMeshPro.text = $"{CurrentValue * 100}%";
-        else
-            _textMeshPro.text = $"{CurrentValue}/{MaxValue}";
+        switch (_typeDisplay)
+        {
+            case TypeDisplay.Default:
+                _textMeshPro.text = $"{DisplayedValue: #0.}";
+                return;
+
+            case TypeDisplay.Percent:
+                _textMeshPro.text = $"{DisplayedValue: #0.} %";
+                return;
+
+            case TypeDisplay.MaxValue:
+                _textMeshPro.text = $"{DisplayedValue: #0.}/{MaxValue}";
+                return;
+        }
+
+        throw new ArgumentOutOfRangeException(nameof(_typeDisplay));
+    }
+
+    protected override float GetOperatingValue()
+    {
+        return _isPercentageValue ? PercentageValue : CurrentValue;
     }
 }

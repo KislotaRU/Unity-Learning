@@ -19,7 +19,7 @@ public class GameBootstrapper1 : MonoBehaviour
         PlayerProgress data = new();
         SceneLoader sceneLoader = new(data);
 
-        _loadingCurtain.Show();
+        await _loadingCurtain.Show();
 
         LoadSceneConfigurations();
 

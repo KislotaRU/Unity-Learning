@@ -203,8 +203,8 @@ Camera:
   m_GameObject: {fileID: 536720047}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -352,17 +352,29 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1558200482113372762, guid: abc7d94ade88bea42bb5df0d6286ebdc, type: 3}
-      propertyPath: m_AnchorMax.y
+    - target: {fileID: 2530710348378697140, guid: abc7d94ade88bea42bb5df0d6286ebdc, type: 3}
+      propertyPath: _typeBar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2530710348378697140, guid: abc7d94ade88bea42bb5df0d6286ebdc, type: 3}
+      propertyPath: _typeValue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2530710348378697140, guid: abc7d94ade88bea42bb5df0d6286ebdc, type: 3}
+      propertyPath: _displayValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124100576226305118, guid: abc7d94ade88bea42bb5df0d6286ebdc, type: 3}
+      propertyPath: _typeBar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124100576226305118, guid: abc7d94ade88bea42bb5df0d6286ebdc, type: 3}
+      propertyPath: _typeValue
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8898336248241646303, guid: abc7d94ade88bea42bb5df0d6286ebdc, type: 3}
       propertyPath: m_Name
       value: LoadingScreen
-      objectReference: {fileID: 0}
-    - target: {fileID: 8898336248241646303, guid: abc7d94ade88bea42bb5df0d6286ebdc, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
