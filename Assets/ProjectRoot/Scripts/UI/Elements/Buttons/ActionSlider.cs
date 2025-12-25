@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class CommonSlider : MonoBehaviour
+public abstract class ActionSlider : MonoBehaviour
 {
+    [Header("Settings")]
     [SerializeField] protected Slider _slider;
 
     private void OnEnable()

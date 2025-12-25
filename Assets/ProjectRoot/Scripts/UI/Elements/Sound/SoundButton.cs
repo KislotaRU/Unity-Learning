@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class SoundButton : CommonButton
+public class SoundButton : ActionButton
 {
     [SerializeField] private AudioSource _audioSource;
 
-    protected override void HandleClick()
+    protected override void OnClick()
     {
         Debug.Log("Sound");
         _audioSource.Play();

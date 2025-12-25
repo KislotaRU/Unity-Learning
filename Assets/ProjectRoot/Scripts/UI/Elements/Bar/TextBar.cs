@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TextBar : Bar
 {
-    [Header("Setting TextBar")]
+    [Header("TextBar")]
     [SerializeField] private TextMeshProUGUI _textMeshPro;
     [SerializeField] private TypeDisplay _typeDisplay;
     [Space]
@@ -23,7 +23,7 @@ public class TextBar : Bar
                 return;
 
             case TypeDisplay.MaxValue:
-                _textMeshPro.text = $"{DisplayedValue: #0.}/{MaxValue}";
+                _textMeshPro.text = $"{DisplayedValue: #0.}/{MaxValue: #0.}";
                 return;
         }
 
@@ -32,6 +32,6 @@ public class TextBar : Bar
 
     protected override float GetOperatingValue()
     {
-        return _isPercentageValue ? PercentageValue : CurrentValue;
+        return _isPercentageValue ? PercentageValueInt : CurrentValue;
     }
 }

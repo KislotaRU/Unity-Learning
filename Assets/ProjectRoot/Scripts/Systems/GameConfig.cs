@@ -4,5 +4,5 @@ using UnityEngine;
 public class GameConfig : ScriptableObject
 {
     [field: Header("Scenes")]
-    [field: SerializeField] public string FirstScene { get; private set; } = "MainMenu";
+    [field: SerializeField] public Scenes FirstScene { get; private set; }
 }

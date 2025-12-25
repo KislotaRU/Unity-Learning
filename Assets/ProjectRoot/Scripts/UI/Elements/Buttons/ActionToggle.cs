@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class CommonToggle : MonoBehaviour
+public abstract class ActionToggle : MonoBehaviour
 {
+    [Header("Settings")]
     [SerializeField] private Toggle _toggle;
 
     private void OnEnable()

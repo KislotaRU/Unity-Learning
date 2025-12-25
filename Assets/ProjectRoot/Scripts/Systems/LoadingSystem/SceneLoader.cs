@@ -1,39 +1,46 @@
+using System;
 using Cysharp.Threading.Tasks;
+using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 
 public class SceneLoader
 {
-    private readonly PlayerProgress _playerProgress;
+    private readonly LoadingScreen _loadingScreen;
 
-    public SceneLoader(PlayerProgress playerProgress)
+    public SceneLoader(LoadingScreen loadingScreen)
     {
-        _playerProgress = playerProgress;
+        _loadingScreen = loadingScreen != null ? loadingScreen : throw new ArgumentNullException(nameof(loadingScreen));
     }
 
-    public async UniTask<string> LoadNextScene()
+    public async UniTaskVoid LoadSceneWithLoadingScreenAsync(string sceneName)
     {
-        string nextScene = _playerProgress.GetNextScene();
+        _loadingScreen.SetName(sceneName);
 
-        await SceneManager.LoadSceneAsync(nextScene);
+        await _loadingScreen.Show();
 
-        return nextScene;
+        IProgress<float> progress = Progress.Create<float>(value => _loadingScreen.SetProgress(value));
+
+        _loadingScreen.SetMessage("Loading Scene...");
+        progress.Report(0.12f);
+        await UniTask.Delay(1000);
+        await LoadSceneAsync(sceneName);
+
+        _loadingScreen.SetMessage($"Completion...");
+        progress.Report(1.0f);
+        await UniTask.Delay(1000);
+
+        await _loadingScreen.Hide();
     }
 
     public async UniTask LoadSceneAsync(string sceneName)
     {
-        var operation = SceneManager.LoadSceneAsync(sceneName);
+        await Addressables.LoadSceneAsync(sceneName);
+    }
 
-        operation.allowSceneActivation = false;
+    public async UniTask ReloadSceneAsync()
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
 
-        while (operation.isDone == false)
-        {
-            if (operation.progress >= 0.9f)
-            {
-                await UniTask.Delay(500);
-                operation.allowSceneActivation = true;
-            }
-
-            await UniTask.Yield();
-        }
+        await LoadSceneAsync(currentScene);
     }
 }

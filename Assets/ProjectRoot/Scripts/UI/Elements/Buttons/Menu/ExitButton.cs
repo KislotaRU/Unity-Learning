@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class ExitButton : CommonButton
+public class ExitButton : ActionButton
 {
-    protected override void HandleClick()
+    protected override void OnClick()
     {
         Debug.Log("Exit");
         Application.Quit();

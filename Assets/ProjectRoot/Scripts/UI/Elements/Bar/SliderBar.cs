@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class SliderBar : Bar
 {
-    [Header("Setting SliderBar")]
+    [Header("SliderBar")]
     [SerializeField] private Slider _slider;
 
     protected override void Display()
@@ -13,6 +13,6 @@ public class SliderBar : Bar
 
     protected override float GetOperatingValue()
     {
-        return PercentageValue;
+        return PercentageValueFloat;
     }
 }

@@ -75,3 +75,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: a5420639854858b459adc4676bf37d37, type: 2}
+  _ammoController: {fileID: 3969289560727809301, guid: 2d193c6234c132d4a932ff122c4da18e, type: 3}
+  _loadingScreen: {fileID: 957297448142453871, guid: abc7d94ade88bea42bb5df0d6286ebdc, type: 3}

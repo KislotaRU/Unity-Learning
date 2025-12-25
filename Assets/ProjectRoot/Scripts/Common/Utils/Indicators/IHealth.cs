@@ -1,4 +1,4 @@
-public interface IHealth : ICountable, IAttackable
+public interface IHealth : IAttackable
 {
     void TakeHealth(float value);
 }

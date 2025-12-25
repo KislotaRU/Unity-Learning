@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class SoundToggle : CommonToggle
+public class SoundToggle : ActionToggle
 {
     [SerializeField] private AudioMixerGroup _audioMixerGroup;
 

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class SoundSlider : CommonSlider
+public class SoundSlider : ActionSlider
 {
     private const int MinVolume = -80;
     private const int CoefficientDB = 20;
