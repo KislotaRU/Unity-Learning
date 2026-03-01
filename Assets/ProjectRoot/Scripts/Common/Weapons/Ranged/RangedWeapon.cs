@@ -6,7 +6,7 @@ public class RangedWeapon : Weapon
 {
     [SerializeField] private RangedWeaponConfig _configuration;
     [Space]
-    [SerializeField] private BulletSpawner _bulletSpawner;
+    [SerializeField] private SpawnerProjectile _spawnerProjectile;
     [SerializeField] private Transform _transformParent;
     [SerializeField] private Transform _transformBullet;
     [Space]
@@ -90,14 +90,14 @@ public class RangedWeapon : Weapon
             IsReloading = false;
         });
     }
-
+    // Поработать над инициализацией пули и конфигурацией персонажей
     private void Shoot()
     {
         Projectile bullet;
 
         ProjectileCount -= ProjectilesPerShot;
 
-        bullet = _bulletSpawner.Spawn();
+        bullet = _spawnerProjectile.Spawn();
 
         bullet.Destroyed += HandleProjectileDestroyed;
         bullet.Hit += HandleProjectileHit;
@@ -105,7 +105,7 @@ public class RangedWeapon : Weapon
         bullet.Initialize(_transformBullet.position, _transformBullet.rotation, ProjectileVelocity, ProjectileLifeTime);
     }
 
-    private void HandleProjectileHit(IHealth health)
+    private void HandleProjectileHit(Health health)
     {
         if (health == null)
             throw new ArgumentNullException(nameof(health));

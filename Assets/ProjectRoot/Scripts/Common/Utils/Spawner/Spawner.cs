@@ -1,26 +1,21 @@
 using System;
-using System.Collections;
 using UnityEngine;
 
 public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
 {
-    [Header("Main Parameters")]
-    [SerializeField] protected T _prefab;
-    [SerializeField] protected Transform _container;
+    [Header("Main Settings")]
+    [SerializeField] private T _prefab;
     [Space]
-    [SerializeField, Min(0)] protected int _maxSize;
-    [SerializeField, Min(0)] protected int _capacity;
-    [SerializeField, Min(0f)] protected float _delay;
-    [Space]
-    [SerializeField] protected bool _autoSpawning;
+    [SerializeField, Min(0)] private int _maxSize;
+    [SerializeField, Min(0)] private int _initialSize;
 
     public event Action<T> Spawned;
 
-    protected ObjectPool<T> _objectPool;
+    private ObjectPool<T> _objectPool;
 
     private void OnValidate()
     {
-        _capacity = _capacity > _maxSize ? _maxSize : _capacity;
+        _initialSize = _initialSize > _maxSize ? _maxSize : _initialSize;
     }
 
     private void Awake()
@@ -30,16 +25,13 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
                                         actionRelease: (@object) => Release(@object),
                                         actionDestroy: (@object) => Destroy(@object),
                                         maxSize: _maxSize,
-                                        capacity: _capacity);
+                                        initialSize: _initialSize);
     }
 
     private void Start()
     {
-        for (int i = 0; i < _capacity; i++)
+        for (int i = 0; i < _initialSize; i++)
             Spawn();
-
-        if (_autoSpawning)
-            StartCoroutine(SpawningWithDelay());
     }
 
     public virtual T Spawn()
@@ -71,44 +63,40 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
         _objectPool.Remove(@object);
     }
 
-    protected IEnumerator SpawningWithDelay()
-    {
-        WaitForSeconds delay = new (_delay);
-
-        while (_autoSpawning)
-        {
-            yield return delay;
-
-            Spawn();
-        }
-    }
-
-    protected virtual T Create()
-    {
-        return Instantiate(_prefab);
-    }
-
     protected virtual void Get(T @object)
     {
-        @object.transform.parent = null;
+        if (@object == null)
+            throw new ArgumentNullException(nameof(@object));
 
         @object.gameObject.SetActive(true);
     }
 
-    protected void HandleRelease(T @object)
-    {
-        _objectPool?.Release(@object);
-    }
-
     protected virtual void Release(T @object)
     {
-        @object.gameObject.SetActive(false);
+        if (@object == null)
+            throw new ArgumentNullException(nameof(@object));
 
-        @object.transform.parent = _container;
+        @object.gameObject.SetActive(false);
     }
 
-    protected virtual void Destroy(T @object)
+    protected virtual void OnRelease(T @object)
     {
+        if (@object == null)
+            throw new ArgumentNullException(nameof(@object));
+
+        _objectPool.Release(@object);
+    }
+
+    private T Create()
+    {
+        return Instantiate(_prefab);
+    }
+
+    private void Destroy(T @object)
+    {
+        if (@object == null)
+            throw new ArgumentNullException(nameof(@object));
+
         Destroy(@object.gameObject);
     }
 }

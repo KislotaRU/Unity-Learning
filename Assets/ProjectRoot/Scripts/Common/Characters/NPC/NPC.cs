@@ -1,45 +1,51 @@
 using System;
 using UnityEngine;
 
-public class NPC : MonoBehaviour
+public class NPC : Entity
 {
-    [SerializeField] private EntityAnimator _entityAnimator;
     [SerializeField] private Follower _follower;
-    [SerializeField] private Mover _mover;
-    [SerializeField] private Rotator _rotator;
 
-    private void Awake()
-    {
-        if (_entityAnimator == null)
-            throw new ArgumentNullException(nameof(_entityAnimator));
+    [SerializeField] private float _moveSpeed;
 
-        if (_follower == null)
-            throw new ArgumentNullException(nameof(_follower));
+    public event Action<NPC> Died;
 
-        if (_mover == null)
-            throw new ArgumentNullException(nameof(_mover));
-    }
+    public float CurrentSpeed { get; private set; }
 
     private void Update()
     {
         HandleAnimator();
+
         HandleMove();
         HandleRotator();
     }
 
-    private void HandleRotator()
+    public void SetTarget(Transform target)
     {
-        _rotator.HandleLook(_follower.Direction);
+        _follower.SetTarget(target);
     }
 
-    private void HandleMove()
+    protected override void HandleAnimator()
     {
-        //transform.position += (_mover.Speed * Time.deltaTime * _follower.Direction);
-        _mover.HandleMove(_follower.Direction);
+        _animator.SetParametrs(CurrentSpeed);
     }
 
-    private void HandleAnimator()
+    protected virtual void HandleRotator()
     {
-        _entityAnimator.SetParametrs(_mover.CurrentSpeed);
+        transform.LookAt(_follower.Target);
+    }
+
+    protected virtual void HandleMove()
+    {
+        CurrentSpeed = _follower.Direction.sqrMagnitude;
+
+        if (_follower.Direction.sqrMagnitude <= 0.1f)
+            return;
+
+        transform.position += _moveSpeed * Time.deltaTime * _follower.Direction;
+    }
+
+    protected override void OnDied()
+    {
+        Died?.Invoke(this);
     }
 }

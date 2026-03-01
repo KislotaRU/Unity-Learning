@@ -1,80 +1,57 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-[RequireComponent(typeof(BoxCollider))]
 public class SpawnZone : MonoBehaviour
 {
-    private readonly float _offsetPosition = 0.5f;
-
-    private List<Vector3> _positions;
-    private List<Vector3> _lockPositions;
-    private List<Vector3> _unlockPositions;
-
-    private BoxCollider _boxCollider;
-
-    public bool IsFreePosition => _unlockPositions.Count > 0;
+    [Header("Settings")]
+    [SerializeField] private BoxCollider _boxCollider;
+    [Space]
+    [SerializeField] private TypePosition _typePosition;
 
     private void Awake()
     {
-        _boxCollider = GetComponent<BoxCollider>();
-
-        _positions = new List<Vector3>();
-        _lockPositions = new List<Vector3>();
-
-        GeneratePositions();
-
-        if (_positions.Count == 0)
-        {
-            enabled = false;
-            return;
-        }
-
-        _unlockPositions = new List<Vector3>(_positions);
+        if (_boxCollider == null)
+            throw new ArgumentNullException(nameof(_boxCollider));
     }
 
     private void OnDrawGizmos()
     {
         if (_boxCollider == null)
-            _boxCollider = GetComponent<BoxCollider>();
+            return;
 
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(_boxCollider.bounds.center, _boxCollider.bounds.size);
     }
 
-    public Vector3 GetRandomPosition()
+    public Vector3 GetPosition()
     {
-        int index = Random.Range(0, _unlockPositions.Count);
-        Vector3 position = _unlockPositions[index];
-
-        _lockPositions.Add(position);
-        _unlockPositions.Remove(position);
-
-        return position;
-    }
-
-    public void ReleasePosition(Vector3 lockPosition)
-    {
-        if (_lockPositions.Remove(lockPosition))
-            _unlockPositions.Add(lockPosition);
-    }
-
-    private void GeneratePositions()
-    {
-        Vector3Int dimensions = new Vector3Int((int)_boxCollider.bounds.size.x, (int)_boxCollider.bounds.size.y, (int)_boxCollider.bounds.size.z);
-        Vector3 minPosition = _boxCollider.bounds.min + Vector3.one * _offsetPosition;
-        int totalPositions = dimensions.x * dimensions.y * dimensions.z;
-
-        for (int i = 0; i < totalPositions; i++)
+        switch (_typePosition)
         {
-            int x = i % dimensions.x;
-            int y = (i / dimensions.x) % dimensions.y;
-            int z = i / (dimensions.x * dimensions.y);
+            case TypePosition.Zero:
+                return GetCenterPosition();
 
-            _positions.Add(new Vector3(
-                minPosition.x + x,
-                minPosition.y + y,
-                minPosition.z + z
-            ));
+            case TypePosition.Random:
+                return GetRandomPosition();
+
+            default:
+                break;
         }
+        
+        throw new ArgumentOutOfRangeException(nameof(TypePosition));
+    }
+
+    private Vector3 GetCenterPosition()
+    {
+        return _boxCollider.bounds.center;
+    }
+
+    private Vector3 GetRandomPosition()
+    {
+        float positionX = Random.Range(_boxCollider.bounds.min.x, _boxCollider.bounds.max.x);
+        float positionY = Random.Range(_boxCollider.bounds.min.y, _boxCollider.bounds.max.y);
+        float positionZ = Random.Range(_boxCollider.bounds.min.z, _boxCollider.bounds.max.z);
+
+        return new Vector3(positionX, positionY, positionZ);
     }
 }

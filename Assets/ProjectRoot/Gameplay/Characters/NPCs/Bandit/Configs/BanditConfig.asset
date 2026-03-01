@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62108a40efb300345a03dfd213f426f4, type: 3}
   m_Name: BanditConfig
   m_EditorClassIdentifier: 
-  <MaxValueHealth>k__BackingField: 0
+  <MaxValueHealth>k__BackingField: 100

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "RangedWeaponConfig", menuName = "Configs/Weapon/RangedWeaponConfig")]
+[CreateAssetMenu(fileName = "RangedWeaponConfig", menuName = "Configs/Weapon/RangedWeaponConfig", order = 51)]
 public class RangedWeaponConfig : WeaponConfig
 {
     [field: Header("Ranged Specific")]

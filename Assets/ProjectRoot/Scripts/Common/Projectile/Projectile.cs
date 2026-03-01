@@ -5,7 +5,7 @@ public class Projectile : MonoBehaviour
 {
     private ITimerService<Projectile> _timerService;
 
-    public event Action<IHealth> Hit;
+    public event Action<Health> Hit;
     public event Action<Projectile> Destroyed;
 
     public float ProjectileVelocity { get; private set; }
@@ -27,7 +27,7 @@ public class Projectile : MonoBehaviour
         if (other.TryGetComponent(out Projectile _))
             return;
 
-        if (other.TryGetComponent(out IHealth health))
+        if (other.TryGetComponent(out Health health))
             Hit?.Invoke(health);
 
         Destroyed?.Invoke(this);

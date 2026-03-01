@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MeleeWeaponConfig", menuName = "Configs/Weapon/MeleeWeaponConfig")]
+[CreateAssetMenu(fileName = "MeleeWeaponConfig", menuName = "Configs/Weapon/MeleeWeaponConfig", order = 51)]
 public class MeleeWeaponConfig : WeaponConfig
 {
     [field: Header("Melee Specific")]

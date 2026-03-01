@@ -4,15 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class EntityAnimator : MonoBehaviour
 {
-    private const string IdleMotion = "Idle";
-
-    private const string WalkMotion = "Walk";
-    private const string RunMotion = "Run";
-    private const string JumpMotion = "Jump";
-
-    private const string AttackMotion = "Attack";
-    private const string DieMotion = "Die";
-
     [SerializeField] private AnimationConfig _animationConfiguration;
 
     private Animator _animator;
@@ -31,14 +22,14 @@ public class EntityAnimator : MonoBehaviour
         _overrideController = new AnimatorOverrideController(_animator.runtimeAnimatorController);
         _animator.runtimeAnimatorController = _overrideController;
 
-        _overrideController[IdleMotion] = _animationConfiguration.IdleClip;
+        _overrideController[TypeMotion.Idle.ToString()] = _animationConfiguration.IdleClip;
 
-        _overrideController[WalkMotion] = _animationConfiguration.WalkClip;
-        _overrideController[RunMotion] = _animationConfiguration.RunClip;
-        _overrideController[JumpMotion] = _animationConfiguration.JumpClip;
+        _overrideController[TypeMotion.Walk.ToString()] = _animationConfiguration.WalkClip;
+        _overrideController[TypeMotion.Run.ToString()] = _animationConfiguration.RunClip;
+        _overrideController[TypeMotion.Jump.ToString()] = _animationConfiguration.JumpClip;
 
-        _overrideController[AttackMotion] = _animationConfiguration.AttackClip;
-        _overrideController[DieMotion] = _animationConfiguration.DieClip;
+        _overrideController[TypeMotion.Attack.ToString()] = _animationConfiguration.AttackClip;
+        _overrideController[TypeMotion.Die.ToString()] = _animationConfiguration.DieClip;
     }
 
     public void SetParametrs(float speed)

@@ -13,19 +13,19 @@ public class ObjectPool<T> : IDisposable where T : class
     private readonly Action<T> _actionRelease;
     private readonly Action<T> _actionDestroy;
 
-    public ObjectPool(Func<T> functionCreate, Action<T> actionGet, Action<T> actionRelease, Action<T> actionDestroy, int maxSize, int capacity)
+    public ObjectPool(Func<T> functionCreate, Action<T> actionGet, Action<T> actionRelease, Action<T> actionDestroy, int maxSize, int initialSize)
     {
         _functionCreate = functionCreate ?? throw new ArgumentNullException(nameof(functionCreate));
         _maxSize = maxSize > 0 ? maxSize : throw new ArgumentOutOfRangeException(nameof(maxSize));
 
-        if (capacity < 0)
-            throw new ArgumentOutOfRangeException(nameof(capacity));
+        if (initialSize < 0)
+            throw new ArgumentOutOfRangeException(nameof(initialSize));
 
         _actionGet = actionGet;
         _actionRelease = actionRelease;
         _actionDestroy = actionDestroy;
 
-        _pool = new List<T>(capacity);
+        _pool = new List<T>(initialSize);
     }
 
     public int CountAll { get; private set; }

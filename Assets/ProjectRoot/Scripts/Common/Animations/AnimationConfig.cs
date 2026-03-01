@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "EntityAnimationConfig", menuName = "Configs/Animation/EntityAnimationConfig")]
+[CreateAssetMenu(fileName = "EntityAnimationConfig", menuName = "Configs/Animation/EntityAnimationConfig", order = 51)]
 public class AnimationConfig : ScriptableObject
 {
     [field: Header("Idle")]

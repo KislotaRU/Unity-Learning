@@ -1,56 +1,36 @@
 using System;
 using UnityEngine;
-using Zenject;
 
-public class Player : MonoBehaviour
+public class Player : Entity
 {
-    [SerializeField] private EntityAnimator _entityAnimator;
-    [SerializeField] private MovementInputHandler _movementInputHandler;
-    [SerializeField] private CombatInputHandler _combatInputHandler;
+    [SerializeField] private PlayerInput _input;
 
-    private InputActions _inputActions;
-
-    [Inject]
-    private void Consturct(InputActions inputActions)
-    {
-        _inputActions = inputActions;
-    }
+    public event Action<Player> Died;
 
     private void Awake()
     {
-        if (_entityAnimator == null)
-            throw new ArgumentNullException(nameof(_entityAnimator));
-
-        if (_movementInputHandler == null)
-            throw new ArgumentNullException(nameof(_movementInputHandler));
-
-        if (_combatInputHandler == null)
-            throw new ArgumentNullException(nameof(_combatInputHandler));
-    }
-
-    private void OnEnable()
-    {
-        _inputActions.Player.Enable();
-    }
-
-    private void OnDisable()
-    {
-        _inputActions.Player.Disable();
+        if (_input == null)
+            throw new ArgumentNullException(nameof(_input));
     }
 
     private void Update()
     {
-        HandleInput();
         HandleAnimator();
+        HandleInput();
     }
 
     private void HandleInput()
     {
-        _movementInputHandler.UpdateInput();
+        _input.UpdateInput();
     }
 
-    private void HandleAnimator()
+    protected override void HandleAnimator()
     {
-        _entityAnimator.SetParametrs(_movementInputHandler.Mover.CurrentSpeed);
+        _animator.SetParametrs(_input.Mover.CurrentSpeed);
+    }
+
+    protected override void OnDied()
+    {
+        Died?.Invoke(this);
     }
 }
